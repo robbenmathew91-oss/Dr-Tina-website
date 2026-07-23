@@ -260,20 +260,131 @@ export function PublicationCard(pub) {
 /**
  * Render Grant Card
  */
-export function GrantCard(grant) {
+export function GrantCard(grant, relations = {}) {
   const statusClass = grant.status.toLowerCase() === 'active' ? 'status-active' : 'status-completed';
+  
+  const techniquesList = (grant.techniques || [])
+    .map(t => `<span class="technique-tag">${t}</span>`)
+    .join('');
+
+  const applicationsList = (grant.applications || [])
+    .map(a => `<span class="application-tag">${a}</span>`)
+    .join('');
+
+  // Resolve dynamic relationships from parameters
+  const linkedProjects = relations.projects || [];
+  const linkedPublications = relations.publications || [];
+  const linkedCollaborators = relations.collaborators || [];
+
+  const projectsMarkup = linkedProjects.length > 0
+    ? linkedProjects.map(p => `
+        <div style="font-size: 0.85rem; margin-bottom: 6px; padding: 8px; border: 1px dashed var(--border); border-radius: 4px; background: var(--bg-offset);">
+          <strong>${p.title}</strong>
+        </div>
+      `).join('')
+    : '';
+
+  const publicationsMarkup = linkedPublications.length > 0
+    ? `<ul style="list-style: none; padding-left: 0; margin-bottom: 0;">` + 
+      linkedPublications.map(pub => `
+        <li style="font-size: 0.85rem; margin-bottom: 6px; line-height: 1.3;">
+          "${pub.title}" (<em>${pub.journal}</em>, ${pub.year})
+        </li>
+      `).join('') + `</ul>`
+    : '';
+
+  const collaboratorsMarkup = linkedCollaborators.length > 0
+    ? linkedCollaborators.map(c => `
+        <div style="font-size: 0.82rem; color: var(--light-gray); margin-bottom: 4px;">
+          • ${c.name} (${c.institution})
+        </div>
+      `).join('')
+    : '';
+
   return `
-    <div class="grant-card" id="grant-${grant.id}">
+    <div class="grant-card ${grant.status.toLowerCase()}" id="grant-${grant.id}">
       <div class="grant-header">
-        <span class="grant-status ${statusClass}">${grant.status}</span>
-        <h3 class="grant-title">${grant.title}</h3>
+        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 10px;">
+          <span class="grant-status ${statusClass}">${grant.status}</span>
+          <span class="pub-badge category-badge" style="text-transform: uppercase;">${grant.research_theme || 'Research'}</span>
+        </div>
+        <h3 class="grant-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.25rem; margin-top: 5px; margin-bottom: 10px; line-height: 1.3;">
+          ${grant.title}
+        </h3>
       </div>
-      <div class="grant-details-grid">
-        <p><strong>Funding Agency:</strong> ${grant.agency}</p>
-        ${grant.grantNumber ? `<p><strong>Award Number:</strong> ${grant.grantNumber}</p>` : ''}
-        ${grant.amount ? `<p><strong>Award Amount:</strong> ${grant.amount}</p>` : ''}
-        <p><strong>Duration:</strong> ${grant.duration}</p>
-        <p><strong>PI:</strong> ${grant.principalInvestigator}</p>
+
+      <div class="grant-agency-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <div>
+          <p style="margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--dark-gray);">${grant.agency}</p>
+          <p style="margin: 0; font-size: 0.8rem; color: var(--light-gray);">Award #: ${grant.grantNumber || 'N/A'} | PI: ${grant.principalInvestigator}</p>
+        </div>
+        <div class="grant-agency-logo-stub" style="width: 45px; height: 45px; border-radius: 50%; background: #ECEFF1; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--light-gray);" title="${grant.agency}">
+          ${grant.agency.split(' ')[0]}
+        </div>
+      </div>
+
+      <div class="grant-body">
+        <p style="font-size: 0.92rem; line-height: 1.5; color: var(--dark-gray); margin-bottom: 12px;">
+          ${grant.summary}
+        </p>
+
+        <div style="margin-bottom: 12px; font-size: 0.9rem; color: var(--dark-gray); background: #FFFDF0; border-left: 2px solid #D4AF37; padding: 8px 12px; border-radius: 0 4px 4px 0;">
+          <strong>Scientific Impact:</strong> ${grant.scientific_impact}
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;" class="theme-cols-2">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Enabled Techniques</span>
+            <div class="techniques-list" style="margin-top: 5px;">${techniquesList}</div>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Enabled Applications</span>
+            <div class="applications-list" style="margin-top: 5px;">${applicationsList}</div>
+          </div>
+        </div>
+
+        <!-- Collapsible Relationships Panel -->
+        <button class="pub-toggle-btn" onclick="toggleDetails('grant-details-panel-${grant.id}')" style="margin-top: 5px;" aria-expanded="false" aria-controls="grant-details-panel-${grant.id}">
+          Explore Linked Projects & Publications
+        </button>
+
+        <div class="pub-abstract-panel hidden" id="grant-details-panel-${grant.id}">
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          
+          ${projectsMarkup ? `
+            <div style="margin-bottom: 12px;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Supported Lab Projects</span>
+              ${projectsMarkup}
+            </div>
+          ` : ''}
+
+          ${publicationsMarkup ? `
+            <div style="margin-bottom: 12px;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Resulting Publications</span>
+              ${publicationsMarkup}
+            </div>
+          ` : ''}
+
+          ${collaboratorsMarkup ? `
+            <div>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Key Collaborations</span>
+              ${collaboratorsMarkup}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+
+      <!-- Future Ready Placeholder: Annual Reports, Award Amount details -->
+      <div class="pub-future-actions" style="margin-top: 15px; display: flex; gap: 15px; font-size: 0.72rem; color: var(--light-gray); border-top: 1px dashed var(--border); padding-top: 10px;">
+        <span><strong>Funding Amount:</strong> ${grant.amount || 'N/A'}</span>
+        <span>•</span>
+        <button class="export-bibtex-stub" onclick="alert('Annual Reports download is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Annual Reports
+        </button>
+        <span>•</span>
+        <button class="copy-apa-stub" onclick="alert('Official Agency project link is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Agency Award Page
+        </button>
       </div>
     </div>
   `;

@@ -819,22 +819,25 @@ a:hover {
 /* Grant Card */
 .grant-card {
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 20px;
-  background-color: var(--bg);
+  border-left: 3px solid var(--border);
+  border-radius: 0 8px 8px 0;
+  padding: 22px;
+  background-color: var(--bg-offset);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
 .grant-card:hover {
   box-shadow: var(--shadow-md);
-  border-color: var(--primary);
+  background-color: var(--bg);
+}
+.grant-card.active {
+  border-left-color: var(--primary);
+}
+.grant-card.completed {
+  border-left-color: var(--light-gray);
 }
 .grant-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 .grant-status {
   font-size: 0.7rem;
@@ -844,17 +847,10 @@ a:hover {
   border-radius: 4px;
 }
 .grant-title {
-  font-size: 1.15rem;
   margin-bottom: 0;
   flex-grow: 1;
 }
-.grant-details-grid {
-  font-size: 0.9rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 6px;
-  color: var(--dark-gray);
-}
+
 
 /* News Card */
 .news-card {

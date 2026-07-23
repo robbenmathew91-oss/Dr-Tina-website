@@ -9,6 +9,35 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    .funding-stat-card {
+      background: var(--bg-offset);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .funding-stat-val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+      font-family: var(--font-heading);
+    }
+    .funding-stat-label {
+      font-size: 0.8rem;
+      color: var(--light-gray);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    @media (max-width: 900px) {
+      .theme-cols-2 {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -16,28 +45,92 @@
 
   <main id="main-content">
     <h1>Funding & Grants</h1>
-    <p class="hero-tagline">The research grants and organizations supporting our research.</p>
+    <p class="hero-tagline">Federal and institutional sponsors supporting our research program.</p>
 
-    <section class="mb-8">
-      <p>We are grateful for the support of federal and institutional sponsors that make our research possible. Below is a list of active and completed awards supporting the Salguero Lab:</p>
+    <!-- Overview Statistics Dashboard -->
+    <section class="mb-8" style="margin-top: 30px;" aria-label="Funding Metrics Dashboard">
+      <div class="grid-cols-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;" id="funding-dashboard-target">
+        <!-- Stat cards will be dynamically injected -->
+      </div>
     </section>
 
+    <!-- Search & Filter Controls -->
+    <section class="search-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; margin-top: 30px;" aria-label="Search and Filter Controls">
+      <div style="display: flex; gap: 15px; width: 100%; flex-wrap: wrap;">
+        <input type="text" id="search-box" class="search-input" placeholder="Search by grant title or funding agency..." aria-label="Search grants">
+        
+        <select id="sort-filter" class="filter-select" aria-label="Sort grants">
+          <option value="newest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+          <option value="agency">Sort: Agency Name</option>
+          <option value="active">Sort: Active First</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; width: 100%;" class="grid-cols-4">
+        <select id="status-filter" class="filter-select" aria-label="Filter by Status">
+          <option value="all">All Statuses</option>
+          <option value="Active">Active Only</option>
+          <option value="Completed">Completed Only</option>
+        </select>
+
+        <select id="agency-filter" class="filter-select" aria-label="Filter by Funding Agency">
+          <option value="all">All Agencies</option>
+        </select>
+
+        <select id="theme-filter" class="filter-select" aria-label="Filter by Research Theme">
+          <option value="all">All Themes</option>
+        </select>
+
+        <select id="year-filter" class="filter-select" aria-label="Filter by Start Year">
+          <option value="all">All Start Years</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Active Filter Indicators -->
+    <div id="active-filters-container" class="pub-active-filters-row" aria-live="polite"></div>
+
     <!-- Grants Grid -->
-    <section class="mb-8">
-      <div id="grants-list-target" class="grid-cols-2">
+    <section class="mb-8" style="margin-top: 30px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <h2 id="grants-list-title" style="margin: 0; font-size: 1.5rem;">All Awards</h2>
+        <div id="grants-count" class="pub-count-label">Showing 0 of 0 awards</div>
+      </div>
+      <div id="grants-list-target" style="display: flex; flex-direction: column; gap: 25px;">
         <p>Loading funding records...</p>
       </div>
     </section>
 
-    <!-- Sponsor Recognition Logos / Text -->
-    <section class="mb-8 py-8" style="border-top: 1px solid var(--border); margin-top: 50px;">
-      <h3>Our Sponsors</h3>
-      <div class="grid-cols-2 my-8" style="align-items: center; text-align: center; gap: 40px;">
-        <div style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; font-weight: 600; font-size: 1.1rem; background-color: var(--bg-offset);">
-          National Science Foundation (NSF)
+    <!-- Pagination Controls -->
+    <div id="pagination-container" class="pub-pagination-bar" aria-label="Pagination Navigation"></div>
+
+    <!-- Funding Timeline Section -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 25px;">Funding Progression Timeline</h2>
+      <p style="margin-bottom: 25px; color: var(--light-gray);">Chronology of major federal support milestones directing our laboratory's synthesis paradigms.</p>
+      <div id="timeline-target"></div>
+    </section>
+
+    <!-- Funding Impact Summaries -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 25px;">Sponsorship Impact</h2>
+      <div class="research-impact-grid">
+        <div class="impact-card">
+          <h3 class="impact-title"><span class="impact-icon">🏆</span> Scientific Discoveries Enabled</h3>
+          <p class="impact-text">Sponsorship from NSF and DOE BES has directly enabled discoveries in transition metal dichalcogenide CDW sliding mechanisms, 1D atomic chains isolation, and the exfoliation chemistry of ancient pigments.</p>
         </div>
-        <div style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; font-weight: 600; font-size: 1.1rem; background-color: var(--bg-offset);">
-          U.S. Department of Energy (DOE)
+        <div class="impact-card">
+          <h3 class="impact-title"><span class="impact-icon">🎓</span> Graduate & Student Training</h3>
+          <p class="impact-text">Grants support student fellowships (including GEM Fellows) and funding for Ph.D. and M.S. graduate theses, producing highly skilled scientists now working in academia, national labs, and industrial microelectronics.</p>
+        </div>
+        <div class="impact-card">
+          <h3 class="impact-title"><span class="impact-icon">🔬</span> Shared Collaborations</h3>
+          <p class="impact-text">Our funding models actively finance instrumentation time at national microscopy centers (Oak Ridge National Lab) and microfabrication facilities (Georgia Tech cleanrooms).</p>
+        </div>
+        <div class="impact-card">
+          <h3 class="impact-title"><span class="impact-icon">🔌</span> Technological & Societal Relevance</h3>
+          <p class="impact-text">By researching replacement candidates for standard copper interconnects and silicon semiconductors, our sponsors fund research tackling the energy consumption limits of global computational infrastructure.</p>
         </div>
       </div>
     </section>
@@ -51,24 +144,367 @@
     import { loadData } from './src/js/loader.js';
     import { validateData } from './src/js/validator.js';
     import { GrantCard } from './src/js/components.js';
-    import { renderList, SortFunctions } from './src/js/renderer.js';
+
+    let allGrants = [];
+    let filteredGrants = [];
+    let currentPage = 1;
+    let pageSize = 10;
+
+    let allResearch = [];
+    let allProjects = [];
+    let allPublications = [];
+    let allCollaborators = [];
 
     async function initGrants() {
-      const dataObj = await loadData('grants.json');
-      const grantsList = dataObj.grants || [];
+      // Load all 5 data feeds asynchronously
+      const [grantsData, researchData, projectsData, publicationsData, collaboratorsData] = await Promise.all([
+        loadData('grants.json'),
+        loadData('research.json'),
+        loadData('projects.json'),
+        loadData('publications.json'),
+        loadData('collaborators.json')
+      ]);
+
+      allGrants = grantsData.grants || [];
+      allResearch = researchData.themes || [];
+      allProjects = projectsData.projects || [];
+      allPublications = publicationsData.publications || [];
+      allCollaborators = collaboratorsData.collaborators || [];
 
       // Validate
-      validateData('grant', grantsList);
+      validateData('grant', allGrants);
 
-      // Render
-      renderList({
-        selector: '#grants-list-target',
-        items: grantsList,
-        componentFn: GrantCard,
-        sortFn: SortFunctions.grantsDefault,
-        emptyMessage: 'No funding records found in the database.'
+      // Populate filter dropdowns
+      populateFilterDropdowns(allGrants);
+
+      // Add event listeners
+      document.getElementById('search-box').addEventListener('input', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('sort-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('status-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('agency-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('theme-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('year-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+
+      // Initial render
+      applyFilters();
+      renderDashboard();
+      renderTimeline();
+    }
+
+    function populateFilterDropdowns(grants) {
+      const agencySelect = document.getElementById('agency-filter');
+      const themeSelect = document.getElementById('theme-filter');
+      const yearSelect = document.getElementById('year-filter');
+
+      const agencies = new Set();
+      const themes = new Set();
+      const years = new Set();
+
+      grants.forEach(g => {
+        if (g.agency) agencies.add(g.agency);
+        if (g.research_theme) themes.add(g.research_theme);
+        if (g.award_year) years.add(g.award_year);
+      });
+
+      Array.from(agencies).sort().forEach(a => {
+        agencySelect.add(new Option(a, a));
+      });
+      Array.from(themes).sort().forEach(t => {
+        themeSelect.add(new Option(t, t));
+      });
+      Array.from(years).sort((a,b) => b.localeCompare(a)).forEach(y => {
+        yearSelect.add(new Option(y, y));
       });
     }
+
+    function renderDashboard() {
+      const target = document.getElementById('funding-dashboard-target');
+      
+      const totalCount = allGrants.length;
+      const activeCount = allGrants.filter(g => g.status === 'Active').length;
+      const completedCount = allGrants.filter(g => g.status === 'Completed').length;
+      const uniqueAgencies = new Set(allGrants.map(g => g.agency)).size;
+
+      // Count unique linked publications and supported projects
+      const uniquePubs = new Set(allGrants.flatMap(g => g.related_publications || [])).size;
+      const uniqueProj = new Set(allGrants.flatMap(g => g.related_projects || [])).size;
+
+      target.innerHTML = `
+        <div class="funding-stat-card">
+          <div class="funding-stat-val">${totalCount}</div>
+          <div class="funding-stat-label">Total Awards</div>
+        </div>
+        <div class="funding-stat-card">
+          <div class="funding-stat-val">${activeCount}</div>
+          <div class="funding-stat-label">Active Grants</div>
+        </div>
+        <div class="funding-stat-card">
+          <div class="funding-stat-val">${completedCount}</div>
+          <div class="funding-stat-label">Completed</div>
+        </div>
+        <div class="funding-stat-card">
+          <div class="funding-stat-val">${uniqueAgencies}</div>
+          <div class="funding-stat-label">Sponsors</div>
+        </div>
+        <div class="funding-stat-card">
+          <div class="funding-stat-val">${uniqueProj}</div>
+          <div class="funding-stat-label">Lab Projects</div>
+        </div>
+        <div class="funding-stat-card">
+          <div class="funding-stat-val">${uniquePubs}</div>
+          <div class="funding-stat-label">Publications</div>
+        </div>
+      `;
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('search-box').value.toLowerCase().trim();
+      const status = document.getElementById('status-filter').value;
+      const agency = document.getElementById('agency-filter').value;
+      const theme = document.getElementById('theme-filter').value;
+      const year = document.getElementById('year-filter').value;
+      const sortVal = document.getElementById('sort-filter').value;
+
+      // Filter Logic
+      filteredGrants = allGrants.filter(g => {
+        const matchesQuery = !query ||
+          g.title.toLowerCase().includes(query) ||
+          g.agency.toLowerCase().includes(query) ||
+          g.grantNumber.toLowerCase().includes(query);
+
+        const matchesStatus = status === 'all' || g.status === status;
+        const matchesAgency = agency === 'all' || g.agency === agency;
+        const matchesTheme = theme === 'all' || g.research_theme === theme;
+        const matchesYear = year === 'all' || g.award_year === year;
+
+        return matchesQuery && matchesStatus && matchesAgency && matchesTheme && matchesYear;
+      });
+
+      // Sorting Logic
+      let sortFn;
+      if (sortVal === 'newest') {
+        sortFn = (a, b) => (parseInt(b.award_year, 10) || 0) - (parseInt(a.award_year, 10) || 0) || a.title.localeCompare(b.title);
+      } else if (sortVal === 'oldest') {
+        sortFn = (a, b) => (parseInt(a.award_year, 10) || 0) - (parseInt(b.award_year, 10) || 0) || a.title.localeCompare(b.title);
+      } else if (sortVal === 'agency') {
+        sortFn = (a, b) => a.agency.localeCompare(b.agency) || (parseInt(b.award_year, 10) - parseInt(a.award_year, 10));
+      } else if (sortVal === 'active') {
+        sortFn = (a, b) => {
+          if (a.status !== b.status) {
+            return a.status === 'Active' ? -1 : 1;
+          }
+          return (parseInt(b.award_year, 10) || 0) - (parseInt(a.award_year, 10) || 0);
+        };
+      }
+
+      filteredGrants.sort(sortFn);
+
+      // Render filter pills
+      renderActivePills({ query, status, agency, theme, year });
+
+      // Render main listing
+      renderPaginatedGrants();
+    }
+
+    function renderPaginatedGrants() {
+      const target = document.getElementById('grants-list-target');
+      const countLabel = document.getElementById('grants-count');
+
+      // Update count label
+      countLabel.textContent = `Showing ${filteredGrants.length} of ${allGrants.length} awards`;
+
+      if (filteredGrants.length === 0) {
+        target.innerHTML = `
+          <div class="empty-state" style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border); border-radius: 8px; background: var(--bg-offset);">
+            <p style="font-size: 1.1rem; color: var(--light-gray); margin-bottom: 10px;">No grants found matching your criteria.</p>
+            <button class="btn btn-secondary btn-sm" onclick="window.clearAllFilters()">Clear All Filters</button>
+          </div>
+        `;
+        document.getElementById('pagination-container').innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(filteredGrants.length / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, filteredGrants.length);
+      const pageItems = filteredGrants.slice(startIndex, endIndex);
+
+      // Render cards resolving relational maps dynamically
+      const markup = pageItems.map(g => {
+        // Resolve relations
+        const relations = {
+          projects: allProjects.filter(p => (g.related_projects || []).includes(p.id)),
+          publications: allPublications.filter(pub => (g.related_publications || []).includes(pub.id)),
+          collaborators: allCollaborators.filter(collab => (g.related_collaborators || []).includes(collab.id))
+        };
+        return GrantCard(g, relations);
+      }).join('');
+
+      target.innerHTML = markup;
+
+      // Render navigation controls
+      renderPaginationBar(totalPages);
+    }
+
+    function renderPaginationBar(totalPages) {
+      const container = document.getElementById('pagination-container');
+      
+      let pageButtons = '';
+      for (let i = 1; i <= totalPages; i++) {
+        pageButtons += `
+          <button class="pub-page-btn ${i === currentPage ? 'active-page' : ''}" onclick="window.setPage(${i})" aria-label="Page ${i}" ${i === currentPage ? 'aria-current="page"' : ''}>
+            ${i}
+          </button>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="pub-count-label">
+          Showing ${Math.min((currentPage - 1) * pageSize + 1, filteredGrants.length)}–${Math.min(currentPage * pageSize, filteredGrants.length)} of ${filteredGrants.length}
+        </div>
+        
+        <div class="pub-page-controls">
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous Page">
+            &lt; Prev
+          </button>
+          ${pageButtons}
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next Page">
+            Next &gt;
+          </button>
+        </div>
+
+        <div>
+          <span style="font-size: 0.85rem; color: var(--light-gray); margin-right: 8px;">Show:</span>
+          <select class="pub-pagesize-select" onchange="window.setPageSize(this.value)" aria-label="Grants per page">
+            <option value="10" ${pageSize === 10 ? 'selected' : ''}>10</option>
+            <option value="20" ${pageSize === 20 ? 'selected' : ''}>20</option>
+            <option value="50" ${pageSize === 50 ? 'selected' : ''}>50</option>
+          </select>
+        </div>
+      `;
+    }
+
+    function renderActivePills({ query, status, agency, theme, year }) {
+      const container = document.getElementById('active-filters-container');
+      const pills = [];
+
+      if (query) {
+        pills.push(`
+          <span class="filter-pill">
+            Search: "${query}"
+            <button class="filter-pill-remove" onclick="window.clearFilter('search')" aria-label="Remove search filter">×</button>
+          </span>
+        `);
+      }
+      if (status !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Status: ${status}
+            <button class="filter-pill-remove" onclick="window.clearFilter('status')" aria-label="Remove status filter">×</button>
+          </span>
+        `);
+      }
+      if (agency !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Agency: ${agency}
+            <button class="filter-pill-remove" onclick="window.clearFilter('agency')" aria-label="Remove agency filter">×</button>
+          </span>
+        `);
+      }
+      if (theme !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Theme: ${theme}
+            <button class="filter-pill-remove" onclick="window.clearFilter('theme')" aria-label="Remove theme filter">×</button>
+          </span>
+        `);
+      }
+      if (year !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Start Year: ${year}
+            <button class="filter-pill-remove" onclick="window.clearFilter('year')" aria-label="Remove year filter">×</button>
+          </span>
+        `);
+      }
+
+      if (pills.length > 0) {
+        container.innerHTML = `
+          ${pills.join('')}
+          <button class="btn btn-text btn-sm" onclick="window.clearAllFilters()" style="color: var(--primary); text-decoration: underline; cursor: pointer; padding: 0; font-weight: 600;">
+            Clear All
+          </button>
+        `;
+      } else {
+        container.innerHTML = '';
+      }
+    }
+
+    function renderTimeline() {
+      const target = document.getElementById('timeline-target');
+      // Sort grants by award year ascending for chronological timeline
+      const sorted = [...allGrants].sort((a,b) => a.award_year.localeCompare(b.award_year));
+
+      const markup = sorted.map(g => `
+        <div class="timeline-node">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content-card">
+            <div class="timeline-header">
+              <span class="event-date" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">${g.award_year}</span>
+              <span class="grant-status ${g.status === 'Active' ? 'status-active' : 'status-completed'}" style="font-size: 0.65rem;">${g.status}</span>
+            </div>
+            <h3 class="event-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.1rem; margin-top: 5px; margin-bottom: 8px;">
+              ${g.agency}: ${g.title}
+            </h3>
+            <ul style="list-style: none; padding-left: 0; margin-bottom: 0;">
+              ${(g.milestones || []).map(m => `
+                <li style="font-size: 0.85rem; color: var(--dark-gray); margin-bottom: 4px; padding-left: 12px; position: relative;">
+                  <span style="position: absolute; left: 0; color: var(--primary);">▪</span> ${m}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+      `).join('');
+
+      target.innerHTML = `<div class="timeline-container">${markup}</div>`;
+    }
+
+    // Global bindings for pagination & pills
+    window.setPage = function(pageNumber) {
+      currentPage = pageNumber;
+      applyFilters();
+      document.getElementById('grants-list-title').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    window.setPageSize = function(size) {
+      pageSize = parseInt(size, 10);
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearFilter = function(name) {
+      if (name === 'search') document.getElementById('search-box').value = '';
+      if (name === 'status') document.getElementById('status-filter').value = 'all';
+      if (name === 'agency') document.getElementById('agency-filter').value = 'all';
+      if (name === 'theme') document.getElementById('theme-filter').value = 'all';
+      if (name === 'year') document.getElementById('year-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearAllFilters = function() {
+      document.getElementById('search-box').value = '';
+      document.getElementById('status-filter').value = 'all';
+      document.getElementById('agency-filter').value = 'all';
+      document.getElementById('theme-filter').value = 'all';
+      document.getElementById('year-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
 
     initGrants();
   </script>

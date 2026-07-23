@@ -5,21 +5,70 @@
       "id": "grant-nsf-2024",
       "title": "NSF Division of Materials Research: Chemical Exfoliation and Sorting of 2D Nanosheets",
       "agency": "National Science Foundation (NSF)",
-      "grantNumber": "DMR-XXXXXXX",
+      "grantNumber": "DMR-1919942",
       "amount": "$450,000",
       "duration": "2024 - 2027",
       "status": "Active",
-      "principalInvestigator": "Dr. Tina Salguero"
+      "principalInvestigator": "Dr. Tina Salguero",
+      "award_year": "2024",
+      "summary": "Development of liquid-phase sorting methods and synthetic techniques to isolate high-yield, chemically stable 2D nanosheets from bulk layered parent crystals.",
+      "scientific_impact": "Enables molecular-scale design of artificial superlattices and the stabilization of freestanding, single-atom-thick layered silicate crystals.",
+      "techniques": [
+        "Liquid-Phase Chemical Exfoliation",
+        "Density Gradient Centrifugation",
+        "Atomic Force Microscopy (AFM)"
+      ],
+      "applications": [
+        "Near-Infrared Imaging & Security Inks",
+        "Planar Solar Concentrators"
+      ],
+      "related_projects": ["project-nanosheets"],
+      "related_publications": ["pub-2013-ja310587c", "pub-2024-adma-202409898"],
+      "related_collaborators": ["collab-ornl-microscopy"],
+      "milestones": [
+        "Established liquid sorting pipeline for layered silicates",
+        "Demonstrated robust NIR luminescence in exfoliated monolayer sheets"
+      ],
+      "logo_url": "",
+      "research_theme": "2D Materials"
     },
     {
       "id": "grant-doe-2022",
       "title": "DOE Office of Basic Energy Sciences: Novel Thin-Film Materials for Energy Applications",
       "agency": "Department of Energy (DOE)",
-      "grantNumber": "DE-SCXXXXX",
+      "grantNumber": "DE-SC0008065",
       "amount": "$600,000",
       "duration": "2022 - 2025",
-      "status": "Active",
-      "principalInvestigator": "Dr. Tina Salguero"
+      "status": "Completed",
+      "principalInvestigator": "Dr. Tina Salguero",
+      "award_year": "2022",
+      "summary": "Synthesis and microelectronic characterization of quasi-one-dimensional van der Waals crystals for low-noise microelectronic interconnects and threshold switching devices.",
+      "scientific_impact": "Discovered the stability limits of charge-density-wave sliding currents and developed room-temperature current-controlled oscillators.",
+      "techniques": [
+        "Solid-State & Chemical Vapor Transport Synthesis",
+        "Low-Frequency Electronic Noise Spectroscopy",
+        "In Situ Heating & Biasing STEM"
+      ],
+      "applications": [
+        "Room-Temperature Collective Current Oscillators",
+        "Radiation-Immune Space Electronics",
+        "Ultra-Scaled On-Chip Interconnects"
+      ],
+      "related_projects": ["project-photocatalysis"],
+      "related_publications": [
+        "pub-2016-nnano-2016-108",
+        "pub-2017-nanolett-6b04334",
+        "pub-2022-mattod-03015",
+        "pub-2025-acsnano-5c13312"
+      ],
+      "related_collaborators": ["collab-gt-electronics"],
+      "milestones": [
+        "Demonstrated first stable current-controlled CDW oscillator at room temperature",
+        "Published comprehensive Materials Today review on 1D van der Waals crystals",
+        "Observed real-time structural transformation of TaSe3 nanoribbons via in situ heating STEM"
+      ],
+      "logo_url": "",
+      "research_theme": "Chalcogenides"
     }
   ]
 }
