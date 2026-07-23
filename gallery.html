@@ -3,12 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Visual record of the Salguero Group: group portraits, experimental setups, microscopy images, and lab life at UGA.">
   <title>Lab Gallery | Salguero Research Group</title>
+  <meta name="description" content="Explore the visual story of the Salguero Research Group: high-resolution electron microscopy, crystal synthesis, lab facilities, and group events at UGA.">
+  <link rel="canonical" href="https://robbenmathew91-oss.github.io/Dr-Tina-website/gallery.html">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Lab Gallery | Salguero Research Group">
+  <meta property="og:description" content="Explore the visual story of the Salguero Research Group: high-resolution electron microscopy, crystal synthesis, lab facilities, and group events at UGA.">
+  <meta property="og:url" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/gallery.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/nsf_microscope_slide1.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lab Gallery | Salguero Research Group">
+  <meta name="twitter:description" content="Explore the visual story of the Salguero Research Group: high-resolution electron microscopy, crystal synthesis, lab facilities, and group events at UGA.">
+  <meta name="twitter:image" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/nsf_microscope_slide1.jpg">
+
   <link rel="stylesheet" href="styles/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    .gallery-stat-card {
+      background: var(--bg-offset);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .gallery-stat-val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+      font-family: var(--font-heading);
+    }
+    .gallery-stat-label {
+      font-size: 0.8rem;
+      color: var(--light-gray);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .zoom-in {
+      transform: scale(1.5);
+      cursor: zoom-out !important;
+    }
+    @media (max-width: 900px) {
+      .theme-cols-2 {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -18,21 +66,103 @@
     <h1>Lab Gallery</h1>
     <p class="hero-tagline">A visual record of our research, equipment, and lab culture.</p>
 
-    <!-- Gallery Filter buttons -->
-    <section class="gallery-filter-buttons">
-      <button class="filter-btn active" id="btn-all" onclick="filterGallery('all')">All Photos</button>
-      <button class="filter-btn" id="btn-group" onclick="filterGallery('Group')">Group Profiles</button>
-      <button class="filter-btn" id="btn-research" onclick="filterGallery('Research')">Research & STEM</button>
-      <button class="filter-btn" id="btn-lab-life" onclick="filterGallery('Lab Life')">Lab Life</button>
+    <!-- Gallery Dashboard Stats -->
+    <section class="mb-8" style="margin-top: 30px;" aria-label="Gallery Metrics Dashboard">
+      <div class="grid-cols-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px;" id="gallery-dashboard-target">
+        <!-- Stats dynamically loaded -->
+      </div>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <section class="search-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; margin-top: 30px;" aria-label="Search and Filter Controls">
+      <div style="display: flex; gap: 15px; width: 100%; flex-wrap: wrap;">
+        <input type="text" id="search-box" class="search-input" placeholder="Search by photo title or caption..." aria-label="Search gallery">
+        
+        <select id="sort-filter" class="filter-select" aria-label="Sort images">
+          <option value="newest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+          <option value="category">Sort: Category</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%;" class="grid-cols-2">
+        <select id="category-filter" class="filter-select" aria-label="Filter by Category">
+          <option value="all">All Categories</option>
+          <option value="Laboratory">Laboratory</option>
+          <option value="Research">Research</option>
+          <option value="Microscopy">Microscopy</option>
+          <option value="Crystal Growth">Crystal Growth</option>
+          <option value="Instrumentation">Instrumentation</option>
+          <option value="Conferences">Conferences</option>
+          <option value="Outreach">Outreach</option>
+          <option value="Awards">Awards</option>
+          <option value="Group Photos">Group Photos</option>
+          <option value="Teaching">Teaching</option>
+        </select>
+
+        <select id="year-filter" class="filter-select" aria-label="Filter by Year">
+          <option value="all">All Years</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Active Filter Indicators -->
+    <div id="active-filters-container" class="pub-active-filters-row" aria-live="polite"></div>
+
+    <!-- Featured Top Pinned Images -->
+    <section id="featured-gallery-section" class="mb-8 hidden" style="margin-top: 30px;">
+      <h2 style="color: #B8860B; border-bottom: 2px solid #D4AF37; padding-bottom: 5px; margin-bottom: 20px;">Featured Gallery Highlights</h2>
+      <div id="featured-gallery-target" class="gallery-grid"></div>
     </section>
 
     <!-- Gallery Grid -->
-    <section class="mb-8">
+    <section class="mb-8" style="margin-top: 40px;">
+      <div style="display: flex; justify-space-between; align-items: baseline; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <h2 id="gallery-list-title" style="margin: 0; font-size: 1.5rem; flex-grow: 1;">Visual Index</h2>
+        <div id="gallery-count" class="pub-count-label">Showing 0 of 0 images</div>
+      </div>
       <div id="gallery-grid-target" class="gallery-grid">
         <p>Loading gallery images...</p>
       </div>
     </section>
+
+    <!-- Pagination Navigation -->
+    <div id="pagination-container" class="pub-pagination-bar" aria-label="Pagination Navigation"></div>
   </main>
+
+  <!-- Lightbox Viewer Modal -->
+  <div id="gallery-lightbox" class="lightbox-modal hidden" role="dialog" aria-label="Image Lightbox Viewer" aria-hidden="true" tabindex="-1">
+    <button class="lightbox-close" onclick="window.closeLightbox()" aria-label="Close Lightbox">&times;</button>
+    <button class="lightbox-prev" onclick="window.navigateLightbox(-1)" aria-label="Previous Image">&lsaquo;</button>
+    <button class="lightbox-next" onclick="window.navigateLightbox(1)" aria-label="Next Image">&rsaquo;</button>
+    
+    <div class="lightbox-content">
+      <div class="lightbox-image-container" style="overflow: hidden; border-radius: 8px; background: #000; display: flex; align-items: center; justify-content: center; position: relative;">
+        <img id="lightbox-img" src="" alt="" style="max-height: 70vh; max-width: 85vw; object-fit: contain; cursor: zoom-in; transition: transform 0.25s ease;" onclick="window.zoomLightbox()" />
+      </div>
+      <div class="lightbox-caption-container" style="color: #fff; background: rgba(0,0,0,0.88); padding: 20px; border-radius: 8px; margin-top: 15px; max-width: 600px; text-align: left; border: 1px solid rgba(255,255,255,0.15);">
+        <h3 id="lightbox-title" style="margin: 0 0 5px 0; color: #D4AF37; font-family: var(--font-heading); font-size: 1.15rem;"></h3>
+        <p id="lightbox-desc" style="font-size: 0.9rem; margin-bottom: 8px; line-height: 1.4; color: #eee;"></p>
+        <div style="font-size: 0.8rem; opacity: 0.8; display: flex; gap: 15px; flex-wrap: wrap; color: #ccc;">
+          <span id="lightbox-meta-category"></span>
+          <span id="lightbox-meta-date"></span>
+          <span id="lightbox-meta-photographer"></span>
+        </div>
+        <div id="lightbox-relations-container" style="margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.25); padding-top: 8px; font-size: 0.8rem;"></div>
+        
+        <!-- Future Ready Placeholder: Downloads & Social Sharing inside Lightbox -->
+        <div style="margin-top: 15px; display: flex; gap: 15px; font-size: 0.72rem; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px;">
+          <a href="#" id="lightbox-download-stub" onclick="alert('High-resolution photo download coming soon!'); return false;" style="color: #D4AF37; text-decoration: underline;">
+            Download Image
+          </a>
+          <span style="color: #666;">•</span>
+          <a href="#" onclick="alert('Social sharing is coming soon!'); return false;" style="color: #D4AF37; text-decoration: underline;">
+            Share Photo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="footer-container"></div>
 
@@ -41,46 +171,398 @@
     import { loadData } from './src/js/loader.js';
     import { validateData } from './src/js/validator.js';
     import { GalleryItem } from './src/js/components.js';
-    import { renderList, SortFunctions } from './src/js/renderer.js';
 
     let allPhotos = [];
+    let filteredPhotos = [];
+    let currentPage = 1;
+    let pageSize = 12;
 
-    // Bind filter function to window so it is accessible by inline buttons
-    window.filterGallery = function(category) {
-      // Toggle button active states
-      const buttons = document.querySelectorAll('.filter-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-
-      const currentBtnId = `btn-${category.toLowerCase().replace(/\s+/g, '-')}`;
-      const activeBtn = document.getElementById(currentBtnId);
-      if (activeBtn) {
-        activeBtn.classList.add('active');
-      }
-
-      // Filter photos
-      const filtered = category === 'all' 
-        ? allPhotos 
-        : allPhotos.filter(photo => photo.category === category);
-
-      renderList({
-        selector: '#gallery-grid-target',
-        items: filtered,
-        componentFn: GalleryItem,
-        sortFn: SortFunctions.datesDescending,
-        emptyMessage: 'No photos in this category yet.'
-      });
-    };
+    let allResearch = [];
+    let allProjects = [];
+    let allPublications = [];
+    let allNews = [];
+    let allPeople = [];
 
     async function initGallery() {
-      const dataObj = await loadData('gallery.json');
-      allPhotos = dataObj.gallery || [];
+      // Load all data feeds asynchronously
+      const [galleryData, researchData, projectsData, publicationsData, newsData, studentsData, alumniData] = await Promise.all([
+        loadData('gallery.json'),
+        loadData('research.json'),
+        loadData('projects.json'),
+        loadData('publications.json'),
+        loadData('news.json'),
+        loadData('students.json'),
+        loadData('alumni.json')
+      ]);
+
+      allPhotos = galleryData.gallery || [];
+      allResearch = researchData.themes || [];
+      allProjects = projectsData.projects || [];
+      allPublications = publicationsData.publications || [];
+      allNews = newsData.news || [];
+      allPeople = [
+        ...(studentsData.students || []).map(s => ({ id: s.id, name: s.name })),
+        ...(alumniData.alumni || []).map(a => ({ id: a.id, name: a.name })),
+        { id: "casey-rowe", name: "Casey Rowe" }
+      ];
 
       // Validate
       validateData('gallery', allPhotos);
 
-      // Render all photos initially
-      window.filterGallery('all');
+      // Populate filters
+      populateFilterDropdowns(allPhotos);
+
+      // Add listeners
+      document.getElementById('search-box').addEventListener('input', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('sort-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('category-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('year-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+
+      // Initial Render
+      applyFilters();
+      renderDashboard();
+
+      // Set up key navigation for lightbox
+      document.addEventListener('keydown', (e) => {
+        const lightbox = document.getElementById('gallery-lightbox');
+        if (lightbox.classList.contains('hidden')) return;
+
+        if (e.key === 'Escape') window.closeLightbox();
+        if (e.key === 'ArrowLeft') window.navigateLightbox(-1);
+        if (e.key === 'ArrowRight') window.navigateLightbox(1);
+      });
     }
+
+    function populateFilterDropdowns(photos) {
+      const yearSelect = document.getElementById('year-filter');
+      const years = new Set();
+
+      photos.forEach(p => {
+        if (p.year) years.add(p.year);
+      });
+
+      Array.from(years).sort((a,b) => b.localeCompare(a)).forEach(y => {
+        yearSelect.add(new Option(y, y));
+      });
+    }
+
+    function renderDashboard() {
+      const target = document.getElementById('gallery-dashboard-target');
+      
+      const totalCount = allPhotos.length;
+      const uniqueCats = new Set(allPhotos.map(p => p.category)).size;
+      const researchCount = allPhotos.filter(p => p.category === 'Research' || p.category === 'Microscopy').length;
+      const outreachCount = allPhotos.filter(p => p.category === 'Outreach').length;
+      const confCount = allPhotos.filter(p => p.category === 'Conferences').length;
+      const awardsCount = allPhotos.filter(p => p.category === 'Awards').length;
+
+      target.innerHTML = `
+        <div class="gallery-stat-card">
+          <div class="gallery-stat-val">${totalCount}</div>
+          <div class="gallery-stat-label">Total Images</div>
+        </div>
+        <div class="gallery-stat-card">
+          <div class="gallery-stat-val">${uniqueCats}</div>
+          <div class="gallery-stat-label">Categories</div>
+        </div>
+        <div class="gallery-stat-card">
+          <div class="gallery-stat-val">${researchCount}</div>
+          <div class="gallery-stat-label">Research/Micro</div>
+        </div>
+        <div class="gallery-stat-card">
+          <div class="gallery-stat-val">${outreachCount}</div>
+          <div class="gallery-stat-label">Outreach</div>
+        </div>
+        <div class="gallery-stat-card">
+          <div class="gallery-stat-val">${confCount}</div>
+          <div class="gallery-stat-label">Conferences</div>
+        </div>
+        <div class="gallery-stat-card">
+          <div class="gallery-stat-val">${awardsCount}</div>
+          <div class="gallery-stat-label">Awards</div>
+        </div>
+      `;
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('search-box').value.toLowerCase().trim();
+      const category = document.getElementById('category-filter').value;
+      const year = document.getElementById('year-filter').value;
+      const sortVal = document.getElementById('sort-filter').value;
+
+      // Filter
+      filteredPhotos = allPhotos.filter(p => {
+        const matchesQuery = !query ||
+          p.caption.toLowerCase().includes(query) ||
+          (p.title && p.title.toLowerCase().includes(query));
+
+        const matchesCategory = category === 'all' || p.category === category;
+        const matchesYear = year === 'all' || p.year === year;
+
+        return matchesQuery && matchesCategory && matchesYear;
+      });
+
+      // Sort
+      let sortFn;
+      if (sortVal === 'newest') {
+        sortFn = (a, b) => b.date.localeCompare(a.date) || a.caption.localeCompare(b.caption);
+      } else if (sortVal === 'oldest') {
+        sortFn = (a, b) => a.date.localeCompare(b.date) || a.caption.localeCompare(b.caption);
+      } else if (sortVal === 'category') {
+        sortFn = (a, b) => a.category.localeCompare(b.category) || b.date.localeCompare(a.date);
+      }
+
+      filteredPhotos.sort(sortFn);
+
+      // Render Active Pills
+      renderActivePills({ query, category, year });
+
+      // Render Featured (only if no active search/filters)
+      const isFilterActive = query || category !== 'all' || year !== 'all';
+      renderFeaturedSection(isFilterActive);
+
+      // Render Cards
+      renderPaginatedGallery();
+    }
+
+    function renderFeaturedSection(isFilterActive) {
+      const section = document.getElementById('featured-gallery-section');
+      const target = document.getElementById('featured-gallery-target');
+
+      if (isFilterActive) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      const featured = allPhotos.filter(p => p.featured);
+      if (featured.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      section.classList.remove('hidden');
+      target.innerHTML = featured.map(p => GalleryItem(p)).join('');
+    }
+
+    function renderActivePills({ query, category, year }) {
+      const container = document.getElementById('active-filters-container');
+      const pills = [];
+
+      if (query) {
+        pills.push(`
+          <span class="filter-pill">
+            Search: "${query}"
+            <button class="filter-pill-remove" onclick="window.clearFilter('search')" aria-label="Remove search filter">×</button>
+          </span>
+        `);
+      }
+      if (category !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Category: ${category}
+            <button class="filter-pill-remove" onclick="window.clearFilter('category')" aria-label="Remove category filter">×</button>
+          </span>
+        `);
+      }
+      if (year !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Year: ${year}
+            <button class="filter-pill-remove" onclick="window.clearFilter('year')" aria-label="Remove year filter">×</button>
+          </span>
+        `);
+      }
+
+      if (pills.length > 0) {
+        container.innerHTML = `
+          ${pills.join('')}
+          <button class="btn btn-text btn-sm" onclick="window.clearAllFilters()" style="color: var(--primary); text-decoration: underline; cursor: pointer; padding: 0; font-weight: 600;">
+            Clear All
+          </button>
+        `;
+      } else {
+        container.innerHTML = '';
+      }
+    }
+
+    function renderPaginatedGallery() {
+      const target = document.getElementById('gallery-grid-target');
+      const countLabel = document.getElementById('gallery-count');
+
+      countLabel.textContent = `Showing ${filteredPhotos.length} of ${allPhotos.length} images`;
+
+      if (filteredPhotos.length === 0) {
+        target.innerHTML = `
+          <div class="empty-state" style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border); border-radius: 8px; background: var(--bg-offset);">
+            <p style="font-size: 1.1rem; color: var(--light-gray); margin-bottom: 10px;">No images found matching your criteria.</p>
+            <button class="btn btn-secondary btn-sm" onclick="window.clearAllFilters()">Clear All Filters</button>
+          </div>
+        `;
+        document.getElementById('pagination-container').innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(filteredPhotos.length / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, filteredPhotos.length);
+      const pageItems = filteredPhotos.slice(startIndex, endIndex);
+
+      target.innerHTML = pageItems.map(p => GalleryItem(p)).join('');
+
+      renderPaginationBar(totalPages);
+    }
+
+    function renderPaginationBar(totalPages) {
+      const container = document.getElementById('pagination-container');
+      
+      let pageButtons = '';
+      for (let i = 1; i <= totalPages; i++) {
+        pageButtons += `
+          <button class="pub-page-btn ${i === currentPage ? 'active-page' : ''}" onclick="window.setPage(${i})" aria-label="Page ${i}" ${i === currentPage ? 'aria-current="page"' : ''}>
+            ${i}
+          </button>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="pub-count-label">
+          Showing ${Math.min((currentPage - 1) * pageSize + 1, filteredPhotos.length)}–${Math.min(currentPage * pageSize, filteredPhotos.length)} of ${filteredPhotos.length}
+        </div>
+        
+        <div class="pub-page-controls">
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous Page">
+            &lt; Prev
+          </button>
+          ${pageButtons}
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next Page">
+            Next &gt;
+          </button>
+        </div>
+
+        <div>
+          <span style="font-size: 0.85rem; color: var(--light-gray); margin-right: 8px;">Show:</span>
+          <select class="pub-pagesize-select" onchange="window.setPageSize(this.value)" aria-label="Images per page">
+            <option value="12" ${pageSize === 12 ? 'selected' : ''}>12</option>
+            <option value="24" ${pageSize === 24 ? 'selected' : ''}>24</option>
+            <option value="48" ${pageSize === 48 ? 'selected' : ''}>48</option>
+          </select>
+        </div>
+      `;
+    }
+
+    // Lightbox Functionality
+    let currentLightboxPhotoId = null;
+
+    window.openLightbox = function(photoId) {
+      currentLightboxPhotoId = photoId;
+      const photo = allPhotos.find(p => p.id === photoId);
+      if (!photo) return;
+
+      const lightbox = document.getElementById('gallery-lightbox');
+      const img = document.getElementById('lightbox-img');
+      const title = document.getElementById('lightbox-title');
+      const desc = document.getElementById('lightbox-desc');
+      const cat = document.getElementById('lightbox-meta-category');
+      const date = document.getElementById('lightbox-meta-date');
+      const photoCredit = document.getElementById('lightbox-meta-photographer');
+      const relationsContainer = document.getElementById('lightbox-relations-container');
+
+      img.src = photo.url;
+      img.alt = photo.caption;
+      img.classList.remove('zoom-in'); // Reset zoom
+
+      title.textContent = photo.title || 'Untitled';
+      desc.textContent = photo.caption;
+      cat.innerHTML = `<strong>Category:</strong> ${photo.category}`;
+      date.innerHTML = `<strong>Date:</strong> ${new Date(photo.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+      photoCredit.innerHTML = photo.photographer ? `<strong>Photographer:</strong> ${photo.photographer}` : '';
+
+      // Resolve and render relationships inside Lightbox
+      const relatedThemes = allResearch.filter(t => (photo.related_themes || []).includes(t.id));
+      const relatedProjs = allProjects.filter(p => (photo.related_projects || []).includes(p.id));
+      const relatedPubs = allPublications.filter(pub => (photo.related_publications || []).includes(pub.id));
+      const relatedNewsItems = allNews.filter(n => (photo.related_news || []).includes(n.id));
+      const relatedPeop = allPeople.filter(p => (photo.related_people || []).includes(p.id));
+
+      let relationsHtml = '';
+      if (relatedThemes.length > 0) {
+        relationsHtml += `<div style="margin-bottom: 5px;"><strong>Themes:</strong> ${relatedThemes.map(t => t.title).join(', ')}</div>`;
+      }
+      if (relatedProjs.length > 0) {
+        relationsHtml += `<div style="margin-bottom: 5px;"><strong>Projects:</strong> ${relatedProjs.map(p => p.title).join(', ')}</div>`;
+      }
+      if (relatedPubs.length > 0) {
+        relationsHtml += `<div style="margin-bottom: 5px;"><strong>Publications:</strong> ${relatedPubs.map(pub => `"${pub.title}"`).join(', ')}</div>`;
+      }
+      if (relatedNewsItems.length > 0) {
+        relationsHtml += `<div style="margin-bottom: 5px;"><strong>News:</strong> ${relatedNewsItems.map(n => n.title).join(', ')}</div>`;
+      }
+      if (relatedPeop.length > 0) {
+        relationsHtml += `<div style="margin-bottom: 5px;"><strong>People:</strong> ${relatedPeop.map(p => p.name).join(', ')}</div>`;
+      }
+
+      relationsContainer.innerHTML = relationsHtml ? `<strong>Scientific Mappings:</strong><div style="margin-top: 5px; opacity: 0.95;">${relationsHtml}</div>` : '';
+
+      lightbox.classList.remove('hidden');
+      lightbox.setAttribute('aria-hidden', 'false');
+      lightbox.focus();
+    };
+
+    window.closeLightbox = function() {
+      const lightbox = document.getElementById('gallery-lightbox');
+      lightbox.classList.add('hidden');
+      lightbox.setAttribute('aria-hidden', 'true');
+      currentLightboxPhotoId = null;
+    };
+
+    window.navigateLightbox = function(direction) {
+      if (!currentLightboxPhotoId) return;
+      const activeList = filteredPhotos;
+      const currentIndex = activeList.findIndex(p => p.id === currentLightboxPhotoId);
+      if (currentIndex === -1) return;
+
+      let nextIndex = currentIndex + direction;
+      if (nextIndex < 0) nextIndex = activeList.length - 1;
+      if (nextIndex >= activeList.length) nextIndex = 0;
+
+      window.openLightbox(activeList[nextIndex].id);
+    };
+
+    window.zoomLightbox = function() {
+      const img = document.getElementById('lightbox-img');
+      img.classList.toggle('zoom-in');
+    };
+
+    // Global filters and pagination bindings
+    window.setPage = function(pageNumber) {
+      currentPage = pageNumber;
+      applyFilters();
+      document.getElementById('gallery-list-title').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    window.setPageSize = function(size) {
+      pageSize = parseInt(size, 10);
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearFilter = function(name) {
+      if (name === 'search') document.getElementById('search-box').value = '';
+      if (name === 'category') document.getElementById('category-filter').value = 'all';
+      if (name === 'year') document.getElementById('year-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearAllFilters = function() {
+      document.getElementById('search-box').value = '';
+      document.getElementById('category-filter').value = 'all';
+      document.getElementById('year-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
 
     initGallery();
   </script>

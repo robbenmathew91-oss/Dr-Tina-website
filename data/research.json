@@ -1,0 +1,84 @@
+{
+  "$schema": "./schemas/research.schema.json",
+  "themes": [
+    {
+      "id": "theme-synthesis-exfoliation",
+      "title": "Low-Dimensional Inorganic Synthesis & Exfoliation",
+      "image": "assets/images/placeholder.svg",
+      "scientific_overview": "This theme focuses on the design, solid-state or hydrothermal synthesis, and soft-chemical liquid exfoliation of layered and quasi-one-dimensional crystals. By exfoliating bulk crystals into single-layer nanosheets or single-chain nanoribbons, we explore quantum confinement and structural features at the atomic limit.",
+      "why_it_matters": "Exfoliated low-dimensional crystals serve as fundamental building blocks for constructing artificial heterostructures, advanced optical coatings, and nanoscale electronic devices that are otherwise impossible to fabricate through conventional thin-film deposition.",
+      "current_challenges": "Key challenges include achieving high-yield, defect-free exfoliation without chemical degradation and precisely sorting exfoliated layers by thickness and length.",
+      "experimental_techniques": [
+        "Solid-State & Hydrothermal Synthesis",
+        "Liquid-Phase Chemical Exfoliation",
+        "Aberration-Corrected STEM Imaging",
+        "Atomic Force Microscopy (AFM)"
+      ],
+      "applications": [
+        "Near-Infrared Imaging & Security Inks",
+        "Planar Solar Concentrators",
+        "Quantum Confined Electronics"
+      ],
+      "related_projects": ["project-nanosheets"],
+      "related_funding": ["grant-nsf-2024"],
+      "related_publications": ["pub-2013-ja310587c", "pub-2024-adma-202409898"],
+      "related_collaborators": ["collab-ornl-microscopy"]
+    },
+    {
+      "id": "theme-cdw-phase-transitions",
+      "title": "Charge-Density-Wave Devices & Phase Transitions",
+      "image": "assets/images/placeholder.svg",
+      "scientific_overview": "We investigate collective electronic phenomena, such as charge-density-wave (CDW) states, in quasi-one-dimensional Weyl semimetals (e.g., TaSe3, (TaSe4)2I) and quasi-two-dimensional transition-metal dichalcogenides (e.g., 1T-TaS2). This includes fabricating vertical and planar devices to control CDW phase sliding electrically at room temperature.",
+      "why_it_matters": "CDW phase-transition devices exhibit abrupt resistance switches that can operate at gigahertz frequencies. They are prime candidates for low-power microelectronics, radiation-immune electronics, and room-temperature oscillatory logic networks.",
+      "current_challenges": "Mitigating low-frequency electronic noise and stabilizing CDW phase coherence in devices smaller than 10 nanometers.",
+      "experimental_techniques": [
+        "Low-Frequency Electronic Noise Spectroscopy",
+        "Electrical Gating & Transport Measurements",
+        "In Situ Heating & Biasing STEM",
+        "Photolithographic Device Fabrication"
+      ],
+      "applications": [
+        "Room-Temperature Current-Controlled Oscillators",
+        "Radiation-Hard Space Electronics",
+        "Neuromorphic Computing Systems"
+      ],
+      "related_projects": ["project-photocatalysis"],
+      "related_funding": ["grant-doe-2022"],
+      "related_publications": ["pub-2016-nnano-2016-108", "pub-2017-nanolett-6b04334", "pub-2025-acsnano-5c13312"],
+      "related_collaborators": ["collab-gt-electronics"]
+    }
+  ],
+  "impact": {
+    "discoveries": "Pioneered the soft-chemical exfoliation of the ancient silicate pigment Egyptian blue into stable, single-layer near-infrared luminescent nanosheets.",
+    "societal": "Paving the way for ultra-low-power computing paradigms that address the exponential carbon footprint of modern AI data centers.",
+    "industrial": "Collaborating with national laboratories and microelectronics developers to prototype Weyl-semimetal-based interconnects that resist electromigration.",
+    "future": "Synthesizing novel mixed-dimensional superlattices and exploring topological edge states for room-temperature topological quantum computing."
+  },
+  "timeline": [
+    {
+      "year": "2013",
+      "title": "Nanoscience of Egyptian Blue",
+      "description": "Reported the first soft-chemical exfoliation of CaCuSi4O10 into monolayer silicate nanosheets, demonstrating NIR luminescence."
+    },
+    {
+      "year": "2016",
+      "title": "Room-Temperature CDW Oscillator",
+      "description": "Co-developed an integrated 1T-TaS2/h-BN/graphene device demonstrating stable CDW current oscillations at room temperature."
+    },
+    {
+      "year": "2022",
+      "title": "Quasi-1D van der Waals Materials Review",
+      "description": "Published a definitive overview in Materials Today establishing quasi-1D nanowires as a major new quantum materials research field."
+    },
+    {
+      "year": "2024",
+      "title": "1D Atomic Chain Limit",
+      "description": "Demonstrated the physical limit of liquid exfoliation, isolating individual atomic chains of MoI3 and Ta2Se8I."
+    },
+    {
+      "year": "2025",
+      "title": "In Situ STEM Dynamics",
+      "description": "Observed real-time thermally-driven phase transformations of TaSe3 nanoribbons using in situ heating electron microscopy."
+    }
+  ]
+}

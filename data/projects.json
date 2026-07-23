@@ -9,17 +9,103 @@
       "detailedDescription": "This project aims to study the basic chemical physics of 2D exfoliation. We are synthesizing new parent layered materials and using soft-chemical routes to produce stable colloid suspensions of single-layer sheets. We are developing layer-by-layer deposition techniques to build artificial superlattices with tailored magnetic and optical properties.",
       "tags": ["Nanosheets", "Thin Films", "Inorganic Synthesis"],
       "image": "assets/images/placeholder.svg",
-      "funding": "National Science Foundation (NSF)"
+      "funding": "National Science Foundation (NSF)",
+      "research_theme": "2D Materials",
+      "scientific_motivation": "How do structural confinement and artificial layering in nanosheet heterostructures influence optical bandgaps and magnetic super-exchange interactions?",
+      "research_objectives": [
+        "Synthesize high-purity parent layered silicates",
+        "Establish density-gradient centifugational sorting parameters",
+        "Construct artificial superlattices via layer-by-layer robotic deposition"
+      ],
+      "techniques": [
+        "Liquid-Phase Exfoliation",
+        "Aberration-Corrected STEM",
+        "Atomic Force Microscopy"
+      ],
+      "expected_outcomes": "Stable colloidal suspensions of monolayer nanosheets and artificial superlattice films with near-infrared luminescent response.",
+      "applications": [
+        "NIR security ink",
+        "Planar solar concentrators",
+        "Thin-film transistors"
+      ],
+      "timeline": "2024 - 2027",
+      "project_leads": ["Jose Garcia", "Athar Yeganeh Neysiani"],
+      "related_grants": ["grant-nsf-2024"],
+      "related_publications": ["pub-2013-ja310587c", "pub-2024-adma-202409898"],
+      "related_collaborators": ["collab-ornl-microscopy"],
+      "milestones": [
+        {
+          "year": "2024",
+          "title": "Synthesized parent calcium copper tetrasilicate crystals"
+        },
+        {
+          "year": "2025",
+          "title": "Completed robot assembly calibration for LBL deposition"
+        }
+      ],
+      "workflow": {
+        "question": "Can ancient pigments be exfoliated into high-luminescence 2D layers?",
+        "methods": "Liquid-phase soft-chemical exfoliation using organic solvents.",
+        "materials": "Bulk CaCuSi4O10 (Egyptian blue) parent crystals.",
+        "characterization": "Atomic Force Microscopy for layer height and STEM for lattice spacing.",
+        "results": "Freestanding monolayers with highly stable near-infrared photoluminescence.",
+        "applications": "Planar solar concentrators and high-security anti-counterfeiting ink."
+      }
     },
     {
       "id": "project-photocatalysis",
       "title": "New Photocatalytic Systems for Solar Energy Conversion",
-      "status": "Active",
+      "status": "Completed",
       "summary": "Designing high-surface-area transition metal oxide materials optimized for hydrogen generation and solar light harvesting.",
       "detailedDescription": "This research investigates how structural tuning and doping of metal oxides influences charge-carrier lifetime and catalytic efficiency. We are integrating exfoliated sheets into catalyst platforms to maximize accessible surface area and active catalytic sites.",
       "tags": ["Photocatalysis", "Energy", "Metal Oxides"],
       "image": "assets/images/placeholder.svg",
-      "funding": "Department of Energy (DOE)"
+      "funding": "Department of Energy (DOE)",
+      "research_theme": "Chalcogenides",
+      "scientific_motivation": "Can we stabilize threshold-switching currents and collective charge-density-wave oscillations at room temperature using quasi-1D van der Waals nanowire interconnects?",
+      "research_objectives": [
+        "Grow high-quality 1T-TaS2 and TaSe3 crystals via chemical vapor transport",
+        "Characterize low-frequency electronic noise spectra across phase transitions",
+        "In situ heat and bias nanoribbons to verify structural changes"
+      ],
+      "techniques": [
+        "Chemical Vapor Transport",
+        "Low-Frequency Noise Spectroscopy",
+        "In Situ Biasing STEM"
+      ],
+      "expected_outcomes": "Demonstration of a stable room-temperature current-controlled oscillator and topological interconnect nanowires.",
+      "applications": [
+        "Neuromorphic hardware",
+        "Radiation-hard space electronics",
+        "Downscaled local interconnects"
+      ],
+      "timeline": "2022 - 2025",
+      "project_leads": ["Clayton Mantz", "Ali Ahmed"],
+      "related_grants": ["grant-doe-2022"],
+      "related_publications": ["pub-2016-nnano-2016-108", "pub-2017-nanolett-6b04334", "pub-2025-acsnano-5c13312"],
+      "related_collaborators": ["collab-gt-electronics"],
+      "milestones": [
+        {
+          "year": "2023",
+          "title": "Fabricated integrated 1T-TaS2/h-BN/graphene devices"
+        },
+        {
+          "year": "2024",
+          "title": "Published noise spectroscopy analysis in Nano Letters"
+        },
+        {
+          "year": "2025",
+          "title": "Observed real-time thermal phase stability via STEM"
+        }
+      ],
+      "workflow": {
+        "question": "Can CDW transitions be stabilized at room temperature in low-dimensional devices?",
+        "methods": "Device integration using graphene gates on hexagonal boron nitride.",
+        "materials": "Thin-film 1T-TaS2 and quasi-1D TaSe3 nanowires.",
+        "characterization": "Electronic noise spectroscopy and transport measurements.",
+        "results": "Abrupt current switching and room temperature oscillatory behavior.",
+        "applications": "Oscillatory logic gates and radiation-hard microelectronics."
+      }
     }
   ]
 }

@@ -20,7 +20,7 @@
           },
           "status": {
             "type": "string",
-            "enum": ["Active", "Completed"],
+            "enum": ["Planning", "Active", "Completed"],
             "description": "Current status of the project"
           },
           "summary": {
@@ -43,6 +43,80 @@
           "funding": {
             "type": "string",
             "description": "Sponsor or agency details supporting the research"
+          },
+          "research_theme": {
+            "type": "string",
+            "description": "Primary research theme (e.g. 2D Materials, Chalcogenides, Catalysis)"
+          },
+          "scientific_motivation": {
+            "type": "string",
+            "description": "Scientific question or motivation driving this project"
+          },
+          "research_objectives": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Key target objectives"
+          },
+          "techniques": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Experimental techniques employed"
+          },
+          "expected_outcomes": {
+            "type": "string",
+            "description": "Expected scientific results"
+          },
+          "applications": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Applications of the research outcomes"
+          },
+          "timeline": {
+            "type": "string",
+            "description": "Project duration dates (e.g. 2024 - 2027)"
+          },
+          "project_leads": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Lab members leading this project"
+          },
+          "related_grants": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Linked grant IDs"
+          },
+          "related_publications": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Linked publication IDs"
+          },
+          "related_collaborators": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Linked collaborator IDs"
+          },
+          "milestones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["year", "title"],
+              "properties": {
+                "year": { "type": "string" },
+                "title": { "type": "string" }
+              }
+            }
+          },
+          "workflow": {
+            "type": "object",
+            "required": ["question", "methods", "materials", "characterization", "results", "applications"],
+            "properties": {
+              "question": { "type": "string" },
+              "methods": { "type": "string" },
+              "materials": { "type": "string" },
+              "characterization": { "type": "string" },
+              "results": { "type": "string" },
+              "applications": { "type": "string" }
+            }
           }
         }
       }

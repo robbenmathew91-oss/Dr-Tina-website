@@ -1,32 +1,291 @@
 {
   "$schema": "./schemas/faculty.schema.json",
-  "name": "Dr. Tina Salguero",
-  "title": "Associate Professor / Principal Investigator",
+  "name": "Dr. Tina T. Salguero",
+  "title": "Associate Professor & Principal Investigator",
   "department": "Department of Chemistry",
   "institution": "University of Georgia",
-  "office": "Chemistry Building, Room 302",
-  "phone": "(706) 542-1982",
+  "office": "iSTEM-2, Room 2256 (Lab: iSTEM-2, Room 2247)",
+  "phone": "(706) 542-6376",
   "email": "salguero@uga.edu",
   "photo": "assets/images/tina_salguero.jpg",
-  "googleScholar": "https://scholar.google.com/citations?user=ExampleID",
-  "orcid": "https://orcid.org/0000-0002-1234-5678",
-  "biography": "Dr. Tina Salguero is an Associate Professor of Chemistry at the University of Georgia. Her research focuses on materials chemistry, synthesis, and characterization of layered materials, nanosheets, and inorganic compounds.",
+  "googleScholar": "https://scholar.google.com/citations?user=iLQHX7cAAAAJ",
+  "orcid": "https://orcid.org/0000-0001-9396-3583",
+  "biography": "Dr. Tina T. Salguero is an Associate Professor of Chemistry, Associate Department Head, Undergraduate Coordinator, and Academic Director of Georgia Electron Microscopy (GEM) at the University of Georgia.",
+  "summary": [
+    "Dr. Tina T. Salguero leads an interdisciplinary research laboratory at the University of Georgia focused on synthetic materials chemistry, low-dimensional functional nanostructures, and low-voltage electron microscopy. Her scientific mission centers on discovering, exfoliating, and characterizing novel layered inorganic solids and quasi-one-dimensional van der Waals materials for next-generation electronic, energy, and quantum technologies.",
+    "Following her undergraduate studies at Columbia University (B.A. summa cum laude, 1997) and doctoral training at Caltech (Ph.D., 2003) under 2005 Nobel Laureate Prof. Robert H. Grubbs, Dr. Salguero held a Damon Runyon Postdoctoral Fellowship at UC Santa Barbara and conducted industrial materials energy research at HRL Laboratories before joining the UGA faculty in 2010.",
+    "As Academic Director of the Georgia Electron Microscopy (GEM) core facility and co-PI on regional NSF quantum traineeships, Dr. Salguero integrates rigorous chemical synthesis with state-of-the-art electron imaging to mentor graduate and undergraduate researchers across chemistry, physics, and materials engineering."
+  ],
+  "quickFacts": {
+    "yearsAtUGA": "16+",
+    "activeResearchThemes": 4,
+    "activeGrants": 2,
+    "currentLabMembers": 3,
+    "totalPublications": "80+",
+    "totalCitations": "2,200+",
+    "hIndex": "25+",
+    "metricsDisclaimer": "Research metrics are based on publicly available academic profiles and may change over time."
+  },
+  "researchVision": {
+    "philosophy": "Our scientific philosophy bridges solid-state chemical synthesis, soft-chemical exfoliation, and high-resolution electron spectroscopy to understand how atomic-scale confinement and anisotropy dictate macroscopic electronic, optical, and thermal behaviors.",
+    "longTermVision": "To establish quasi-1D van der Waals nanoribbons and atomic-thin dielectric ceramic sheets as foundational building blocks for low-power microelectronics, quantum interconnects, and high-density energy storage.",
+    "whyItMatters": "As modern microelectronics approach physical scaling limits, conventional silicon architectures require novel quantum materials capable of room-temperature phase switching, radiation-immune performance, and extreme current-carrying capacity.",
+    "interdisciplinaryApproach": "We combine synthetic inorganic chemistry with low-voltage electron microscopy (STEM/EELS), low-frequency noise spectroscopy, device physics, machine-learning material discovery, and cultural heritage materials analysis.",
+    "futureDirections": "Expanding machine-learning-driven discovery of 1D van der Waals compounds, developing solution-processed quantum composite inks, and advancing low-kV electron microscopy protocols for beam-sensitive nanostructures."
+  },
+  "timeline": [
+    {
+      "year": "1997",
+      "milestone": "B.A. in Chemistry, Columbia University",
+      "category": "Education",
+      "details": "Graduated summa cum laude."
+    },
+    {
+      "year": "2003",
+      "milestone": "Ph.D. in Chemistry, California Institute of Technology (Caltech)",
+      "category": "Graduate Research",
+      "details": "Conducted doctoral research under Nobel Laureate Prof. Robert H. Grubbs on ruthenium olefin-metathesis catalysts."
+    },
+    {
+      "year": "2003 – 2005",
+      "milestone": "Damon Runyon Postdoctoral Fellow, UC Santa Barbara",
+      "category": "Postdoctoral Research",
+      "details": "Supported by the prestigious Damon Runyon Cancer Research Foundation Fellowship."
+    },
+    {
+      "year": "2005 – 2010",
+      "milestone": "Research Scientist, HRL Laboratories, LLC (Malibu, CA)",
+      "category": "Industrial Research",
+      "details": "Pioneered energy materials for metal-hydride hydrogen storage, PEM fuel cell bipolar plates, and bio-fuel cells."
+    },
+    {
+      "year": "2010",
+      "milestone": "Appointed Assistant Professor, University of Georgia",
+      "category": "Faculty Appointment",
+      "details": "Joined the Department of Chemistry as tenure-track faculty in inorganic materials chemistry."
+    },
+    {
+      "year": "2012",
+      "milestone": "DOE Early Career Research Program Award",
+      "category": "Major Grant",
+      "details": "Awarded $750,000 BES Early Career grant for Dielectric Ceramics in Nanosheet Form (first recipient in Georgia)."
+    },
+    {
+      "year": "2014",
+      "milestone": "NSF EFRI 2-DARE Co-Investigator",
+      "category": "Interdisciplinary Collaboration",
+      "details": "Co-PI on $1.8M NSF EFRI project studying switching phenomena in atomic heterostructures."
+    },
+    {
+      "year": "2019 – 2020",
+      "milestone": "PI on NSF MRI Award & Installation of Hitachi SU9000EA FE-SEM/STEM",
+      "category": "Instrumentation Leadership",
+      "details": "Awarded $997,499 NSF MRI grant to acquire Georgia's premier low-voltage electron microscope at GEM."
+    },
+    {
+      "year": "2022",
+      "milestone": "Co-PI on NSF Quantum Traineeship (NRT) & Landmark Materials Today Review",
+      "category": "Quantum Education & Vision",
+      "details": "Co-PI on $1.65M NSF NRT Quantum Networks Alliance and published landmark review defining 1D vdW materials."
+    },
+    {
+      "year": "2024",
+      "milestone": "Recipients of UGA First-Year Odyssey Teaching Award",
+      "category": "Teaching Excellence",
+      "details": "Recognized for innovative undergraduate course 'UGA at High Magnification'."
+    },
+    {
+      "year": "Present",
+      "milestone": "Associate Professor, Associate Dept. Head & Academic Director of GEM",
+      "category": "Academic Leadership",
+      "details": "Directing ongoing research in 1D/2D materials, electron microscopy, and undergraduate/graduate department programs."
+    }
+  ],
   "education": [
+    {
+      "degree": "B.A. in Chemistry",
+      "institution": "Columbia University",
+      "year": "1997",
+      "notes": "Graduated summa cum laude."
+    },
     {
       "degree": "Ph.D. in Chemistry",
       "institution": "California Institute of Technology (Caltech)",
-      "year": "2005"
+      "year": "2003",
+      "notes": "Adviser: Prof. Robert H. Grubbs (2005 Nobel Prize in Chemistry)."
     },
     {
-      "degree": "B.S. in Chemistry",
-      "institution": "Columbia University",
-      "year": "1999"
+      "degree": "Postdoctoral Fellowship",
+      "institution": "University of California, Santa Barbara",
+      "year": "2003 – 2005",
+      "notes": "Damon Runyon Cancer Research Foundation Fellow."
     }
   ],
+  "graduateAndPostdoc": {
+    "doctoral": {
+      "degree": "Ph.D. in Chemistry",
+      "institution": "California Institute of Technology (Caltech)",
+      "year": "2003",
+      "advisor": "Prof. Robert H. Grubbs (2005 Nobel Laureate in Chemistry)",
+      "focus": "Organometallic Chemistry & Olefin Metathesis Catalysis",
+      "summary": "Investigated the synthesis, reactivity, and fundamental decomposition mechanisms of ruthenium alkylidene metathesis catalysts (published under maiden name Tina M. Trnka), establishing foundational insights into catalyst stability.",
+      "nobelNotes": "Conducted doctoral dissertation research in the laboratory of Prof. Robert H. Grubbs prior to his receipt of the 2005 Nobel Prize in Chemistry for the development of the olefin metathesis method in organic synthesis."
+    },
+    "postdoctoral": {
+      "role": "Damon Runyon Postdoctoral Fellow",
+      "institution": "University of California, Santa Barbara",
+      "fellowship": "Damon Runyon Cancer Research Foundation Fellowship",
+      "summary": "Focused on bio-inspired nanomaterials, functional polymer architectures, and soft-matter interfaces, supported by a competitive national postdoctoral fellowship."
+    },
+    "industrial": {
+      "role": "Senior Research Scientist",
+      "organization": "HRL Laboratories, LLC (Malibu, CA)",
+      "focus": "Energy Materials & Electrochemical Systems",
+      "summary": "Developed complex metal-hydrides for hydrogen storage, durable hydrophilic coatings for PEM fuel cell bipolar plates, and microbial fuel cell components for commercial and defense applications."
+    }
+  },
+  "leadershipAndMentorship": {
+    "roles": [
+      "Associate Department Head, Department of Chemistry",
+      "Undergraduate Coordinator, Department of Chemistry",
+      "Academic Director, Georgia Electron Microscopy (GEM) Core Facility",
+      "Co-PI, NSF Quantum Networks Training and Research Alliance (NRT)"
+    ],
+    "mentoringPhilosophy": "We foster a collaborative, inclusive, and rigorous research environment where graduate and undergraduate students master both chemical synthesis and advanced instrumentation, empowering them for careers in academia, national laboratories, and high-tech industry.",
+    "trainingPrograms": "Co-leading the regional NSF NRT Quantum Traineeship program with UT Knoxville, training 50+ graduate students across quantum devices, materials chemistry, and network infrastructure.",
+    "outreachAndEquity": "Directs GEM's 'Electron Theater' outreach program producing open-access K-12 STEM microscopy curricula; co-authored landmark ACS Nano advocacy commentary on supporting women scientists in academic STEM."
+  },
   "researchInterests": [
-    "Inorganic Materials Synthesis",
-    "Nanosheet Chemistry and Exfoliation",
-    "Solid-State Chemistry",
-    "Energy conversion materials"
+    "Layered 2D Materials & Nanosheets",
+    "Quasi-1D van der Waals Quantum Materials",
+    "Charge-Density-Wave (CDW) Electronics",
+    "Solid-State & Hydrothermal Synthesis",
+    "Low-Voltage STEM & Low-kV EELS",
+    "Dielectric Ceramics & Energy Storage",
+    "Cultural Heritage Materials Chemistry",
+    "Machine-Learning Materials Discovery"
+  ],
+  "awards": [
+    {
+      "award": "DOE Office of Science Early Career Research Program Award",
+      "category": "National Awards",
+      "year": "2012",
+      "details": "$750,000 5-year BES award (#SC0008065) for 'Dielectric Ceramics in Nanosheet Form'—the first recipient in the State of Georgia."
+    },
+    {
+      "award": "NSF Major Research Instrumentation (MRI) Award (PI)",
+      "category": "Research Awards",
+      "year": "2019",
+      "details": "$997,499 federal grant (#1919942) for acquiring Georgia's premier Hitachi SU9000EA low-voltage FE-SEM/STEM."
+    },
+    {
+      "award": "UGA First-Year Odyssey (FYO) Teaching Award",
+      "category": "Teaching Awards",
+      "year": "2024",
+      "details": "Awarded for exceptional undergraduate instruction in the seminar course 'UGA at High Magnification'."
+    },
+    {
+      "award": "National Academy of Engineering Frontiers of Engineering (FOE) Invitee",
+      "category": "Major Honors",
+      "year": "2008, 2009",
+      "details": "Selected general participant (German-American FOE, Irvine) and committee member (China-America FOE, Beijing)."
+    },
+    {
+      "award": "Damon Runyon Cancer Research Foundation Postdoctoral Fellowship",
+      "category": "Fellowships",
+      "year": "2003",
+      "details": "National postdoctoral fellowship for bio-related chemistry research at UC Santa Barbara."
+    },
+    {
+      "award": "B.A. Summa Cum Laude",
+      "category": "Major Honors",
+      "year": "1997",
+      "details": "Highest academic distinction from Columbia University."
+    }
+  ],
+  "whyJoin": [
+    {
+      "title": "Cutting-Edge Materials Synthesis",
+      "description": "Pioneer soft-chemical exfoliation, chemical vapor transport, and hydrothermal synthesis of novel 2D nanosheets and 1D quantum nanoribbons."
+    },
+    {
+      "title": "Advanced Electron Microscopy Facilities",
+      "description": "Gain direct access and expert training on Georgia's premier low-voltage Hitachi SU9000EA FE-SEM/STEM at the GEM core facility."
+    },
+    {
+      "title": "Nationally Funded Research Programs",
+      "description": "Participate in major federal research grants funded by the National Science Foundation (NSF) and Department of Energy (DOE BES)."
+    },
+    {
+      "title": "Collaborative & Interdisciplinary Network",
+      "description": "Collaborate closely with leading device physics teams at UC Riverside, Oak Ridge National Laboratory, and regional quantum alliance networks."
+    },
+    {
+      "title": "Inclusive Graduate & Undergraduate Mentorship",
+      "description": "Experience tailored research mentorship empowering students for top careers in academia, national laboratories, and high-tech industry."
+    },
+    {
+      "title": "Interdisciplinary Quantum & Energy Frontiers",
+      "description": "Integrate synthetic chemistry with quantum network devices, low-frequency noise spectroscopy, machine learning, and heritage materials science."
+    }
+  ],
+  "professionalService": [
+    {
+      "role": "Academic Director",
+      "organization": "Georgia Electron Microscopy (GEM) Core Facility",
+      "details": "Oversees instrument acquisitions, multi-user facility operations, user training, and STEM outreach."
+    },
+    {
+      "role": "Affiliated Faculty & Advisory Group Member",
+      "organization": "UGA Center for Applied Isotope Studies (CAIS)",
+      "details": "Provides materials characterization expertise for interdisciplinary isotope and heritage science projects."
+    },
+    {
+      "role": "Associate Department Head & Undergraduate Coordinator",
+      "organization": "UGA Department of Chemistry",
+      "details": "Leads undergraduate curriculum development, student advising, and departmental administrative governance."
+    },
+    {
+      "role": "Grant Reviewer & Referee",
+      "organization": "NSF, DOE BES, ACS Publications, Nature Portfolio",
+      "details": "Serves as expert peer reviewer for federal funding agencies and top-tier materials chemistry journals."
+    }
+  ],
+  "milestones": [
+    {
+      "year": "1997",
+      "title": "Summa Cum Laude Graduate from Columbia University",
+      "description": "Earned B.A. in Chemistry with highest honors."
+    },
+    {
+      "year": "2003",
+      "title": "Ph.D. Completion at Caltech",
+      "description": "Published landmark studies on olefin metathesis catalyst decomposition mechanisms with Prof. Robert H. Grubbs."
+    },
+    {
+      "year": "2010",
+      "title": "Established Salguero Research Group at UGA",
+      "description": "Launched independent research program in inorganic materials synthesis and nanosheets."
+    },
+    {
+      "year": "2012",
+      "title": "DOE Early Career Awardee",
+      "description": "Pioneered freestanding ceramic nanosheets under DOE BES Early Career grant SC0008065."
+    },
+    {
+      "year": "2016",
+      "title": "Room-Temperature CDW Oscillator Demonstration",
+      "description": "Co-authored landmark Nature Nanotechnology paper demonstrating 1T-TaS2 CDW switches in device heterostructures."
+    },
+    {
+      "year": "2020",
+      "title": "Commissioned Hitachi SU9000EA STEM at GEM",
+      "description": "Brought state-of-the-art low-voltage electron microscopy capabilities to UGA via $1M NSF MRI grant."
+    },
+    {
+      "year": "2022",
+      "title": "Framing the 1D van der Waals Quantum Materials Field",
+      "description": "Published seminal Materials Today review defining quasi-1D nanoribbons as a major frontier in materials science."
+    }
   ]
 }

@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Research Themes Schema",
+  "type": "object",
+  "required": ["themes", "impact", "timeline"],
+  "properties": {
+    "themes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "image",
+          "scientific_overview",
+          "why_it_matters",
+          "current_challenges",
+          "experimental_techniques",
+          "applications",
+          "related_projects",
+          "related_funding",
+          "related_publications",
+          "related_collaborators"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "scientific_overview": {
+            "type": "string"
+          },
+          "why_it_matters": {
+            "type": "string"
+          },
+          "current_challenges": {
+            "type": "string"
+          },
+          "experimental_techniques": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "applications": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_projects": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_funding": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_publications": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_collaborators": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "impact": {
+      "type": "object",
+      "required": ["discoveries", "societal", "industrial", "future"],
+      "properties": {
+        "discoveries": { "type": "string" },
+        "societal": { "type": "string" },
+        "industrial": { "type": "string" },
+        "future": { "type": "string" }
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["year", "title", "description"],
+        "properties": {
+          "year": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}

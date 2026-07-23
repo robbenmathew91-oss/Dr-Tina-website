@@ -5,15 +5,82 @@
       "id": "gallery-nsf-slide1",
       "url": "assets/images/gallery/nsf_microscope_slide1.jpg",
       "caption": "NSF MRI Summary Slide showing the Hitachi SU9000EA Microscope and materials characterization examples.",
-      "category": "Research",
-      "date": "2020-01-16"
+      "category": "Microscopy",
+      "date": "2020-01-16",
+      "title": "Hitachi SU9000EA Microscope Lattices",
+      "photographer": "Dr. Tina Salguero",
+      "featured": true,
+      "year": "2020",
+      "related_themes": ["theme-synthesis-exfoliation"],
+      "related_projects": ["project-nanosheets"],
+      "related_grants": ["grant-nsf-2024"],
+      "related_collaborators": ["collab-ornl-microscopy"]
     },
     {
       "id": "gallery-nsf-slide2",
       "url": "assets/images/gallery/nsf_microscope_slide2.jpg",
       "caption": "Georgia Electron Microscopy (GEM) facility summary highlighting low-voltage SEM/STEM capabilities.",
+      "category": "Instrumentation",
+      "date": "2020-01-16",
+      "title": "UGA Electron Microscopy Laboratory",
+      "photographer": "GEM Staff",
+      "featured": false,
+      "year": "2020",
+      "related_themes": ["theme-cdw-phase-transitions"],
+      "related_projects": ["project-photocatalysis"],
+      "related_grants": ["grant-doe-2022"]
+    },
+    {
+      "id": "gallery-ancient-pigments",
+      "url": "assets/images/placeholder.svg",
+      "caption": "Freestanding single-layer nanosheet arrays exfoliated from synthetic Egyptian blue parent silicates CaCuSi4O10.",
       "category": "Research",
-      "date": "2020-01-16"
+      "date": "2013-02-06",
+      "title": "Exfoliated Monolayer Egyptian Blue Nanosheets",
+      "photographer": "Dr. Darrah Johnson-McDaniel",
+      "featured": true,
+      "year": "2013",
+      "related_themes": ["theme-synthesis-exfoliation"],
+      "related_projects": ["project-nanosheets"],
+      "related_publications": ["pub-2013-ja310587c"]
+    },
+    {
+      "id": "gallery-crystal-growth",
+      "url": "assets/images/placeholder.svg",
+      "caption": "High-purity transition metal chalcogenide parent crystals grown via chemical vapor transport (CVT) in a split-tube furnace.",
+      "category": "Crystal Growth",
+      "date": "2024-03-01",
+      "title": "CVT Split-Tube Furnace Crystal Growth",
+      "photographer": "Jose Garcia",
+      "featured": false,
+      "year": "2024",
+      "related_themes": ["theme-cdw-phase-transitions"],
+      "related_projects": ["project-photocatalysis"]
+    },
+    {
+      "id": "gallery-outreach-2023",
+      "url": "assets/images/placeholder.svg",
+      "caption": "Hosting local high school chemistry students for hands-on synthesis and liquid-phase sorting.",
+      "category": "Outreach",
+      "date": "2023-11-15",
+      "title": "Nanoscience Outreach Day",
+      "photographer": "Athar Yeganeh Neysiani",
+      "featured": false,
+      "year": "2023",
+      "related_news": ["news-2023-11-15"]
+    },
+    {
+      "id": "gallery-drc-2024",
+      "url": "assets/images/placeholder.svg",
+      "caption": "Clayton Mantz presenting threshold CDW current switching at the Device Research Conference in Denver.",
+      "category": "Conferences",
+      "date": "2024-06-12",
+      "title": "Mantz Presenting at DRC 2024",
+      "photographer": "Dr. Karen Vance",
+      "featured": false,
+      "year": "2024",
+      "related_people": ["clayton-mantz"],
+      "related_news": ["news-2024-06-12"]
     }
   ]
 }

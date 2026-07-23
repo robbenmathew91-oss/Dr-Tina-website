@@ -42,6 +42,56 @@
           "principalInvestigator": {
             "type": "string",
             "description": "Name of the PI"
+          },
+          "award_year": {
+            "type": "string",
+            "description": "Start year of the grant award"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Short overview of the project scope"
+          },
+          "scientific_impact": {
+            "type": "string",
+            "description": "Statement of scientific discovery enabled by this grant"
+          },
+          "techniques": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Experimental methods enabled by this grant"
+          },
+          "applications": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Applications enabled by this grant"
+          },
+          "related_projects": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Linked project IDs"
+          },
+          "related_publications": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Linked publication IDs"
+          },
+          "related_collaborators": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Linked collaborator IDs"
+          },
+          "milestones": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Key milestone updates achieved"
+          },
+          "logo_url": {
+            "type": "string",
+            "description": "URL or path to funding agency logo"
+          },
+          "research_theme": {
+            "type": "string",
+            "description": "Primary research theme (e.g. 2D Materials, Chalcogenides, Catalysis)"
           }
         }
       }

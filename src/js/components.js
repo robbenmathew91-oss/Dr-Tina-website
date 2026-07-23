@@ -7,59 +7,405 @@
 /**
  * Render Faculty profile banner and biography
  */
-export function FacultyProfile(faculty) {
-  const educationList = (faculty.education || [])
-    .map(edu => `<li class="edu-item"><strong>${edu.degree}</strong> - ${edu.institution} (${edu.year})</li>`)
+export function FacultyProfile(faculty, ecosystem = {}) {
+  const summaryParas = (faculty.summary || [faculty.biography])
+    .map(p => `<p class="pi-summary-paragraph" style="line-height: 1.65; margin-bottom: 12px; font-size: 1.05rem;">${p}</p>`)
     .join('');
 
-  const interestsList = (faculty.researchInterests || [])
-    .map(interest => `<span class="interest-badge">${interest}</span>`)
-    .join('');
+  const quickFacts = faculty.quickFacts || {};
+  const vision = faculty.researchVision || {};
+  const timeline = faculty.timeline || [];
+  const education = faculty.education || [];
+  const gradPostdoc = faculty.graduateAndPostdoc || {};
+  const leadership = faculty.leadershipAndMentorship || {};
+  const interests = faculty.researchInterests || [];
+  const awards = faculty.awards || [];
+  const service = faculty.professionalService || [];
+  const milestones = faculty.milestones || [];
+
+  // Ecosystem dynamic data
+  const themes = (ecosystem.themes || []).slice(0, 4);
+  const featuredPubs = (ecosystem.publications || []).filter(p => p.featured).slice(0, 4);
+  const activeProjects = (ecosystem.projects || []).filter(p => p.status === 'Active').slice(0, 3);
+  const activeGrants = (ecosystem.grants || []).filter(g => g.status === 'Active').slice(0, 3);
+  const latestNews = (ecosystem.news || []).slice(0, 3);
 
   return `
-    <div class="faculty-profile" id="faculty-profile-${faculty.name.replace(/\s+/g, '-').toLowerCase()}">
-      <div class="profile-header-grid">
-        <div class="profile-image-container">
-          <img src="${faculty.photo || 'assets/images/placeholder.svg'}" alt="${faculty.name}" class="profile-photo" loading="lazy" />
-        </div>
-        <div class="profile-details-container">
-          <h1 class="faculty-name">${faculty.name}</h1>
-          <p class="faculty-title">${faculty.title}</p>
-          <p class="faculty-affiliation">${faculty.department}, ${faculty.institution}</p>
-          
-          <div class="contact-info-block">
-            ${faculty.office ? `<p><strong>Office:</strong> ${faculty.office}</p>` : ''}
-            ${faculty.phone ? `<p><strong>Phone:</strong> ${faculty.phone}</p>` : ''}
-            ${faculty.email ? `<p><strong>Email:</strong> <a href="mailto:${faculty.email}">${faculty.email}</a></p>` : ''}
+    <div class="pi-flagship-profile" id="pi-profile-tina-salguero">
+      
+      <!-- 1. Hero Section -->
+      <div class="pi-hero-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 12px; padding: 30px; box-shadow: var(--shadow-sm); margin-bottom: 35px;">
+        <div class="pi-hero-grid" style="display: grid; grid-template-columns: 240px 1fr; gap: 30px; align-items: start;">
+          <div class="pi-image-wrapper" style="text-align: center;">
+            <img src="${faculty.photo || 'assets/images/tina_salguero.jpg'}" alt="${faculty.name}" style="width: 100%; max-width: 240px; height: auto; border-radius: 10px; border: 2px solid var(--border); object-fit: cover; box-shadow: var(--shadow-sm);" loading="lazy" />
+            <div class="pi-social-links" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
+              ${faculty.googleScholar ? `<a href="${faculty.googleScholar}" class="btn-outline scholar" target="_blank" rel="noopener" style="font-size: 0.85rem; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text-color); display: inline-block; background: var(--bg);">Google Scholar Profile &rarr;</a>` : ''}
+              ${faculty.orcid ? `<a href="${faculty.orcid}" class="btn-outline orcid" target="_blank" rel="noopener" style="font-size: 0.85rem; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text-color); display: inline-block; background: var(--bg);">ORCID: ${faculty.orcid.replace('https://orcid.org/', '')}</a>` : ''}
+            </div>
           </div>
+          <div class="pi-hero-details">
+            <h1 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 6px; color: var(--text-color);">${faculty.name}</h1>
+            <p style="font-size: 1.15rem; font-weight: 600; color: var(--primary); margin-bottom: 4px;">${faculty.title}</p>
+            <p style="font-size: 1rem; color: var(--light-gray); margin-bottom: 15px;">${faculty.department}, ${faculty.institution}</p>
+            
+            <div class="pi-contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; background: var(--bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px; font-size: 0.9rem;">
+              <p><strong>Office:</strong> ${faculty.office}</p>
+              <p><strong>Phone:</strong> ${faculty.phone}</p>
+              <p><strong>Email:</strong> <a href="mailto:${faculty.email}" style="color: var(--primary); font-weight: 500;">${faculty.email}</a></p>
+            </div>
 
-          <div class="profile-social-links">
-            ${faculty.googleScholar ? `<a href="${faculty.googleScholar}" class="social-link scholar" target="_blank" rel="noopener">Google Scholar</a>` : ''}
-            ${faculty.orcid ? `<a href="${faculty.orcid}" class="social-link orcid" target="_blank" rel="noopener">ORCID</a>` : ''}
+            <div class="pi-summary-text">
+              ${summaryParas}
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="profile-body">
-        <section class="bio-section">
-          <h2>Biography</h2>
-          <p>${faculty.biography}</p>
+      <!-- 2. Quick Facts Dashboard -->
+      <section class="pi-dashboard-section" style="margin-bottom: 40px;">
+        <h2 style="font-size: 1.4rem; margin-bottom: 15px;">Laboratory Leadership Dashboard</h2>
+        <div class="pi-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px;">
+          <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.totalPublications || '80+'}</div>
+            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Publications</div>
+          </div>
+          <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.totalCitations || '2,200+'}</div>
+            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Citations</div>
+          </div>
+          <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.hIndex || '25+'}</div>
+            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">h-index</div>
+          </div>
+          <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.yearsAtUGA || '16+'}</div>
+            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Years at UGA</div>
+          </div>
+          <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.activeResearchThemes || 4}</div>
+            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Research Themes</div>
+          </div>
+          <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.activeGrants || 2}</div>
+            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Active Grants</div>
+          </div>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--light-gray); margin-top: 12px; font-style: italic; text-align: right;">
+          ${quickFacts.metricsDisclaimer || 'Research metrics are based on publicly available academic profiles and may change over time.'}
+        </p>
+      </section>
+
+      <!-- 3. Scientific Vision & Philosophy -->
+      ${vision.philosophy ? `
+        <section class="pi-vision-section" style="margin-bottom: 40px; background: var(--bg-offset); border: 1px solid var(--border); border-radius: 12px; padding: 25px; box-shadow: var(--shadow-sm);">
+          <h2 style="font-size: 1.5rem; margin-bottom: 15px; border-bottom: 2px solid var(--primary); padding-bottom: 6px; display: inline-block;">Scientific Vision & Philosophy</h2>
+          <div style="display: grid; gap: 15px; line-height: 1.65; margin-top: 10px;">
+            <p><strong>Scientific Philosophy:</strong> ${vision.philosophy}</p>
+            <p><strong>Long-Term Vision:</strong> ${vision.longTermVision}</p>
+            <p><strong>Why This Research Matters:</strong> ${vision.whyItMatters}</p>
+            <p><strong>Interdisciplinary Strategy:</strong> ${vision.interdisciplinaryApproach}</p>
+            <p><strong>Future Directions:</strong> ${vision.futureDirections}</p>
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 8. Scientific Expertise Badges -->
+      <section class="pi-expertise-section" style="margin-bottom: 40px;">
+        <h2 style="font-size: 1.4rem; margin-bottom: 15px;">Scientific Expertise & Core Domains</h2>
+        <div class="expertise-badges" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          ${interests.map(topic => `
+            <span class="interest-badge" style="background: var(--bg-offset); border: 1px solid var(--border); color: var(--primary); font-weight: 600; padding: 8px 14px; border-radius: 20px; font-size: 0.9rem; box-shadow: var(--shadow-sm);">
+              ${topic}
+            </span>
+          `).join('')}
+        </div>
+      </section>
+
+      <!-- 4. Career Timeline -->
+      ${timeline.length > 0 ? `
+        <section class="pi-timeline-section" style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 20px;">Academic Career Timeline</h2>
+          <div class="timeline-container" style="display: flex; flex-direction: column; gap: 15px; border-left: 3px solid var(--primary); padding-left: 20px; margin-left: 10px;">
+            ${timeline.map(t => `
+              <div class="timeline-item" style="position: relative;">
+                <div class="timeline-dot" style="position: absolute; left: -27px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary);"></div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary); uppercase;">${t.year} &bull; ${t.category}</div>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--text-color); margin-top: 2px;">${t.milestone}</div>
+                ${t.details ? `<div style="font-size: 0.9rem; color: var(--light-gray); margin-top: 2px;">${t.details}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 5. Education & 6. Graduate, Postdoc & Industry -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px;">
+        
+        <!-- Education -->
+        <section class="pi-edu-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
+          <h2 style="font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Education</h2>
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+            ${education.map(e => `
+              <li>
+                <div style="font-weight: 700; color: var(--text-color);">${e.degree} (${e.year})</div>
+                <div style="color: var(--primary); font-size: 0.95rem;">${e.institution}</div>
+                ${e.notes ? `<div style="font-size: 0.85rem; color: var(--light-gray);">${e.notes}</div>` : ''}
+              </li>
+            `).join('')}
+          </ul>
         </section>
 
-        ${interestsList ? `
-          <section class="interests-section">
-            <h2>Research Interests</h2>
-            <div class="interests-grid">${interestsList}</div>
+        <!-- Graduate & Postdoc Foundation -->
+        ${gradPostdoc.doctoral ? `
+          <section class="pi-foundation-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
+            <h2 style="font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Graduate & Industrial Foundation</h2>
+            
+            <div style="margin-bottom: 12px;">
+              <div style="font-weight: 700; color: var(--text-color);">${gradPostdoc.doctoral.degree} (${gradPostdoc.doctoral.year})</div>
+              <div style="font-size: 0.9rem; color: var(--primary);">${gradPostdoc.doctoral.institution} &bull; Advisor: ${gradPostdoc.doctoral.advisor}</div>
+              <div style="font-size: 0.85rem; margin-top: 4px; color: var(--text-color);">${gradPostdoc.doctoral.summary}</div>
+            </div>
+
+            <div style="margin-bottom: 12px; padding-top: 8px; border-top: 1px dashed var(--border);">
+              <div style="font-weight: 700; color: var(--text-color);">${gradPostdoc.postdoctoral.role}</div>
+              <div style="font-size: 0.9rem; color: var(--primary);">${gradPostdoc.postdoctoral.institution} &bull; ${gradPostdoc.postdoctoral.fellowship}</div>
+            </div>
+
+            <div style="padding-top: 8px; border-top: 1px dashed var(--border);">
+              <div style="font-weight: 700; color: var(--text-color);">${gradPostdoc.industrial.role}</div>
+              <div style="font-size: 0.9rem; color: var(--primary);">${gradPostdoc.industrial.organization}</div>
+              <div style="font-size: 0.85rem; margin-top: 4px; color: var(--text-color);">${gradPostdoc.industrial.summary}</div>
+            </div>
           </section>
         ` : ''}
 
-        ${educationList ? `
-          <section class="education-section">
-            <h2>Education</h2>
-            <ul class="education-list">${educationList}</ul>
-          </section>
-        ` : ''}
       </div>
+
+      <!-- 7. Laboratory Leadership & Mentorship -->
+      ${leadership.mentoringPhilosophy ? `
+        <section class="pi-leadership-section" style="margin-bottom: 40px; background: var(--bg-offset); border: 1px solid var(--border); border-radius: 12px; padding: 25px; box-shadow: var(--shadow-sm);">
+          <h2 style="font-size: 1.4rem; margin-bottom: 15px; border-bottom: 2px solid var(--primary); padding-bottom: 6px; display: inline-block;">Leadership & Mentorship Philosophy</h2>
+          
+          <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 15px; font-style: italic; color: var(--text-color);">
+            "${leadership.mentoringPhilosophy}"
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; font-size: 0.92rem;">
+            <div style="background: var(--bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
+              <strong style="color: var(--primary); display: block; margin-bottom: 4px;">Institutional Leadership Roles</strong>
+              <ul style="padding-left: 18px; margin: 0;">
+                ${(leadership.roles || []).map(r => `<li style="margin-bottom: 3px;">${r}</li>`).join('')}
+              </ul>
+            </div>
+            <div style="background: var(--bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
+              <strong style="color: var(--primary); display: block; margin-bottom: 4px;">Quantum & Graduate Training</strong>
+              <p style="margin: 0;">${leadership.trainingPrograms}</p>
+            </div>
+            <div style="background: var(--bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
+              <strong style="color: var(--primary); display: block; margin-bottom: 4px;">STEM Outreach & Equity</strong>
+              <p style="margin: 0;">${leadership.outreachAndEquity}</p>
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 9. Awards & 10. Professional Service -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px;">
+        
+        <section class="pi-awards-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
+          <h2 style="font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Honors & Major Awards</h2>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            ${awards.map(a => `
+              <div>
+                <div style="font-weight: 700; color: var(--text-color);">
+                  ${a.award} 
+                  <span style="color: var(--primary); font-size: 0.85rem;">(${a.year})</span>
+                  ${a.category ? `<span style="font-size: 0.75rem; background: var(--bg); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; margin-left: 6px; color: var(--light-gray);">${a.category}</span>` : ''}
+                </div>
+                <div style="font-size: 0.88rem; color: var(--light-gray);">${a.details}</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="pi-service-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
+          <h2 style="font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Professional Service & Governance</h2>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            ${service.map(s => `
+              <div>
+                <div style="font-weight: 700; color: var(--text-color);">${s.role}</div>
+                <div style="color: var(--primary); font-size: 0.9rem;">${s.organization}</div>
+                <div style="font-size: 0.88rem; color: var(--light-gray);">${s.details}</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+      </div>
+
+      <!-- 12. Selected Career Milestones -->
+      ${milestones.length > 0 ? `
+        <section class="pi-milestones-section" style="margin-bottom: 40px; background: var(--bg-offset); border: 1px solid var(--border); border-radius: 12px; padding: 25px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 15px;">Selected Career Milestones</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px;">
+            ${milestones.map(m => `
+              <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 15px;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary); background: rgba(0, 114, 206, 0.1); padding: 3px 8px; border-radius: 4px;">${m.year}</span>
+                <h3 style="font-size: 1rem; font-weight: 600; margin: 8px 0 4px 0;">${m.title}</h3>
+                <p style="font-size: 0.85rem; color: var(--light-gray); margin: 0;">${m.description}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 11. Why Join the Salguero Research Group -->
+      ${(faculty.whyJoin || []).length > 0 ? `
+        <section class="pi-why-join-section" style="margin-bottom: 45px; background: var(--bg-offset); border: 1px solid var(--border); border-radius: 12px; padding: 30px; box-shadow: var(--shadow-sm);">
+          <div style="text-align: center; margin-bottom: 25px;">
+            <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 6px;">Why Join the Salguero Research Group?</h2>
+            <p style="font-size: 0.95rem; color: var(--light-gray); max-width: 650px; margin: 0 auto;">
+              We offer prospective graduate students, postdocs, and undergraduate researchers an empowering, world-class research environment.
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 25px;">
+            ${faculty.whyJoin.map(item => `
+              <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px;">
+                <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--primary); margin-bottom: 6px;">${item.title}</h3>
+                <p style="font-size: 0.88rem; color: var(--text-color); margin: 0; line-height: 1.5;">${item.description}</p>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <a href="join.html" class="btn-primary" style="display: inline-block; padding: 12px 28px; font-size: 1.05rem; font-weight: 600; background: var(--primary); color: #fff; text-decoration: none; border-radius: 8px; box-shadow: var(--shadow-md);">
+              Interested in joining the Salguero Research Group? Apply Here &rarr;
+            </a>
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 4. Dynamic Research Ecosystem Gateway Section -->
+      <section class="pi-ecosystem-section" style="margin-top: 50px; padding-top: 30px; border-top: 2px dashed var(--border);">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 6px;">Laboratory Research Ecosystem</h2>
+          <p style="font-size: 1rem; color: var(--light-gray); max-width: 650px; margin: 0 auto;">
+            Explore how Dr. Salguero's research program connects core scientific themes, high-impact publications, active grants, projects, and latest news.
+          </p>
+        </div>
+
+        <!-- Ecosystem Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          
+          <!-- Themes Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Research Themes</span>
+                <a href="research.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">Explore &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${themes.map(t => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${t.title}</strong>
+                    <p style="font-size: 0.82rem; color: var(--light-gray); margin: 2px 0 0 0;">${t.overview ? t.overview.substring(0, 85) + '...' : ''}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+              <a href="research.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">Explore Research Themes</a>
+            </div>
+          </div>
+
+          <!-- Featured Landmark Publications -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Featured Publications</span>
+                <a href="publications.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View All &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${featuredPubs.map(p => `
+                  <div style="font-size: 0.88rem;">
+                    <a href="${p.link || '#'}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--text-color); text-decoration: none;">${p.title}</a>
+                    <div style="font-size: 0.82rem; color: var(--light-gray);">${p.journal} (${p.year})</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+              <a href="publications.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View All Publications</a>
+            </div>
+          </div>
+
+          <!-- Featured Projects Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Featured Projects</span>
+                <a href="projects.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View Projects &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${activeProjects.map(proj => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${proj.title}</strong>
+                    <p style="font-size: 0.82rem; color: var(--light-gray); margin: 2px 0 0 0;">${proj.summary ? proj.summary.substring(0, 85) + '...' : ''}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+              <a href="projects.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View Research Projects</a>
+            </div>
+          </div>
+
+          <!-- Active Grants Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Active Funding</span>
+                <a href="funding.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View Funding &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${activeGrants.map(g => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${g.agency}</strong>
+                    <div style="font-size: 0.82rem; color: var(--light-gray);">${g.title} (${g.period || g.duration})</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+              <a href="funding.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View Research Grants</a>
+            </div>
+          </div>
+
+          <!-- Latest Lab News Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Latest News</span>
+                <a href="news.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View News &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${latestNews.map(n => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${n.title}</strong>
+                    <div style="font-size: 0.82rem; color: var(--light-gray);">${n.date} &bull; ${n.category}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+              <a href="news.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View All News</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
     </div>
   `;
 }
@@ -77,6 +423,7 @@ export function StudentCard(student) {
         <h3 class="student-name">${student.name}</h3>
         <p class="student-role">${student.role}</p>
         <p class="student-year">Joined the Salguero Lab in ${student.joined_lab || student.yearStarted}</p>
+        ${student.degree ? `<p class="student-degree-info" style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 4px;">${student.degree}, ${student.degree_institution} (${student.degree_year})</p>` : ''}
         <p class="student-focus">${student.projectFocus}</p>
         
         <div class="student-links">
@@ -107,9 +454,12 @@ export function AlumniCard(alumnus) {
           </div>
           <div class="alumni-body">
             <p class="alumni-joined" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 2px;">Joined the Salguero Lab in ${alumnus.joined_lab}</p>
-            <p class="alumni-graduated" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 6px;">Graduated in ${alumnus.graduated_year}</p>
+            <p class="alumni-graduated" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 4px;">Graduated in ${alumnus.graduated_year}</p>
+            ${alumnus.degree_institution ? `<p class="alumni-degree-info" style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 6px;">${alumnus.degree}, ${alumnus.degree_institution} (${alumnus.degree_year})</p>` : ''}
             ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
-            <p class="alumni-current"><strong>Current:</strong> ${alumnus.currentPosition}</p>
+            ${alumnus.researchFocus || alumnus.projectFocus ? `<p class="alumni-focus"><strong>Research Focus:</strong> ${alumnus.researchFocus || alumnus.projectFocus}</p>` : ''}
+            ${alumnus.description ? `<p class="alumni-desc" style="font-size: 0.9rem; margin-top: 4px; color: var(--text-color);">${alumnus.description}</p>` : ''}
+            <p class="alumni-current" style="margin-top: 4px;"><strong>Current:</strong> ${alumnus.currentPosition}</p>
             ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}
           </div>
         </div>
@@ -121,35 +471,165 @@ export function AlumniCard(alumnus) {
 /**
  * Render Research Project Card
  */
-export function ProjectCard(project) {
-  const statusClass = project.status.toLowerCase() === 'active' ? 'status-active' : 'status-completed';
-  const tagsList = (project.tags || []).map(tag => `<span class="project-tag">${tag}</span>`).join('');
+export function ProjectCard(project, relations = {}) {
+  const statusClass = project.status.toLowerCase() === 'active' 
+    ? 'status-active' 
+    : (project.status.toLowerCase() === 'planning' ? 'status-planning' : 'status-completed');
+
+  const techniquesList = (project.techniques || [])
+    .map(t => `<span class="technique-tag">${t}</span>`)
+    .join('');
+
+  const applicationsList = (project.applications || [])
+    .map(a => `<span class="application-tag">${a}</span>`)
+    .join('');
+
+  const objectivesList = (project.research_objectives || [])
+    .map(obj => `<li>${obj}</li>`)
+    .join('');
+
+  // Resolve dynamic relationships from parameters
+  const linkedGrants = relations.grants || [];
+  const linkedPublications = relations.publications || [];
+  const linkedCollaborators = relations.collaborators || [];
+
+  const grantsMarkup = linkedGrants.length > 0
+    ? linkedGrants.map(g => `
+        <div style="font-size: 0.85rem; margin-bottom: 6px; padding: 8px; border: 1px dashed var(--border); border-radius: 4px; background: var(--bg-offset);">
+          <strong>${g.agency}</strong>: ${g.title} (${g.grantNumber})
+        </div>
+      `).join('')
+    : '';
+
+  const publicationsMarkup = linkedPublications.length > 0
+    ? `<ul style="list-style: none; padding-left: 0; margin-bottom: 0;">` + 
+      linkedPublications.map(pub => `
+        <li style="font-size: 0.85rem; margin-bottom: 6px; line-height: 1.3;">
+          "${pub.title}" (<em>${pub.journal}</em>, ${pub.year})
+        </li>
+      `).join('') + `</ul>`
+    : '';
+
+  const collaboratorsMarkup = linkedCollaborators.length > 0
+    ? linkedCollaborators.map(c => `
+        <div style="font-size: 0.82rem; color: var(--light-gray); margin-bottom: 4px;">
+          • ${c.name} (${c.institution})
+        </div>
+      `).join('')
+    : '';
+
+  // Scientific Workflow chart styling
+  const workflow = project.workflow || {};
+  const workflowMarkup = `
+    <div class="project-workflow-diagram" style="margin-top: 15px; background: var(--bg-offset); padding: 15px; border-radius: 6px; border: 1px solid var(--border);">
+      <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 10px;">Scientific Workflow</span>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Question:</span> ${workflow.question || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Materials:</span> ${workflow.materials || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Methods:</span> ${workflow.methods || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Characterization:</span> ${workflow.characterization || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Results:</span> ${workflow.results || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Applications:</span> ${workflow.applications || 'N/A'}</div>
+      </div>
+    </div>
+  `;
 
   return `
-    <article class="project-card" id="project-${project.id}">
-      ${project.image ? `
-        <div class="project-image-container">
-          <img src="${project.image}" alt="${project.title}" class="project-image" loading="lazy" />
-        </div>
-      ` : ''}
+    <article class="project-card ${project.status.toLowerCase()}" id="project-${project.id}" style="border: 1px solid var(--border); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; margin-bottom: 25px; background: var(--bg-offset); box-shadow: var(--shadow-sm); transition: var(--transition); padding: 22px;">
       <div class="project-content">
-        <div class="project-header">
-          <span class="project-status ${statusClass}">${project.status}</span>
-          <h3 class="project-title">${project.title}</h3>
+        <div class="project-header" style="margin-bottom: 12px;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+            <span class="project-status ${statusClass}">${project.status}</span>
+            <span class="pub-badge category-badge" style="text-transform: uppercase;">${project.research_theme || 'Research'}</span>
+          </div>
+          <h3 class="project-title" style="font-family: var(--font-heading); color: var(--primary); font-size: 1.3rem; margin-top: 5px; margin-bottom: 5px;">
+            ${project.title}
+          </h3>
+          <p style="margin: 0; font-size: 0.85rem; color: var(--light-gray);">
+            <strong>Leads:</strong> ${project.project_leads ? project.project_leads.join(', ') : 'N/A'} | <strong>Timeline:</strong> ${project.timeline || 'N/A'}
+          </p>
         </div>
-        <p class="project-summary">${project.summary}</p>
-        
-        <div class="project-tags-row">${tagsList}</div>
-        
-        ${project.funding ? `<p class="project-funding"><strong>Funding Support:</strong> ${project.funding}</p>` : ''}
 
-        <button class="btn btn-secondary btn-sm project-more-btn" onclick="toggleDetails('project-desc-${project.id}')">
-          View Project Details
+        <p class="project-summary" style="font-size: 0.95rem; line-height: 1.5; color: var(--dark-gray); margin-bottom: 12px;">
+          ${project.summary}
+        </p>
+
+        <div style="margin-bottom: 15px; font-size: 0.9rem; color: var(--dark-gray); background: #FFFDF0; border-left: 2px solid #D4AF37; padding: 10px 12px; border-radius: 0 4px 4px 0;">
+          <strong>Scientific Motivation:</strong> ${project.scientific_motivation}
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;" class="theme-cols-2">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Techniques Used</span>
+            <div class="techniques-list" style="margin-top: 5px;">${techniquesList}</div>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Expected Applications</span>
+            <div class="applications-list" style="margin-top: 5px;">${applicationsList}</div>
+          </div>
+        </div>
+
+        <!-- Collapsible Details Trigger -->
+        <button class="pub-toggle-btn" onclick="toggleDetails('project-details-panel-${project.id}')" aria-expanded="false" aria-controls="project-details-panel-${project.id}">
+          Explore Scientific Workflow & Relations
         </button>
-        
-        <div class="project-description-full hidden" id="project-desc-${project.id}">
-          <hr />
-          <p>${project.detailedDescription}</p>
+
+        <div class="pub-abstract-panel hidden" id="project-details-panel-${project.id}">
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          
+          <div style="margin-bottom: 15px;">
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Research Objectives</span>
+            <ul style="font-size: 0.9rem; color: var(--dark-gray); padding-left: 15px;">
+              ${objectivesList}
+            </ul>
+          </div>
+
+          <div style="margin-bottom: 15px;">
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Expected Outcomes</span>
+            <p style="font-size: 0.9rem; color: var(--dark-gray); line-height: 1.4;">${project.expected_outcomes}</p>
+          </div>
+
+          <!-- Scientific Workflow Diagram -->
+          ${workflowMarkup}
+
+          <!-- Relations -->
+          <div style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;" class="theme-cols-2">
+            <div>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Linked Funding</span>
+              ${grantsMarkup || '<p style="font-size: 0.85rem; color: var(--light-gray);">None</p>'}
+            </div>
+            <div>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Linked Publications</span>
+              ${publicationsMarkup || '<p style="font-size: 0.85rem; color: var(--light-gray);">None</p>'}
+            </div>
+          </div>
+          
+          ${collaboratorsMarkup ? `
+            <div style="margin-top: 15px;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Scientific Collaborations</span>
+              ${collaboratorsMarkup}
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Future Ready Placeholder: GitHub, Datasets, Student profiles -->
+        <div class="pub-future-actions" style="margin-top: 15px; display: flex; gap: 15px; font-size: 0.72rem; color: var(--light-gray); border-top: 1px dashed var(--border); padding-top: 10px;">
+          <a href="#" class="pdf-download-stub" onclick="alert('Dataset repository link is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
+            Datasets
+          </a>
+          <span>•</span>
+          <button class="export-bibtex-stub" onclick="alert('GitHub Repository is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+            GitHub Code
+          </button>
+          <span>•</span>
+          <button class="copy-apa-stub" onclick="alert('Supplementary Files download is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+            Supplementary Info
+          </button>
         </div>
       </div>
     </article>
@@ -160,34 +640,97 @@ export function ProjectCard(project) {
  * Render Publication Reference Card
  */
 export function PublicationCard(pub) {
-  const tagsList = (pub.tags || []).map(tag => `<span class="pub-tag-badge">${tag}</span>`).join('');
-  const detailsString = `${pub.journal}${pub.volume ? `, Vol. ${pub.volume}` : ''}${pub.pages ? `, Pages ${pub.pages}` : ''} (${pub.year})`;
+  const highlightAuthor = (authors) => {
+    const regex = /(Tina T\. Salguero|Tina Salguero|T\. T\. Salguero|T\. Salguero|Salguero, T\. T\.|Salguero, T\.|Trnka, T\. M\.|T\. M\. Trnka|Trnka, T\.)/g;
+    return authors.replace(regex, '<strong>$1</strong>');
+  };
+
+  const keywordsList = (pub.keywords || [])
+    .map(kw => `<span class="pub-keyword">${kw}</span>`)
+    .join('');
 
   return `
-    <div class="publication-card" id="publication-${pub.id}">
+    <div class="publication-card ${pub.featured ? 'featured-pub' : ''}" id="publication-${pub.id}" data-featured="${pub.featured || false}">
+      ${pub.featured ? '<div class="pub-featured-tag">★ Featured Publication</div>' : ''}
+      
       <div class="pub-meta-row">
-        <span class="pub-year-badge">${pub.year}</span>
-        <div class="pub-tags-list">${tagsList}</div>
+        <div class="pub-badges">
+          <span class="pub-badge category-badge">${pub.research_category}</span>
+          <span class="pub-badge type-badge">${pub.publication_type}</span>
+          <span class="pub-year-badge">${pub.year}</span>
+        </div>
+        
+        <!-- Future Ready Placeholder: Altmetric and Citation Count -->
+        <div class="pub-future-metrics">
+          <span class="pub-metric-badge citation-count-stub" title="Citations (Coming Soon)">
+            <svg viewBox="0 0 24 24" class="metric-icon" style="width: 14px; height: 14px; fill: currentColor; display: inline-block; vertical-align: middle; margin-right: 3px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <span class="stub-val">--</span>
+          </span>
+          <span class="pub-metric-badge altmetric-stub" title="Altmetric (Coming Soon)">
+            <span class="altmetric-donut-stub" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--primary); display: inline-block; vertical-align: middle; margin-right: 3px;"></span>
+            <span class="stub-val">--</span>
+          </span>
+        </div>
       </div>
-      
+
       <h3 class="pub-title">${pub.title}</h3>
-      <p class="pub-authors">${pub.authors}</p>
-      <p class="pub-journal-details">${detailsString}</p>
+      <p class="pub-authors">${highlightAuthor(pub.authors)}</p>
       
+      <p class="pub-journal-details">
+        <span class="pub-journal-name">${pub.journal}</span>${pub.volume ? `, <strong>Vol. ${pub.volume}</strong>` : ''}${pub.issue ? `, Issue ${pub.issue}` : ''}${pub.pages ? `, Pages ${pub.pages}` : ''}
+      </p>
+
       <div class="pub-actions">
-        <a href="${pub.link}" class="pub-link-btn" target="_blank" rel="noopener">DOI: ${pub.doi}</a>
+        <a href="https://doi.org/${pub.doi}" class="pub-link-btn" target="_blank" rel="noopener" aria-label="DOI Link for ${pub.title}">
+          DOI: ${pub.doi}
+        </a>
+        <a href="${pub.link}" class="pub-link-btn read-btn" target="_blank" rel="noopener" aria-label="Read paper: ${pub.title}">
+          Read Paper &rarr;
+        </a>
+        
         ${pub.abstract ? `
-          <button class="pub-abstract-btn" onclick="toggleDetails('pub-abstract-${pub.id}')">
-            Show Abstract
+          <button class="pub-toggle-btn abstract-btn" onclick="toggleDetails('pub-abstract-${pub.id}')" aria-expanded="false" aria-controls="pub-abstract-${pub.id}">
+            View Abstract
+          </button>
+        ` : ''}
+        
+        ${keywordsList ? `
+          <button class="pub-toggle-btn keywords-btn" onclick="toggleDetails('pub-keywords-${pub.id}')" aria-expanded="false" aria-controls="pub-keywords-${pub.id}">
+            Keywords
           </button>
         ` : ''}
       </div>
 
+      <!-- Expandable Abstract Panel -->
       ${pub.abstract ? `
         <div class="pub-abstract-panel hidden" id="pub-abstract-${pub.id}">
-          <p class="abstract-text">${pub.abstract}</p>
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          <p class="abstract-text"><strong>Abstract:</strong> ${pub.abstract}</p>
         </div>
       ` : ''}
+
+      <!-- Expandable Keywords Panel -->
+      ${keywordsList ? `
+        <div class="pub-keywords-panel hidden" id="pub-keywords-${pub.id}">
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          <div class="pub-keywords-list">
+            <strong>Keywords:</strong> ${keywordsList}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Future Ready Placeholder: Citation & Bibliography export hooks -->
+      <div class="pub-future-actions" style="margin-top: 12px; display: flex; gap: 15px; font-size: 0.75rem; color: var(--light-gray);">
+        <button class="export-bibtex-stub" onclick="alert('BibTeX export is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.75rem;">
+          Cite (BibTeX)
+        </button>
+        <button class="copy-apa-stub" onclick="alert('ACS/APA Citation copy is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.75rem;">
+          Copy Citation
+        </button>
+        <a href="#" class="pdf-download-stub" onclick="alert('PDF download is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
+          Download PDF
+        </a>
+      </div>
     </div>
   `;
 }
@@ -195,20 +738,131 @@ export function PublicationCard(pub) {
 /**
  * Render Grant Card
  */
-export function GrantCard(grant) {
+export function GrantCard(grant, relations = {}) {
   const statusClass = grant.status.toLowerCase() === 'active' ? 'status-active' : 'status-completed';
+  
+  const techniquesList = (grant.techniques || [])
+    .map(t => `<span class="technique-tag">${t}</span>`)
+    .join('');
+
+  const applicationsList = (grant.applications || [])
+    .map(a => `<span class="application-tag">${a}</span>`)
+    .join('');
+
+  // Resolve dynamic relationships from parameters
+  const linkedProjects = relations.projects || [];
+  const linkedPublications = relations.publications || [];
+  const linkedCollaborators = relations.collaborators || [];
+
+  const projectsMarkup = linkedProjects.length > 0
+    ? linkedProjects.map(p => `
+        <div style="font-size: 0.85rem; margin-bottom: 6px; padding: 8px; border: 1px dashed var(--border); border-radius: 4px; background: var(--bg-offset);">
+          <strong>${p.title}</strong>
+        </div>
+      `).join('')
+    : '';
+
+  const publicationsMarkup = linkedPublications.length > 0
+    ? `<ul style="list-style: none; padding-left: 0; margin-bottom: 0;">` + 
+      linkedPublications.map(pub => `
+        <li style="font-size: 0.85rem; margin-bottom: 6px; line-height: 1.3;">
+          "${pub.title}" (<em>${pub.journal}</em>, ${pub.year})
+        </li>
+      `).join('') + `</ul>`
+    : '';
+
+  const collaboratorsMarkup = linkedCollaborators.length > 0
+    ? linkedCollaborators.map(c => `
+        <div style="font-size: 0.82rem; color: var(--light-gray); margin-bottom: 4px;">
+          • ${c.name} (${c.institution})
+        </div>
+      `).join('')
+    : '';
+
   return `
-    <div class="grant-card" id="grant-${grant.id}">
+    <div class="grant-card ${grant.status.toLowerCase()}" id="grant-${grant.id}">
       <div class="grant-header">
-        <span class="grant-status ${statusClass}">${grant.status}</span>
-        <h3 class="grant-title">${grant.title}</h3>
+        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 10px;">
+          <span class="grant-status ${statusClass}">${grant.status}</span>
+          <span class="pub-badge category-badge" style="text-transform: uppercase;">${grant.research_theme || 'Research'}</span>
+        </div>
+        <h3 class="grant-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.25rem; margin-top: 5px; margin-bottom: 10px; line-height: 1.3;">
+          ${grant.title}
+        </h3>
       </div>
-      <div class="grant-details-grid">
-        <p><strong>Funding Agency:</strong> ${grant.agency}</p>
-        ${grant.grantNumber ? `<p><strong>Award Number:</strong> ${grant.grantNumber}</p>` : ''}
-        ${grant.amount ? `<p><strong>Award Amount:</strong> ${grant.amount}</p>` : ''}
-        <p><strong>Duration:</strong> ${grant.duration}</p>
-        <p><strong>PI:</strong> ${grant.principalInvestigator}</p>
+
+      <div class="grant-agency-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <div>
+          <p style="margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--dark-gray);">${grant.agency}</p>
+          <p style="margin: 0; font-size: 0.8rem; color: var(--light-gray);">Award #: ${grant.grantNumber || 'N/A'} | PI: ${grant.principalInvestigator}</p>
+        </div>
+        <div class="grant-agency-logo-stub" style="width: 45px; height: 45px; border-radius: 50%; background: #ECEFF1; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--light-gray);" title="${grant.agency}">
+          ${grant.agency.split(' ')[0]}
+        </div>
+      </div>
+
+      <div class="grant-body">
+        <p style="font-size: 0.92rem; line-height: 1.5; color: var(--dark-gray); margin-bottom: 12px;">
+          ${grant.summary}
+        </p>
+
+        <div style="margin-bottom: 12px; font-size: 0.9rem; color: var(--dark-gray); background: #FFFDF0; border-left: 2px solid #D4AF37; padding: 8px 12px; border-radius: 0 4px 4px 0;">
+          <strong>Scientific Impact:</strong> ${grant.scientific_impact}
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;" class="theme-cols-2">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Enabled Techniques</span>
+            <div class="techniques-list" style="margin-top: 5px;">${techniquesList}</div>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Enabled Applications</span>
+            <div class="applications-list" style="margin-top: 5px;">${applicationsList}</div>
+          </div>
+        </div>
+
+        <!-- Collapsible Relationships Panel -->
+        <button class="pub-toggle-btn" onclick="toggleDetails('grant-details-panel-${grant.id}')" style="margin-top: 5px;" aria-expanded="false" aria-controls="grant-details-panel-${grant.id}">
+          Explore Linked Projects & Publications
+        </button>
+
+        <div class="pub-abstract-panel hidden" id="grant-details-panel-${grant.id}">
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          
+          ${projectsMarkup ? `
+            <div style="margin-bottom: 12px;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Supported Lab Projects</span>
+              ${projectsMarkup}
+            </div>
+          ` : ''}
+
+          ${publicationsMarkup ? `
+            <div style="margin-bottom: 12px;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Resulting Publications</span>
+              ${publicationsMarkup}
+            </div>
+          ` : ''}
+
+          ${collaboratorsMarkup ? `
+            <div>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Key Collaborations</span>
+              ${collaboratorsMarkup}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+
+      <!-- Future Ready Placeholder: Annual Reports, Award Amount details -->
+      <div class="pub-future-actions" style="margin-top: 15px; display: flex; gap: 15px; font-size: 0.72rem; color: var(--light-gray); border-top: 1px dashed var(--border); padding-top: 10px;">
+        <span><strong>Funding Amount:</strong> ${grant.amount || 'N/A'}</span>
+        <span>•</span>
+        <button class="export-bibtex-stub" onclick="alert('Annual Reports download is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Annual Reports
+        </button>
+        <span>•</span>
+        <button class="copy-apa-stub" onclick="alert('Official Agency project link is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Agency Award Page
+        </button>
       </div>
     </div>
   `;
@@ -217,32 +871,116 @@ export function GrantCard(grant) {
 /**
  * Render News Card
  */
-export function NewsCard(item) {
+export function NewsCard(item, relations = {}) {
   const dateFormatted = new Date(item.date).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  return `
-    <article class="news-card" id="news-${item.id}">
-      ${item.image ? `
-        <div class="news-image-wrapper">
-          <img src="${item.image}" alt="${item.title}" class="news-image" loading="lazy" />
-        </div>
-      ` : ''}
-      <div class="news-card-content">
-        <time class="news-date" datetime="${item.date}">${dateFormatted}</time>
-        <h3 class="news-title">${item.title}</h3>
-        <p class="news-excerpt">${item.excerpt}</p>
-        
-        <button class="btn btn-link news-read-btn" onclick="toggleDetails('news-body-${item.id}')">
-          Read Article &darr;
-        </button>
+  const keywordsList = (item.keywords || [])
+    .map(kw => `<span class="pub-keyword">${kw}</span>`)
+    .join('');
 
-        <div class="news-body-full hidden" id="news-body-${item.id}">
-          <hr />
-          <div class="news-detailed-text">${item.content}</div>
-          ${item.link ? `<p class="news-external-link"><a href="${item.link}" target="_blank" rel="noopener">Official Press Release &rarr;</a></p>` : ''}
+  // Resolve relations
+  const linkedPubs = relations.publications || [];
+  const linkedProjects = relations.projects || [];
+  const linkedGrants = relations.grants || [];
+  const linkedPeople = relations.people || [];
+
+  const publicationsMarkup = linkedPubs.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Publications</span>` +
+      `<ul style="list-style: none; padding-left: 0; margin-bottom: 0;">` +
+      linkedPubs.map(pub => `<li style="font-size: 0.85rem; margin-bottom: 4px; line-height: 1.3;">• "${pub.title}" (<em>${pub.journal}</em>, ${pub.year})</li>`).join('') +
+      `</ul></div>`
+    : '';
+
+  const projectsMarkup = linkedProjects.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Projects</span>` +
+      linkedProjects.map(p => `<div style="font-size: 0.85rem; margin-bottom: 4px; padding: 6px 10px; border: 1px dashed var(--border); border-radius: 4px; background: var(--bg-offset);"><strong>${p.title}</strong></div>`).join('') +
+      `</div>`
+    : '';
+
+  const grantsMarkup = linkedGrants.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Grants</span>` +
+      linkedGrants.map(g => `<div style="font-size: 0.82rem; color: var(--dark-gray);">• ${g.agency} (${g.grantNumber})</div>`).join('') +
+      `</div>`
+    : '';
+
+  const peopleMarkup = linkedPeople.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Group Members</span>` +
+      `<div style="display: flex; flex-wrap: wrap; gap: 6px;">` +
+      linkedPeople.map(p => `<span class="technique-tag" style="background: #E0F2F1; color: #004D40; border-color: #B2DFDB;">${p.name || p}</span>`).join('') +
+      `</div></div>`
+    : '';
+
+  return `
+    <article class="news-card ${item.featured ? 'featured-pub' : ''}" id="news-${item.id}" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg-offset); box-shadow: var(--shadow-sm); transition: var(--transition); display: flex; flex-direction: column; margin-bottom: 25px;" data-featured="${item.featured || false}">
+      ${item.featured ? '<div class="pub-featured-tag" style="padding: 15px 20px 0 20px; font-weight: 700; color: #B8860B;">★ Featured Announcement</div>' : ''}
+      
+      <div style="display: flex; gap: 20px; padding: 20px;" class="theme-cols-2">
+        ${item.image ? `
+          <div class="news-image-wrapper" style="width: 150px; min-width: 150px; height: 120px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border);">
+            <img src="${item.image}" alt="${item.title}" class="news-image" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+          </div>
+        ` : ''}
+
+        <div class="news-card-content" style="flex-grow: 1;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+            <span class="pub-badge category-badge" style="text-transform: uppercase; font-size: 0.68rem;">${item.category || 'News'}</span>
+            <time class="news-date" datetime="${item.date}" style="font-size: 0.8rem; color: var(--light-gray);">${dateFormatted}</time>
+          </div>
+
+          <h3 class="news-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.25rem; margin-top: 5px; margin-bottom: 8px;">
+            ${item.title}
+          </h3>
+          
+          <p class="news-excerpt" style="font-size: 0.92rem; line-height: 1.5; color: var(--dark-gray); margin-bottom: 12px;">
+            ${item.excerpt}
+          </p>
+
+          <!-- Collapsible Read More Button -->
+          <button class="pub-toggle-btn" onclick="toggleDetails('news-body-panel-${item.id}')" aria-expanded="false" aria-controls="news-body-panel-${item.id}">
+            Read Full Post &rarr;
+          </button>
+
+          <div class="pub-abstract-panel hidden" id="news-body-panel-${item.id}">
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+            <div class="news-detailed-text" style="font-size: 0.9rem; line-height: 1.6; color: var(--dark-gray); margin-bottom: 15px;">
+              ${item.content}
+            </div>
+
+            <!-- Keywords List -->
+            ${keywordsList ? `<div style="margin-bottom: 10px;"><strong>Keywords:</strong> ${keywordsList}</div>` : ''}
+
+            <!-- Relations -->
+            ${publicationsMarkup}
+            ${projectsMarkup}
+            ${grantsMarkup}
+            ${peopleMarkup}
+
+            ${item.link ? `
+              <div style="margin-top: 15px;">
+                <a href="${item.link}" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="font-size: 0.8rem; padding: 5px 10px;">
+                  Official Announcement Specs &rarr;
+                </a>
+              </div>
+            ` : ''}
+          </div>
         </div>
+      </div>
+
+      <!-- Future Ready Placeholder: Embedded Videos, Press Kits, Social Sharing -->
+      <div class="pub-future-actions" style="margin-top: auto; padding: 12px 20px; background: rgba(0,0,0,0.02); display: flex; gap: 15px; font-size: 0.72rem; color: var(--light-gray); border-top: 1px solid var(--border);">
+        <button class="export-bibtex-stub" onclick="alert('Press Kit download is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Download Press Kit
+        </button>
+        <span>•</span>
+        <button class="copy-apa-stub" onclick="alert('Embedded video is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Watch Video
+        </button>
+        <span>•</span>
+        <a href="#" class="pdf-download-stub" onclick="alert('Social sharing is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
+          Share Article
+        </a>
       </div>
     </article>
   `;
@@ -252,14 +990,35 @@ export function NewsCard(item) {
  * Render Gallery Item
  */
 export function GalleryItem(photo) {
+  const dateFormatted = new Date(photo.date).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
   return `
-    <div class="gallery-card" id="gallery-${photo.id}" data-category="${photo.category}">
-      <div class="gallery-image-wrapper">
-        <img src="${photo.url}" alt="${photo.caption}" class="gallery-image" loading="lazy" />
-        <div class="gallery-overlay">
-          <span class="gallery-category-badge">${photo.category}</span>
-          <p class="gallery-caption">${photo.caption}</p>
-          <time class="gallery-date">${new Date(photo.date).getFullYear()}</time>
+    <div class="gallery-card" id="gallery-${photo.id}" data-category="${photo.category}" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg-offset); box-shadow: var(--shadow-sm); transition: var(--transition); display: flex; flex-direction: column; height: 100%;">
+      <div class="gallery-image-wrapper" style="position: relative; aspect-ratio: 4/3; width: 100%; overflow: hidden; background-color: #000; cursor: pointer;" onclick="window.openLightbox('${photo.id}')">
+        <img src="${photo.url}" alt="${photo.caption}" class="gallery-image" style="width: 100%; height: 100%; object-fit: cover; transition: var(--transition); display: block;" loading="lazy" />
+        <div style="position: absolute; top: 10px; left: 10px; z-index: 5;">
+          <span class="pub-badge category-badge" style="text-transform: uppercase; font-size: 0.65rem;">${photo.category}</span>
+        </div>
+      </div>
+      <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+        <div>
+          <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 1.05rem; margin: 0 0 8px 0;">
+            ${photo.title || 'Untitled'}
+          </h3>
+          <p style="font-size: 0.85rem; line-height: 1.4; color: var(--dark-gray); margin: 0 0 10px 0;">
+            ${photo.caption}
+          </p>
+        </div>
+        <div>
+          <div style="font-size: 0.75rem; color: var(--light-gray); display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border); padding-top: 8px; margin-bottom: 10px;">
+            <span>${dateFormatted}</span>
+            ${photo.photographer ? `<span>Photo: ${photo.photographer}</span>` : ''}
+          </div>
+          <button class="pub-toggle-btn" style="width: 100%; text-align: center; justify-content: center; font-size: 0.8rem;" onclick="window.openLightbox('${photo.id}')">
+            View Image Lightbox
+          </button>
         </div>
       </div>
     </div>

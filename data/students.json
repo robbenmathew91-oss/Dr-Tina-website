@@ -36,30 +36,6 @@
       "photo": "assets/images/team/athar_yeganeh_neysiani.jpg",
       "joined_lab": "2024",
       "status": "Current Member"
-    },
-    {
-      "id": "ali-ahmed",
-      "name": "Ali Ahmed",
-      "role": "Graduate Student",
-      "yearStarted": "2024",
-      "projectFocus": "Materials Chemistry research and inorganic exfoliation.",
-      "email": "contact@uga.edu",
-      "linkedin": "",
-      "photo": "assets/images/placeholder.svg",
-      "joined_lab": "2024",
-      "status": "Current Member"
-    },
-    {
-      "id": "april-rains",
-      "name": "April Rains",
-      "role": "Graduate Student",
-      "yearStarted": "2025",
-      "projectFocus": "Materials Chemistry synthesis and characterization.",
-      "email": "contact@uga.edu",
-      "linkedin": "",
-      "photo": "assets/images/placeholder.svg",
-      "joined_lab": "2025",
-      "status": "Current Member"
     }
   ]
 }

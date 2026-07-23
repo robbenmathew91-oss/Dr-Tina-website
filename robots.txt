@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robbenmathew91-oss.github.io/Dr-Tina-website/sitemap.xml

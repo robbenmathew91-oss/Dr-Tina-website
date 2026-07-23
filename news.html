@@ -3,27 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Chronological updates, student accolades, accepted papers, and group announcements from the Salguero Lab.">
-  <title>News & Announcements | Salguero Research Group</title>
+  <title>News & Events | Salguero Research Group</title>
+  <meta name="description" content="Latest news, scientific breakthroughs, awards, publications, outreach activities, and laboratory milestones from the Salguero Research Group at UGA.">
+  <link rel="canonical" href="https://robbenmathew91-oss.github.io/Dr-Tina-website/news.html">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="News & Events | Salguero Research Group">
+  <meta property="og:description" content="Latest news, scientific breakthroughs, awards, publications, outreach activities, and laboratory milestones from the Salguero Research Group at UGA.">
+  <meta property="og:url" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/news.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/tina_salguero.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="News & Events | Salguero Research Group">
+  <meta name="twitter:description" content="Latest news, scientific breakthroughs, awards, publications, outreach activities, and laboratory milestones from the Salguero Research Group at UGA.">
+  <meta name="twitter:image" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/tina_salguero.jpg">
+
   <link rel="stylesheet" href="styles/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    .news-stat-card {
+      background: var(--bg-offset);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .news-stat-val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+      font-family: var(--font-heading);
+    }
+    .news-stat-label {
+      font-size: 0.8rem;
+      color: var(--light-gray);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    @media (max-width: 900px) {
+      .theme-cols-2 {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <div id="header-container"></div>
 
   <main id="main-content">
-    <h1>News & Announcements</h1>
-    <p class="hero-tagline">Updates, achievements, and lab milestones.</p>
+    <h1>News & Events</h1>
+    <p class="hero-tagline">Scientific achievements, outreach, student awards, and group milestones.</p>
 
-    <!-- News List Target -->
-    <section class="mb-8" style="margin-top: 30px;">
-      <div id="news-list-target" class="grid-cols-2">
-        <p>Loading news updates...</p>
+    <!-- News Dashboard Stats -->
+    <section class="mb-8" style="margin-top: 30px;" aria-label="News Metrics Dashboard">
+      <div class="grid-cols-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px;" id="news-dashboard-target">
+        <!-- Dashboard stats dynamically injected -->
       </div>
     </section>
+
+    <!-- Search & Filter Controls -->
+    <section class="search-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; margin-top: 30px;" aria-label="Search and Filter Controls">
+      <div style="display: flex; gap: 15px; width: 100%; flex-wrap: wrap;">
+        <input type="text" id="search-box" class="search-input" placeholder="Search by title, summary, or keywords..." aria-label="Search news">
+        
+        <select id="sort-filter" class="filter-select" aria-label="Sort news">
+          <option value="newest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+          <option value="category">Sort: Category</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; width: 100%;" class="grid-cols-3">
+        <select id="category-filter" class="filter-select" aria-label="Filter by Category">
+          <option value="all">All Categories</option>
+          <option value="Publications">Publications Only</option>
+          <option value="Awards">Awards Only</option>
+          <option value="Conferences">Conferences Only</option>
+          <option value="Outreach">Outreach Only</option>
+          <option value="Student News">Student News Only</option>
+          <option value="Lab Milestones">Lab Milestones Only</option>
+          <option value="Funding">Funding Only</option>
+          <option value="New Members">New Members Only</option>
+          <option value="Alumni">Alumni Only</option>
+        </select>
+
+        <select id="year-filter" class="filter-select" aria-label="Filter by Year">
+          <option value="all">All Years</option>
+        </select>
+
+        <select id="theme-filter" class="filter-select" aria-label="Filter by Research Theme">
+          <option value="all">All Themes</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Active Filter Indicators -->
+    <div id="active-filters-container" class="pub-active-filters-row" aria-live="polite"></div>
+
+    <!-- Featured News Announcements (Pinned Highlights) -->
+    <section id="featured-news-section" class="mb-8 hidden" style="margin-top: 30px;">
+      <h2 style="color: #B8860B; border-bottom: 2px solid #D4AF37; padding-bottom: 5px; margin-bottom: 20px;">Featured Announcements</h2>
+      <div id="featured-news-target"></div>
+    </section>
+
+    <!-- News List Grid -->
+    <section class="mb-8" style="margin-top: 40px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <h2 id="news-list-title" style="margin: 0; font-size: 1.5rem;">All Updates</h2>
+        <div id="news-count" class="pub-count-label">Showing 0 of 0 posts</div>
+      </div>
+      <div id="news-list-target" style="display: flex; flex-direction: column; gap: 20px;">
+        <p>Loading news feed...</p>
+      </div>
+    </section>
+
+    <!-- Pagination controls -->
+    <div id="pagination-container" class="pub-pagination-bar" aria-label="Pagination Navigation"></div>
+
+    <!-- Visual Timeline of Major Milestones -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 25px;">Laboratory Historical Timeline</h2>
+      <p style="margin-bottom: 25px; color: var(--light-gray);">Visual overview of key lab achievements and structural milestones.</p>
+      <div id="timeline-target"></div>
+    </section>
+
   </main>
 
   <div id="footer-container"></div>
@@ -33,24 +144,376 @@
     import { loadData } from './src/js/loader.js';
     import { validateData } from './src/js/validator.js';
     import { NewsCard } from './src/js/components.js';
-    import { renderList, SortFunctions } from './src/js/renderer.js';
+    import './src/js/renderer.js'; // defines window.toggleDetails
+
+    let allNews = [];
+    let filteredNews = [];
+    let currentPage = 1;
+    let pageSize = 5;
+
+    let allResearch = [];
+    let allGrants = [];
+    let allProjects = [];
+    let allPublications = [];
+    let allPeople = [];
 
     async function initNews() {
-      const dataObj = await loadData('news.json');
-      const newsList = dataObj.news || [];
+      // Load all data feeds asynchronously
+      const [newsData, researchData, grantsData, projectsData, publicationsData, studentsData, alumniData] = await Promise.all([
+        loadData('news.json'),
+        loadData('research.json'),
+        loadData('grants.json'),
+        loadData('projects.json'),
+        loadData('publications.json'),
+        loadData('students.json'),
+        loadData('alumni.json')
+      ]);
+
+      allNews = newsData.news || [];
+      allResearch = researchData.themes || [];
+      allGrants = grantsData.grants || [];
+      allProjects = projectsData.projects || [];
+      allPublications = publicationsData.publications || [];
+      
+      // Combine students and alumni into a single roster for referencing leads/people
+      allPeople = [
+        ...(studentsData.students || []).map(s => ({ id: s.id, name: s.name })),
+        ...(alumniData.alumni || []).map(a => ({ id: a.id, name: a.name })),
+        { id: "casey-rowe", name: "Casey Rowe" } // Hard-coded fallback for missing dossier graduates
+      ];
 
       // Validate
-      validateData('news', newsList);
+      validateData('news', allNews);
 
-      // Render
-      renderList({
-        selector: '#news-list-target',
-        items: newsList,
-        componentFn: NewsCard,
-        sortFn: SortFunctions.datesDescending,
-        emptyMessage: 'No news or updates posted yet.'
+      // Populate filter dropdowns
+      populateFilterDropdowns(allNews);
+
+      // Add event listeners
+      document.getElementById('search-box').addEventListener('input', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('sort-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('category-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('theme-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('year-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+
+      // Initial render
+      applyFilters();
+      renderDashboard();
+      renderTimeline();
+    }
+
+    function populateFilterDropdowns(news) {
+      const yearSelect = document.getElementById('year-filter');
+      const themeSelect = document.getElementById('theme-filter');
+
+      const years = new Set();
+      const themes = new Set();
+
+      news.forEach(item => {
+        if (item.year) years.add(item.year);
+        if (item.related_themes) item.related_themes.forEach(t => themes.add(t));
+      });
+
+      // Populate Years (Sorted descending)
+      Array.from(years).sort((a,b) => b.localeCompare(a)).forEach(y => {
+        yearSelect.add(new Option(y, y));
+      });
+
+      // Populate Themes
+      Array.from(themes).sort().forEach(t => {
+        themeSelect.add(new Option(t, t));
       });
     }
+
+    function renderDashboard() {
+      const target = document.getElementById('news-dashboard-target');
+      
+      const totalCount = allNews.length;
+      const pubCount = allNews.filter(n => n.category === 'Publications').length;
+      const awardCount = allNews.filter(n => n.category === 'Awards').length;
+      const confCount = allNews.filter(n => n.category === 'Conferences').length;
+      const outreachCount = allNews.filter(n => n.category === 'Outreach').length;
+      const memberCount = allNews.filter(n => n.category === 'New Members').length;
+
+      target.innerHTML = `
+        <div class="news-stat-card">
+          <div class="news-stat-val">${totalCount}</div>
+          <div class="news-stat-label">Total Updates</div>
+        </div>
+        <div class="news-stat-card">
+          <div class="news-stat-val">${pubCount}</div>
+          <div class="news-stat-label">Papers</div>
+        </div>
+        <div class="news-stat-card">
+          <div class="news-stat-val">${awardCount}</div>
+          <div class="news-stat-label">Awards</div>
+        </div>
+        <div class="news-stat-card">
+          <div class="news-stat-val">${confCount}</div>
+          <div class="news-stat-label">Conferences</div>
+        </div>
+        <div class="news-stat-card">
+          <div class="news-stat-val">${outreachCount}</div>
+          <div class="news-stat-label">Outreach</div>
+        </div>
+        <div class="news-stat-card">
+          <div class="news-stat-val">${memberCount}</div>
+          <div class="news-stat-label">New Members</div>
+        </div>
+      `;
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('search-box').value.toLowerCase().trim();
+      const category = document.getElementById('category-filter').value;
+      const year = document.getElementById('year-filter').value;
+      const theme = document.getElementById('theme-filter').value;
+      const sortVal = document.getElementById('sort-filter').value;
+
+      // Filter Logic
+      filteredNews = allNews.filter(n => {
+        const matchesQuery = !query ||
+          n.title.toLowerCase().includes(query) ||
+          n.excerpt.toLowerCase().includes(query) ||
+          (n.keywords && n.keywords.some(kw => kw.toLowerCase().includes(query)));
+
+        const matchesCategory = category === 'all' || n.category === category;
+        const matchesYear = year === 'all' || n.year === year;
+        const matchesTheme = theme === 'all' || (n.related_themes && n.related_themes.includes(theme));
+
+        return matchesQuery && matchesCategory && matchesYear && matchesTheme;
+      });
+
+      // Sorting Logic
+      let sortFn;
+      if (sortVal === 'newest') {
+        sortFn = (a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title);
+      } else if (sortVal === 'oldest') {
+        sortFn = (a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title);
+      } else if (sortVal === 'category') {
+        sortFn = (a, b) => a.category.localeCompare(b.category) || b.date.localeCompare(a.date);
+      }
+
+      filteredNews.sort(sortFn);
+
+      // Render pills
+      renderActivePills({ query, category, year, theme });
+
+      // Render featured section (only when no filters are active)
+      const isFilterActive = query || category !== 'all' || year !== 'all' || theme !== 'all';
+      renderFeaturedSection(isFilterActive);
+
+      // Render paginated news cards
+      renderPaginatedNews();
+    }
+
+    function renderFeaturedSection(isFilterActive) {
+      const section = document.getElementById('featured-news-section');
+      const target = document.getElementById('featured-news-target');
+
+      if (isFilterActive) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      const featured = allNews.filter(n => n.featured);
+      if (featured.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      section.classList.remove('hidden');
+      const markup = featured.map(n => {
+        const relations = resolveRelations(n);
+        return NewsCard(n, relations);
+      }).join('');
+      target.innerHTML = markup;
+    }
+
+    function resolveRelations(n) {
+      return {
+        publications: allPublications.filter(pub => (n.related_publications || []).includes(pub.id)),
+        projects: allProjects.filter(p => (n.related_projects || []).includes(p.id)),
+        grants: allGrants.filter(g => (n.related_grants || []).includes(g.id)),
+        people: allPeople.filter(p => (n.related_people || []).includes(p.id))
+      };
+    }
+
+    function renderPaginatedNews() {
+      const target = document.getElementById('news-list-target');
+      const countLabel = document.getElementById('news-count');
+
+      countLabel.textContent = `Showing ${filteredNews.length} of ${allNews.length} updates`;
+
+      if (filteredNews.length === 0) {
+        target.innerHTML = `
+          <div class="empty-state" style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border); border-radius: 8px; background: var(--bg-offset);">
+            <p style="font-size: 1.1rem; color: var(--light-gray); margin-bottom: 10px;">No updates found matching your criteria.</p>
+            <button class="btn btn-secondary btn-sm" onclick="window.clearAllFilters()">Clear All Filters</button>
+          </div>
+        `;
+        document.getElementById('pagination-container').innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(filteredNews.length / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, filteredNews.length);
+      const pageItems = filteredNews.slice(startIndex, endIndex);
+
+      // Render cards resolving relations dynamically
+      const markup = pageItems.map(n => {
+        const relations = resolveRelations(n);
+        return NewsCard(n, relations);
+      }).join('');
+
+      target.innerHTML = markup;
+
+      renderPaginationBar(totalPages);
+    }
+
+    function renderPaginationBar(totalPages) {
+      const container = document.getElementById('pagination-container');
+      
+      let pageButtons = '';
+      for (let i = 1; i <= totalPages; i++) {
+        pageButtons += `
+          <button class="pub-page-btn ${i === currentPage ? 'active-page' : ''}" onclick="window.setPage(${i})" aria-label="Page ${i}" ${i === currentPage ? 'aria-current="page"' : ''}>
+            ${i}
+          </button>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="pub-count-label">
+          Showing ${Math.min((currentPage - 1) * pageSize + 1, filteredNews.length)}–${Math.min(currentPage * pageSize, filteredNews.length)} of ${filteredNews.length}
+        </div>
+        
+        <div class="pub-page-controls">
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous Page">
+            &lt; Prev
+          </button>
+          ${pageButtons}
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next Page">
+            Next &gt;
+          </button>
+        </div>
+
+        <div>
+          <span style="font-size: 0.85rem; color: var(--light-gray); margin-right: 8px;">Show:</span>
+          <select class="pub-pagesize-select" onchange="window.setPageSize(this.value)" aria-label="News per page">
+            <option value="5" ${pageSize === 5 ? 'selected' : ''}>5</option>
+            <option value="10" ${pageSize === 10 ? 'selected' : ''}>10</option>
+            <option value="20" ${pageSize === 20 ? 'selected' : ''}>20</option>
+          </select>
+        </div>
+      `;
+    }
+
+    function renderActivePills({ query, category, year, theme }) {
+      const container = document.getElementById('active-filters-container');
+      const pills = [];
+
+      if (query) {
+        pills.push(`
+          <span class="filter-pill">
+            Search: "${query}"
+            <button class="filter-pill-remove" onclick="window.clearFilter('search')" aria-label="Remove search filter">×</button>
+          </span>
+        `);
+      }
+      if (category !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Category: ${category}
+            <button class="filter-pill-remove" onclick="window.clearFilter('category')" aria-label="Remove category filter">×</button>
+          </span>
+        `);
+      }
+      if (year !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Year: ${year}
+            <button class="filter-pill-remove" onclick="window.clearFilter('year')" aria-label="Remove year filter">×</button>
+          </span>
+        `);
+      }
+      if (theme !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Theme: ${theme}
+            <button class="filter-pill-remove" onclick="window.clearFilter('theme')" aria-label="Remove theme filter">×</button>
+          </span>
+        `);
+      }
+
+      if (pills.length > 0) {
+        container.innerHTML = `
+          ${pills.join('')}
+          <button class="btn btn-text btn-sm" onclick="window.clearAllFilters()" style="color: var(--primary); text-decoration: underline; cursor: pointer; padding: 0; font-weight: 600;">
+            Clear All
+          </button>
+        `;
+      } else {
+        container.innerHTML = '';
+      }
+    }
+
+    function renderTimeline() {
+      const target = document.getElementById('timeline-target');
+      // Sort posts chronologically
+      const sorted = [...allNews].sort((a,b) => a.date.localeCompare(b.date));
+
+      const markup = sorted.map(item => `
+        <div class="timeline-node">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content-card">
+            <div class="timeline-header">
+              <span class="event-date" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">${item.date}</span>
+              <span class="pub-badge category-badge" style="font-size: 0.65rem;">${item.category}</span>
+            </div>
+            <h3 class="event-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.1rem; margin-top: 5px; margin-bottom: 8px;">
+              ${item.title}
+            </h3>
+            <p style="font-size: 0.9rem; color: var(--dark-gray); margin-bottom: 0;">${item.excerpt}</p>
+          </div>
+        </div>
+      `).join('');
+
+      target.innerHTML = `<div class="timeline-container">${markup}</div>`;
+    }
+
+    // Global bindings for pagination & pills
+    window.setPage = function(pageNumber) {
+      currentPage = pageNumber;
+      applyFilters();
+      document.getElementById('news-list-title').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    window.setPageSize = function(size) {
+      pageSize = parseInt(size, 10);
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearFilter = function(name) {
+      if (name === 'search') document.getElementById('search-box').value = '';
+      if (name === 'category') document.getElementById('category-filter').value = 'all';
+      if (name === 'year') document.getElementById('year-filter').value = 'all';
+      if (name === 'theme') document.getElementById('theme-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearAllFilters = function() {
+      document.getElementById('search-box').value = '';
+      document.getElementById('category-filter').value = 'all';
+      document.getElementById('year-filter').value = 'all';
+      document.getElementById('theme-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
 
     initNews();
   </script>

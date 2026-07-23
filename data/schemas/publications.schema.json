@@ -8,7 +8,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "title", "authors", "journal", "year", "doi", "link"],
+        "required": ["id", "title", "authors", "journal", "year", "doi", "link", "research_category", "keywords", "publication_type"],
         "properties": {
           "id": {
             "type": "string",
@@ -55,6 +55,27 @@
             "type": "array",
             "description": "Scientific tags for categorizing and filtering",
             "items": { "type": "string" }
+          },
+          "issue": {
+            "type": "string",
+            "description": "Issue number of the journal (optional)"
+          },
+          "research_category": {
+            "type": "string",
+            "description": "Core research category (e.g., 2D Materials, Catalysis, etc.)"
+          },
+          "keywords": {
+            "type": "array",
+            "description": "Keywords list for indexing and search",
+            "items": { "type": "string" }
+          },
+          "publication_type": {
+            "type": "string",
+            "description": "Type of publication (e.g. Journal Article, Review, etc.)"
+          },
+          "featured": {
+            "type": "boolean",
+            "description": "Flag to mark this publication as featured (shown at top)"
           }
         }
       }
