@@ -4,7 +4,7 @@
     {
       "id": "casey-rowe",
       "name": "Casey Rowe",
-      "degree": "Ph.D.",
+      "degree": "Ph.D. in Chemistry",
       "graduationYear": "2025",
       "thesisTitle": "Revealing Thermally-Induced Nanoscale Behavior in Low-Dimensional Quantum Materials Through in Situ Scanning Transmission Electron Microscopy",
       "currentPosition": "Postdoctoral Researcher",
@@ -19,7 +19,7 @@
     {
       "id": "nicholas-sesing",
       "name": "Nicholas Sesing",
-      "degree": "Ph.D.",
+      "degree": "Ph.D. in Chemistry",
       "graduationYear": "2025",
       "thesisTitle": "Chemical Vapor Transport Optimization for Actinide Chalcogenides",
       "currentPosition": "Research Scientist",
@@ -34,7 +34,7 @@
     {
       "id": "ali-ahmed",
       "name": "Ali Ahmed",
-      "degree": "M.S. Chemistry",
+      "degree": "M.S. in Chemistry",
       "graduationYear": "2026",
       "currentPosition": "Chemistry Instructor, Nashville State Community College",
       "linkedin": "",
@@ -50,7 +50,7 @@
     {
       "id": "xena-mansoura",
       "name": "Xena Mansoura",
-      "degree": "M.S. Chemistry",
+      "degree": "M.S. in Chemistry",
       "graduationYear": "2024",
       "thesisTitle": "Synthesis, Characterization, and Application of Copper and Manganese Based Luminescent Materials",
       "currentPosition": "Research Associate, Pacific Northwest National Laboratory (PNNL)",
@@ -66,6 +66,21 @@
       "notableAchievements": [
         "2025 CSGS Master's Thesis Award recipient (Math, Physical Sciences, and Engineering)"
       ]
+    },
+    {
+      "id": "april-rains",
+      "name": "April Rains",
+      "degree": "Ph.D. in Chemistry",
+      "graduationYear": "2026",
+      "thesisTitle": "Sustainable Recycling of Lithium-Ion Batteries",
+      "currentPosition": "Alumna",
+      "linkedin": "",
+      "photo": "assets/images/placeholder.svg",
+      "joined_lab": "2025",
+      "status": "Alumni",
+      "graduated_year": "2026",
+      "degree_institution": "University of Georgia",
+      "degree_year": "2026"
     }
   ]
 }
