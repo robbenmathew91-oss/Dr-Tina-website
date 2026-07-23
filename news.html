@@ -3,8 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Latest updates, scientific achievements, publications, awards, outreach, and student news from the Salguero Group.">
   <title>News & Events | Salguero Research Group</title>
+  <meta name="description" content="Latest news, scientific breakthroughs, awards, publications, outreach activities, and laboratory milestones from the Salguero Research Group at UGA.">
+  <link rel="canonical" href="https://robbenmathew91-oss.github.io/Dr-Tina-website/news.html">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="News & Events | Salguero Research Group">
+  <meta property="og:description" content="Latest news, scientific breakthroughs, awards, publications, outreach activities, and laboratory milestones from the Salguero Research Group at UGA.">
+  <meta property="og:url" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/news.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/tina_salguero.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="News & Events | Salguero Research Group">
+  <meta name="twitter:description" content="Latest news, scientific breakthroughs, awards, publications, outreach activities, and laboratory milestones from the Salguero Research Group at UGA.">
+  <meta name="twitter:image" content="https://robbenmathew91-oss.github.io/Dr-Tina-website/tina_salguero.jpg">
+
   <link rel="stylesheet" href="styles/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,6 +144,7 @@
     import { loadData } from './src/js/loader.js';
     import { validateData } from './src/js/validator.js';
     import { NewsCard } from './src/js/components.js';
+    import './src/js/renderer.js'; // defines window.toggleDetails
 
     let allNews = [];
     let filteredNews = [];
