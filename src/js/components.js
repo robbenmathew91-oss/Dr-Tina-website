@@ -77,6 +77,7 @@ export function StudentCard(student) {
         <h3 class="student-name">${student.name}</h3>
         <p class="student-role">${student.role}</p>
         <p class="student-year">Joined the Salguero Lab in ${student.joined_lab || student.yearStarted}</p>
+        ${student.degree ? `<p class="student-degree-info" style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 4px;">${student.degree}, ${student.degree_institution} (${student.degree_year})</p>` : ''}
         <p class="student-focus">${student.projectFocus}</p>
         
         <div class="student-links">
@@ -107,7 +108,8 @@ export function AlumniCard(alumnus) {
           </div>
           <div class="alumni-body">
             <p class="alumni-joined" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 2px;">Joined the Salguero Lab in ${alumnus.joined_lab}</p>
-            <p class="alumni-graduated" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 6px;">Graduated in ${alumnus.graduated_year}</p>
+            <p class="alumni-graduated" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 4px;">Graduated in ${alumnus.graduated_year}</p>
+            ${alumnus.degree_institution ? `<p class="alumni-degree-info" style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 6px;">${alumnus.degree}, ${alumnus.degree_institution} (${alumnus.degree_year})</p>` : ''}
             ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
             <p class="alumni-current"><strong>Current:</strong> ${alumnus.currentPosition}</p>
             ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}

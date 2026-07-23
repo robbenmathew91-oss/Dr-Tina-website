@@ -8,7 +8,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "degree", "graduationYear", "currentPosition", "joined_lab", "status", "graduated_year"],
+        "required": ["id", "name", "degree", "graduationYear", "currentPosition", "joined_lab", "status", "graduated_year", "degree_institution", "degree_year"],
         "properties": {
           "id": {
             "type": "string",
@@ -54,6 +54,14 @@
           "graduated_year": {
             "type": "string",
             "description": "Year they graduated or departed from the lab"
+          },
+          "degree_institution": {
+            "type": "string",
+            "description": "Institution granting the degree"
+          },
+          "degree_year": {
+            "type": "string",
+            "description": "Year the degree was earned"
           }
         }
       }

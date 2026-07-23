@@ -55,6 +55,18 @@
           "graduated_year": {
             "type": "string",
             "description": "Year of graduation or departure from the lab (if Alumnus)"
+          },
+          "degree": {
+            "type": "string",
+            "description": "Degree earned during current lab membership (if applicable)"
+          },
+          "degree_institution": {
+            "type": "string",
+            "description": "Institution granting the degree"
+          },
+          "degree_year": {
+            "type": "string",
+            "description": "Year the degree was earned"
           }
         }
       }
