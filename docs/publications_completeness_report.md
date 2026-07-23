@@ -40,3 +40,11 @@ The site's "Featured Research" section now dynamically presents 11 landmark publ
 - **Pagination**: Paginated navigation automatically scales to 80 publications (e.g., *Showing 80 of 80 publications*, 10 items per page).
 - **Search & Filtering**: Multi-criteria filters (Search string, Year, Research Category, Publication Type, Journal) dynamically compute matches across all 80 items.
 - **DOI Links**: Every record includes valid DOI resolution URLs (`https://doi.org/...`) or direct ArXiv links (`https://arxiv.org/abs/...`).
+
+---
+
+## 5. Official Abstract & Metadata Integrity Policy
+To maintain strict university academic standards and prevent synthetic or template text from appearing as scientific metadata:
+- **Placeholder Elimination**: Removed all 72 generated template abstracts from `data/publications.json`.
+- **Verified Retention**: Retained only official publisher-verified abstracts for 8 landmark papers.
+- **Dynamic UI Omission**: Updated `PublicationCard` component in `src/js/components.js` so that publications lacking an official abstract gracefully omit the "View Abstract" button and collapsible panel completely. No disabled controls, fallback text, or "No abstract available" placeholders are displayed.
