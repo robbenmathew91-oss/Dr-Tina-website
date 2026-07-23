@@ -86,6 +86,7 @@
           <option value="all">All Categories</option>
           <option value="Publications">Publications Only</option>
           <option value="Awards">Awards Only</option>
+          <option value="Awards & Recognition">Awards & Recognition</option>
           <option value="Conferences">Conferences Only</option>
           <option value="Outreach">Outreach Only</option>
           <option value="Student News">Student News Only</option>
@@ -229,7 +230,7 @@
       
       const totalCount = allNews.length;
       const pubCount = allNews.filter(n => n.category === 'Publications').length;
-      const awardCount = allNews.filter(n => n.category === 'Awards').length;
+      const awardCount = allNews.filter(n => n.category === 'Awards' || n.category === 'Awards & Recognition').length;
       const confCount = allNews.filter(n => n.category === 'Conferences').length;
       const outreachCount = allNews.filter(n => n.category === 'Outreach').length;
       const memberCount = allNews.filter(n => n.category === 'New Members').length;
@@ -337,14 +338,23 @@
         people: allPeople.filter(p => (n.related_people || []).includes(p.id))
       };
     }
-
     function renderPaginatedNews() {
       const target = document.getElementById('news-list-target');
       const countLabel = document.getElementById('news-count');
 
-      countLabel.textContent = `Showing ${filteredNews.length} of ${allNews.length} updates`;
+      // Exclude featured articles from "All Updates" when no search/filter is active
+      const query = document.getElementById('search-box').value.toLowerCase().trim();
+      const category = document.getElementById('category-filter').value;
+      const year = document.getElementById('year-filter').value;
+      const theme = document.getElementById('theme-filter').value;
+      const isFilterActive = query || category !== 'all' || year !== 'all' || theme !== 'all';
 
-      if (filteredNews.length === 0) {
+      const displayList = isFilterActive ? filteredNews : filteredNews.filter(n => !n.featured);
+
+      // Update counter text to accurately reflect visible items in All Updates
+      countLabel.textContent = `Showing ${displayList.length} ${displayList.length === 1 ? 'update' : 'updates'}`;
+
+      if (displayList.length === 0) {
         target.innerHTML = `
           <div class="empty-state" style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border); border-radius: 8px; background: var(--bg-offset);">
             <p style="font-size: 1.1rem; color: var(--light-gray); margin-bottom: 10px;">No updates found matching your criteria.</p>
@@ -355,12 +365,12 @@
         return;
       }
 
-      const totalPages = Math.ceil(filteredNews.length / pageSize);
+      const totalPages = Math.ceil(displayList.length / pageSize);
       if (currentPage > totalPages) currentPage = totalPages || 1;
 
       const startIndex = (currentPage - 1) * pageSize;
-      const endIndex = Math.min(startIndex + pageSize, filteredNews.length);
-      const pageItems = filteredNews.slice(startIndex, endIndex);
+      const endIndex = Math.min(startIndex + pageSize, displayList.length);
+      const pageItems = displayList.slice(startIndex, endIndex);
 
       // Render cards resolving relations dynamically
       const markup = pageItems.map(n => {
@@ -370,10 +380,10 @@
 
       target.innerHTML = markup;
 
-      renderPaginationBar(totalPages);
+      renderPaginationBar(totalPages, displayList.length);
     }
 
-    function renderPaginationBar(totalPages) {
+    function renderPaginationBar(totalPages, totalDisplayCount) {
       const container = document.getElementById('pagination-container');
       
       let pageButtons = '';
@@ -387,7 +397,7 @@
 
       container.innerHTML = `
         <div class="pub-count-label">
-          Showing ${Math.min((currentPage - 1) * pageSize + 1, filteredNews.length)}–${Math.min(currentPage * pageSize, filteredNews.length)} of ${filteredNews.length}
+          Showing ${Math.min((currentPage - 1) * pageSize + 1, totalDisplayCount)}–${Math.min(currentPage * pageSize, totalDisplayCount)} of ${totalDisplayCount}
         </div>
         
         <div class="pub-page-controls">
