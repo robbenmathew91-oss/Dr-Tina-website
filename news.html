@@ -86,6 +86,7 @@
           <option value="all">All Categories</option>
           <option value="Publications">Publications Only</option>
           <option value="Awards">Awards Only</option>
+          <option value="Awards & Recognition">Awards & Recognition</option>
           <option value="Conferences">Conferences Only</option>
           <option value="Outreach">Outreach Only</option>
           <option value="Student News">Student News Only</option>
@@ -229,7 +230,7 @@
       
       const totalCount = allNews.length;
       const pubCount = allNews.filter(n => n.category === 'Publications').length;
-      const awardCount = allNews.filter(n => n.category === 'Awards').length;
+      const awardCount = allNews.filter(n => n.category === 'Awards' || n.category === 'Awards & Recognition').length;
       const confCount = allNews.filter(n => n.category === 'Conferences').length;
       const outreachCount = allNews.filter(n => n.category === 'Outreach').length;
       const memberCount = allNews.filter(n => n.category === 'New Members').length;
