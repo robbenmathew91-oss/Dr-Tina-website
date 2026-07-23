@@ -467,7 +467,12 @@ export function AlumniCard(alumnus) {
             ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
             ${alumnus.researchFocus || alumnus.projectFocus ? `<p class="alumni-focus"><strong>Research Focus:</strong> ${alumnus.researchFocus || alumnus.projectFocus}</p>` : ''}
             ${alumnus.description ? `<p class="alumni-desc" style="font-size: 0.9rem; margin-top: 4px; color: var(--text-color);">${alumnus.description}</p>` : ''}
-            <p class="alumni-current" style="margin-top: 4px;"><strong>Current:</strong> ${alumnus.currentPosition}</p>
+            ${alumnus.notableAchievements && alumnus.notableAchievements.length > 0 ? `
+              <div class="alumni-achievements" style="margin-top: 6px; padding: 6px 10px; background: #FFFDF0; border-left: 3px solid #D4AF37; border-radius: 0 4px 4px 0; font-size: 0.85rem; color: #8B6508;">
+                <strong>Notable Achievement:</strong> ${alumnus.notableAchievements.join(', ')}
+              </div>
+            ` : ''}
+            <p class="alumni-current" style="margin-top: 6px;"><strong>Current Position:</strong> ${alumnus.currentPosition}</p>
             ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}
           </div>
         </div>
