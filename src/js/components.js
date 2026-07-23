@@ -657,6 +657,17 @@ export function PublicationCard(pub) {
     .map(kw => `<span class="pub-keyword">${kw}</span>`)
     .join('');
 
+  // Resolve canonical destination: DOI link takes precedence, then link, then null
+  const canonicalUrl = pub.doi
+    ? (pub.doi.startsWith('http') ? pub.doi : `https://doi.org/${pub.doi}`)
+    : (pub.link || '');
+
+  const escapedTitle = pub.title.replace(/'/g, "\\'");
+  const escapedAuthors = pub.authors.replace(/'/g, "\\'");
+  const escapedJournal = pub.journal.replace(/'/g, "\\'");
+  const pubYear = pub.year || '';
+  const pubDoi = pub.doi || '';
+
   return `
     <div class="publication-card ${pub.featured ? 'featured-pub' : ''}" id="publication-${pub.id}" data-featured="${pub.featured || false}">
       ${pub.featured ? '<div class="pub-featured-tag">★ Featured Publication</div>' : ''}
@@ -666,18 +677,6 @@ export function PublicationCard(pub) {
           <span class="pub-badge category-badge">${pub.research_category}</span>
           <span class="pub-badge type-badge">${pub.publication_type}</span>
           <span class="pub-year-badge">${pub.year}</span>
-        </div>
-        
-        <!-- Future Ready Placeholder: Altmetric and Citation Count -->
-        <div class="pub-future-metrics">
-          <span class="pub-metric-badge citation-count-stub" title="Citations (Coming Soon)">
-            <svg viewBox="0 0 24 24" class="metric-icon" style="width: 14px; height: 14px; fill: currentColor; display: inline-block; vertical-align: middle; margin-right: 3px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-            <span class="stub-val">--</span>
-          </span>
-          <span class="pub-metric-badge altmetric-stub" title="Altmetric (Coming Soon)">
-            <span class="altmetric-donut-stub" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--primary); display: inline-block; vertical-align: middle; margin-right: 3px;"></span>
-            <span class="stub-val">--</span>
-          </span>
         </div>
       </div>
 
@@ -689,24 +688,25 @@ export function PublicationCard(pub) {
       </p>
 
       <div class="pub-actions">
-        <a href="https://doi.org/${pub.doi}" class="pub-link-btn" target="_blank" rel="noopener" aria-label="DOI Link for ${pub.title}">
-          DOI: ${pub.doi}
-        </a>
-        <a href="${pub.link}" class="pub-link-btn read-btn" target="_blank" rel="noopener" aria-label="Read paper: ${pub.title}">
-          Read Paper &rarr;
-        </a>
+        ${canonicalUrl ? `
+          <a href="${canonicalUrl}" class="pub-link-btn read-btn" target="_blank" rel="noopener" aria-label="View publication: ${pub.title}">
+            View Publication &rarr;
+          </a>
+        ` : ''}
         
         ${pub.abstract ? `
           <button class="pub-toggle-btn abstract-btn" onclick="toggleDetails('pub-abstract-${pub.id}')" aria-expanded="false" aria-controls="pub-abstract-${pub.id}">
             View Abstract
           </button>
         ` : ''}
-        
-        ${keywordsList ? `
-          <button class="pub-toggle-btn keywords-btn" onclick="toggleDetails('pub-keywords-${pub.id}')" aria-expanded="false" aria-controls="pub-keywords-${pub.id}">
-            Keywords
-          </button>
-        ` : ''}
+
+        <button class="pub-toggle-btn cite-btn" onclick="window.copyCitation('${escapedAuthors}', '${escapedTitle}', '${escapedJournal}', '${pubYear}', '${pub.volume || ''}', '${pub.issue || ''}', '${pub.pages || ''}', '${pubDoi}')" aria-label="Copy citation for ${pub.title}">
+          Copy Citation
+        </button>
+
+        <button class="pub-toggle-btn bibtex-btn" onclick="window.exportBibTeX('${pub.id}', '${escapedAuthors}', '${escapedTitle}', '${escapedJournal}', '${pubYear}', '${pub.volume || ''}', '${pub.issue || ''}', '${pub.pages || ''}', '${pubDoi}')" aria-label="BibTeX citation for ${pub.title}">
+          BibTeX
+        </button>
       </div>
 
       <!-- Expandable Abstract Panel -->
@@ -716,29 +716,6 @@ export function PublicationCard(pub) {
           <p class="abstract-text"><strong>Abstract:</strong> ${pub.abstract}</p>
         </div>
       ` : ''}
-
-      <!-- Expandable Keywords Panel -->
-      ${keywordsList ? `
-        <div class="pub-keywords-panel hidden" id="pub-keywords-${pub.id}">
-          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
-          <div class="pub-keywords-list">
-            <strong>Keywords:</strong> ${keywordsList}
-          </div>
-        </div>
-      ` : ''}
-
-      <!-- Future Ready Placeholder: Citation & Bibliography export hooks -->
-      <div class="pub-future-actions" style="margin-top: 12px; display: flex; gap: 15px; font-size: 0.75rem; color: var(--light-gray);">
-        <button class="export-bibtex-stub" onclick="alert('BibTeX export is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.75rem;">
-          Cite (BibTeX)
-        </button>
-        <button class="copy-apa-stub" onclick="alert('ACS/APA Citation copy is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.75rem;">
-          Copy Citation
-        </button>
-        <a href="#" class="pdf-download-stub" onclick="alert('PDF download is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
-          Download PDF
-        </a>
-      </div>
     </div>
   `;
 }
