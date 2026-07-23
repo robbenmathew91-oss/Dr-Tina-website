@@ -545,89 +545,275 @@ a:hover {
 
 /* Publication Card */
 .publication-card {
-  border-left: 3px solid var(--primary);
-  padding: 15px 20px;
+  border-left: 3px solid var(--border);
+  padding: 20px 25px;
   background: var(--bg-offset);
   border-top: 1px solid var(--border);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  border-radius: 0 6px 6px 0;
-  margin-bottom: 20px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 25px;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
+  position: relative;
 }
 .publication-card:hover {
   box-shadow: var(--shadow-md);
+  border-left-color: var(--primary);
   background: var(--bg);
+}
+.featured-pub {
+  border-left: 3px solid #D4AF37; /* Gold left border for featured */
+  background: #FFFDF0; /* Subtle warm yellow offset background */
+  box-shadow: 0 4px 6px -1px rgba(212,175,55,0.08), 0 2px 4px -1px rgba(212,175,55,0.04);
+}
+.featured-pub:hover {
+  background: #FFFFFA;
+  box-shadow: 0 8px 12px -1px rgba(212,175,55,0.12), 0 4px 6px -1px rgba(212,175,55,0.06);
+}
+.pub-featured-tag {
+  font-size: 0.75rem;
+  color: #B8860B;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 .pub-meta-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.pub-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.pub-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.category-badge {
+  background-color: rgba(204, 0, 0, 0.08);
+  color: var(--primary);
+  border-color: rgba(204, 0, 0, 0.15);
+}
+.type-badge {
+  background-color: #ECEFF1;
+  color: #37474F;
+  border-color: #CFD8DC;
 }
 .pub-year-badge {
-  background-color: var(--primary);
+  background-color: var(--dark-gray);
   color: #fff;
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
-.pub-tags-list {
+.pub-future-metrics {
   display: flex;
-  gap: 5px;
+  gap: 8px;
 }
-.pub-tag-badge {
+.pub-metric-badge {
+  display: inline-flex;
+  align-items: center;
   font-size: 0.7rem;
-  background: #fff;
-  border: 1px solid var(--border);
+  font-weight: 600;
+  color: var(--light-gray);
+  background: #FFF;
+  border: 1px dashed var(--border);
   padding: 2px 6px;
   border-radius: 4px;
-  color: var(--light-gray);
 }
 .pub-title {
-  font-size: 1.15rem;
-  margin-bottom: 6px;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
   color: var(--dark);
+  font-family: var(--font-heading);
+  line-height: 1.35;
 }
 .pub-authors {
   font-size: 0.95rem;
-  font-weight: 500;
-  margin-bottom: 4px;
+  color: var(--dark-gray);
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+.pub-authors strong {
+  color: var(--dark);
+  font-weight: 600;
 }
 .pub-journal-details {
   font-size: 0.9rem;
   color: var(--light-gray);
-  margin-bottom: 12px;
+  margin-bottom: 15px;
+}
+.pub-journal-name {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--dark-gray);
 }
 .pub-actions {
   display: flex;
-  gap: 15px;
-  font-size: 0.85rem;
+  gap: 12px;
+  flex-wrap: wrap;
   align-items: center;
 }
 .pub-link-btn {
+  font-size: 0.8rem;
   font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--dark-gray);
+  text-decoration: none;
+  transition: var(--transition);
 }
-.pub-abstract-btn {
+.pub-link-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.pub-link-btn.read-btn {
+  background: var(--dark-gray);
+  color: #fff;
+  border-color: var(--dark-gray);
+}
+.pub-link-btn.read-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.pub-toggle-btn {
   background: none;
   border: none;
   color: var(--primary);
+  font-weight: 600;
+  font-size: 0.8rem;
   cursor: pointer;
-  font-weight: 500;
-  font-size: 0.85rem;
-  padding: 0;
-}
-.pub-abstract-btn:hover {
+  padding: 6px 0;
+  transition: var(--transition);
   text-decoration: underline;
 }
-.pub-abstract-panel {
+.pub-toggle-btn:hover {
+  color: var(--primary-hover);
+}
+.pub-keyword {
+  display: inline-block;
+  font-size: 0.72rem;
+  background: #FFF;
+  color: var(--light-gray);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 5px;
+  margin-top: 3px;
+}
+.pub-abstract-panel, .pub-keywords-panel {
+  font-size: 0.88rem;
+  color: var(--dark-gray);
+  line-height: 1.5;
+  transition: var(--transition);
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px solid var(--border);
-  font-size: 0.9rem;
+}
+
+/* Pagination & Active Filters Controls */
+.pub-active-filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: #EAEAEA;
   color: var(--dark-gray);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+.filter-pill-remove {
+  background: none;
+  border: none;
+  margin-left: 6px;
+  color: #888;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+}
+.filter-pill-remove:hover {
+  color: var(--primary);
+}
+.pub-pagination-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.pub-page-controls {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.pub-page-btn {
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--dark-gray);
+}
+.pub-page-btn:hover:not(:disabled) {
+  background: var(--bg-offset);
+  border-color: var(--light-gray);
+}
+.pub-page-btn.active-page {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.pub-page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pub-count-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--light-gray);
+}
+.pub-pagesize-select {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  background-color: #fff;
+  cursor: pointer;
+}
+
 }
 
 /* Grant Card */

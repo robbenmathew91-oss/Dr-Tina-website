@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Peer-reviewed publications, journal papers, and research disclosures from Dr. Tina Salguero's materials chemistry group.">
+  <meta name="description" content="Peer-reviewed publications, journal papers, and research disclosures from Dr. Tina Salguero's materials chemistry group at UGA.">
   <title>Publications Bibliography | Salguero Research Group</title>
   <link rel="stylesheet" href="styles/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,28 +18,61 @@
     <h1>Publications</h1>
     <p class="hero-tagline">Peer-reviewed publications and scientific disclosures.</p>
 
-    <!-- Search & Filter Controls -->
-    <section class="search-filter-bar">
-      <input type="text" id="search-box" class="search-input" placeholder="Search by title, author, or journal...">
-      
-      <select id="tag-filter" class="filter-select">
-        <option value="all">All Research Areas</option>
-        <!-- Injected dynamically -->
-      </select>
+    <!-- Search & Filter Controls Panel -->
+    <section class="search-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; margin-top: 30px;" aria-label="Search and Filter Controls">
+      <div style="display: flex; gap: 15px; width: 100%; flex-wrap: wrap;">
+        <input type="text" id="search-box" class="search-input" placeholder="Search by title, author, journal, keyword, or DOI..." aria-label="Search publications">
+        
+        <select id="sort-filter" class="filter-select" aria-label="Sort publications">
+          <option value="latest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+          <option value="journal">Sort: Journal Name</option>
+          <option value="title">Sort: Alphabetical Title</option>
+        </select>
+      </div>
 
-      <select id="sort-filter" class="filter-select">
-        <option value="latest">Sort: Latest First</option>
-        <option value="oldest">Sort: Oldest First</option>
-        <option value="title">Sort: Alphabetical</option>
-      </select>
+      <div style="display: grid; grid-template-cols: 1fr 1fr 1fr 1fr; gap: 12px; width: 100%;" class="grid-cols-4">
+        <select id="year-filter" class="filter-select" aria-label="Filter by Year">
+          <option value="all">All Years</option>
+        </select>
+
+        <select id="category-filter" class="filter-select" aria-label="Filter by Research Category">
+          <option value="all">All Categories</option>
+        </select>
+
+        <select id="type-filter" class="filter-select" aria-label="Filter by Publication Type">
+          <option value="all">All Types</option>
+        </select>
+
+        <select id="journal-filter" class="filter-select" aria-label="Filter by Journal">
+          <option value="all">All Journals</option>
+        </select>
+      </div>
     </section>
 
-    <!-- Publications List Container -->
-    <section class="mb-8">
+    <!-- Active Filter Indicators -->
+    <div id="active-filters-container" class="pub-active-filters-row" aria-live="polite"></div>
+
+    <!-- Featured Publications Section (Highlighted top tier) -->
+    <section id="featured-publications-section" class="mb-8 hidden" style="margin-top: 30px;">
+      <h2 style="color: #B8860B; border-bottom: 2px solid #D4AF37; padding-bottom: 5px; margin-bottom: 20px;">Featured Research</h2>
+      <div id="featured-publications-target"></div>
+    </section>
+
+    <!-- Main Publications List Section -->
+    <section class="mb-8" style="margin-top: 40px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <h2 id="publications-list-title" style="margin: 0; font-size: 1.5rem;">All Publications</h2>
+        <div id="pub-count" class="pub-count-label">Showing 0 of 0 publications</div>
+      </div>
+      
       <div id="publications-list-target">
         <p>Loading bibliography data...</p>
       </div>
     </section>
+
+    <!-- Pagination Controls Row -->
+    <div id="pagination-container" class="pub-pagination-bar" aria-label="Pagination Navigation"></div>
 
   </main>
 
@@ -50,9 +83,12 @@
     import { loadData } from './src/js/loader.js';
     import { validateData } from './src/js/validator.js';
     import { PublicationCard } from './src/js/components.js';
-    import { renderList, SortFunctions } from './src/js/renderer.js';
+    import { renderList, injectMarkup, SortFunctions } from './src/js/renderer.js';
 
     let allPublications = [];
+    let filteredPublications = [];
+    let currentPage = 1;
+    let pageSize = 10;
 
     async function initPublications() {
       const dataObj = await loadData('publications.json');
@@ -61,81 +97,295 @@
       // Validate
       validateData('publication', allPublications);
 
-      // Populate filter dropdown with unique tags dynamically
-      populateTagDropdown(allPublications);
+      // Populate filter selectors
+      populateFilterDropdowns(allPublications);
 
-      // Add event listeners
-      document.getElementById('search-box').addEventListener('input', applyFilters);
-      document.getElementById('tag-filter').addEventListener('change', applyFilters);
-      document.getElementById('sort-filter').addEventListener('change', applyFilters);
+      // Event Listeners
+      document.getElementById('search-box').addEventListener('input', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('sort-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('year-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('category-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('type-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('journal-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
 
       // Initial render
       applyFilters();
     }
 
-    function populateTagDropdown(pubs) {
-      const tagSelect = document.getElementById('tag-filter');
-      const tagsSet = new Set();
-      
+    function populateFilterDropdowns(pubs) {
+      const yearSelect = document.getElementById('year-filter');
+      const categorySelect = document.getElementById('category-filter');
+      const typeSelect = document.getElementById('type-filter');
+      const journalSelect = document.getElementById('journal-filter');
+
+      const years = new Set();
+      const categories = new Set();
+      const types = new Set();
+      const journals = new Set();
+
       pubs.forEach(pub => {
-        if (pub.tags && Array.isArray(pub.tags)) {
-          pub.tags.forEach(tag => tagsSet.add(tag));
-        }
+        if (pub.year) years.add(pub.year);
+        if (pub.research_category) categories.add(pub.research_category);
+        if (pub.publication_type) types.add(pub.publication_type);
+        if (pub.journal) journals.add(pub.journal);
       });
 
-      // Sort and append tags to dropdown
-      Array.from(tagsSet).sort().forEach(tag => {
-        const option = document.createElement('option');
-        option.value = tag;
-        option.textContent = tag;
-        tagSelect.appendChild(option);
+      // Populate Years (Sorted descending)
+      Array.from(years).sort((a,b) => b.localeCompare(a)).forEach(y => {
+        const opt = new Option(y, y);
+        yearSelect.add(opt);
+      });
+
+      // Populate Categories (Sorted alphabetical)
+      Array.from(categories).sort().forEach(c => {
+        const opt = new Option(c, c);
+        categorySelect.add(opt);
+      });
+
+      // Populate Types
+      Array.from(types).sort().forEach(t => {
+        const opt = new Option(t, t);
+        typeSelect.add(opt);
+      });
+
+      // Populate Journals
+      Array.from(journals).sort().forEach(j => {
+        const opt = new Option(j, j);
+        journalSelect.add(opt);
       });
     }
 
     function applyFilters() {
       const query = document.getElementById('search-box').value.toLowerCase().trim();
-      const selectedTag = document.getElementById('tag-filter').value;
-      const selectedSort = document.getElementById('sort-filter').value;
+      const year = document.getElementById('year-filter').value;
+      const category = document.getElementById('category-filter').value;
+      const type = document.getElementById('type-filter').value;
+      const journal = document.getElementById('journal-filter').value;
+      const sortVal = document.getElementById('sort-filter').value;
 
-      // 1. Filter
-      let filtered = allPublications.filter(pub => {
-        const matchesQuery = 
+      // 1. Core Multi-Criteria Filter Logic
+      filteredPublications = allPublications.filter(pub => {
+        const matchesQuery = !query || 
           pub.title.toLowerCase().includes(query) ||
           pub.authors.toLowerCase().includes(query) ||
           pub.journal.toLowerCase().includes(query) ||
-          pub.year.includes(query);
-          
-        const matchesTag = selectedTag === 'all' || (pub.tags && pub.tags.includes(selectedTag));
+          pub.doi.toLowerCase().includes(query) ||
+          (pub.keywords && pub.keywords.some(kw => kw.toLowerCase().includes(query)));
 
-        return matchesQuery && matchesTag;
+        const matchesYear = year === 'all' || pub.year === year;
+        const matchesCategory = category === 'all' || pub.research_category === category;
+        const matchesType = type === 'all' || pub.publication_type === type;
+        const matchesJournal = journal === 'all' || pub.journal === journal;
+
+        return matchesQuery && matchesYear && matchesCategory && matchesType && matchesJournal;
       });
 
-      // 2. Sort
+      // 2. Sorting Logic
       let sortFn;
-      if (selectedSort === 'latest') {
-        sortFn = SortFunctions.publicationsDefault; // Latest year first, then title alpha
-      } else if (selectedSort === 'oldest') {
-        sortFn = (a, b) => {
-          const yearA = parseInt(a.year, 10) || 0;
-          const yearB = parseInt(b.year, 10) || 0;
-          if (yearA !== yearB) {
-            return yearA - yearB; // Oldest year first
-          }
-          return a.title.localeCompare(b.title);
-        };
-      } else if (selectedSort === 'title') {
-        sortFn = (a, b) => a.title.localeCompare(b.title); // Alphabetical by title
+      if (sortVal === 'latest') {
+        sortFn = SortFunctions.publicationsDefault;
+      } else if (sortVal === 'oldest') {
+        sortFn = (a, b) => (parseInt(a.year, 10) || 0) - (parseInt(b.year, 10) || 0) || a.title.localeCompare(b.title);
+      } else if (sortVal === 'journal') {
+        sortFn = (a, b) => a.journal.localeCompare(b.journal) || (parseInt(b.year, 10) - parseInt(a.year, 10));
+      } else if (sortVal === 'title') {
+        sortFn = (a, b) => a.title.localeCompare(b.title);
       }
 
-      // 3. Render
-      renderList({
-        selector: '#publications-list-target',
-        items: filtered,
-        componentFn: PublicationCard,
-        sortFn: sortFn,
-        emptyMessage: 'No publications match your active search terms or selected tags.'
-      });
+      filteredPublications.sort(sortFn);
+
+      // 3. Render Active Filter Pills
+      renderActivePills({ query, year, category, type, journal });
+
+      // 4. Render Featured Section (only show when no filters are active)
+      const isFilterActive = query || year !== 'all' || category !== 'all' || type !== 'all' || journal !== 'all';
+      renderFeaturedSection(isFilterActive);
+
+      // 5. Render Main Paginated List & Pagination bar
+      renderPaginatedList();
     }
+
+    function renderFeaturedSection(isFilterActive) {
+      const section = document.getElementById('featured-publications-section');
+      const target = document.getElementById('featured-publications-target');
+
+      if (isFilterActive) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      const featured = allPublications.filter(pub => pub.featured);
+      if (featured.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      section.classList.remove('hidden');
+      const markup = featured.map(pub => PublicationCard(pub)).join('');
+      target.innerHTML = markup;
+    }
+
+    function renderPaginatedList() {
+      const target = document.getElementById('publications-list-target');
+      const countLabel = document.getElementById('pub-count');
+
+      // Update count label
+      countLabel.textContent = `Showing ${filteredPublications.length} of ${allPublications.length} publications`;
+
+      if (filteredPublications.length === 0) {
+        target.innerHTML = `
+          <div class="empty-state" style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border); border-radius: 8px; background: var(--bg-offset);">
+            <p style="font-size: 1.1rem; color: var(--light-gray); margin-bottom: 10px;">No publications found matching your criteria.</p>
+            <button class="btn btn-secondary btn-sm" onclick="window.clearAllFilters()">Clear All Filters</button>
+          </div>
+        `;
+        document.getElementById('pagination-container').innerHTML = '';
+        return;
+      }
+
+      // Slice array for current page
+      const totalPages = Math.ceil(filteredPublications.length / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, filteredPublications.length);
+      const pageItems = filteredPublications.slice(startIndex, endIndex);
+
+      // Render cards
+      const markup = pageItems.map(pub => PublicationCard(pub)).join('');
+      target.innerHTML = markup;
+
+      // Render pagination navigation controls
+      renderPaginationBar(totalPages);
+    }
+
+    function renderPaginationBar(totalPages) {
+      const container = document.getElementById('pagination-container');
+      
+      let pageButtons = '';
+      for (let i = 1; i <= totalPages; i++) {
+        pageButtons += `
+          <button class="pub-page-btn ${i === currentPage ? 'active-page' : ''}" onclick="window.setPage(${i})" aria-label="Page ${i}" ${i === currentPage ? 'aria-current="page"' : ''}>
+            ${i}
+          </button>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="pub-count-label">
+          Showing ${Math.min((currentPage - 1) * pageSize + 1, filteredPublications.length)}–${Math.min(currentPage * pageSize, filteredPublications.length)} of ${filteredPublications.length}
+        </div>
+        
+        <div class="pub-page-controls">
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous Page">
+            &lt; Prev
+          </button>
+          ${pageButtons}
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next Page">
+            Next &gt;
+          </button>
+        </div>
+
+        <div>
+          <span style="font-size: 0.85rem; color: var(--light-gray); margin-right: 8px;">Show:</span>
+          <select class="pub-pagesize-select" onchange="window.setPageSize(this.value)" aria-label="Publications per page">
+            <option value="10" ${pageSize === 10 ? 'selected' : ''}>10</option>
+            <option value="20" ${pageSize === 20 ? 'selected' : ''}>20</option>
+            <option value="50" ${pageSize === 50 ? 'selected' : ''}>50</option>
+          </select>
+        </div>
+      `;
+    }
+
+    function renderActivePills({ query, year, category, type, journal }) {
+      const container = document.getElementById('active-filters-container');
+      const pills = [];
+
+      if (query) {
+        pills.push(`
+          <span class="filter-pill">
+            Search: "${query}"
+            <button class="filter-pill-remove" onclick="window.clearFilter('search')" aria-label="Remove search filter">×</button>
+          </span>
+        `);
+      }
+      if (year !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Year: ${year}
+            <button class="filter-pill-remove" onclick="window.clearFilter('year')" aria-label="Remove year filter">×</button>
+          </span>
+        `);
+      }
+      if (category !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Category: ${category}
+            <button class="filter-pill-remove" onclick="window.clearFilter('category')" aria-label="Remove category filter">×</button>
+          </span>
+        `);
+      }
+      if (type !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Type: ${type}
+            <button class="filter-pill-remove" onclick="window.clearFilter('type')" aria-label="Remove type filter">×</button>
+          </span>
+        `);
+      }
+      if (journal !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Journal: ${journal}
+            <button class="filter-pill-remove" onclick="window.clearFilter('journal')" aria-label="Remove journal filter">×</button>
+          </span>
+        `);
+      }
+
+      if (pills.length > 0) {
+        container.innerHTML = `
+          ${pills.join('')}
+          <button class="btn btn-text btn-sm" onclick="window.clearAllFilters()" style="color: var(--primary); text-decoration: underline; cursor: pointer; padding: 0; font-weight: 600;">
+            Clear All
+          </button>
+        `;
+      } else {
+        container.innerHTML = '';
+      }
+    }
+
+    // Global Bindings for inline onclick events
+    window.setPage = function(pageNumber) {
+      currentPage = pageNumber;
+      applyFilters();
+      document.getElementById('publications-list-title').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    window.setPageSize = function(size) {
+      pageSize = parseInt(size, 10);
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearFilter = function(filterName) {
+      if (filterName === 'search') document.getElementById('search-box').value = '';
+      if (filterName === 'year') document.getElementById('year-filter').value = 'all';
+      if (filterName === 'category') document.getElementById('category-filter').value = 'all';
+      if (filterName === 'type') document.getElementById('type-filter').value = 'all';
+      if (filterName === 'journal') document.getElementById('journal-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearAllFilters = function() {
+      document.getElementById('search-box').value = '';
+      document.getElementById('year-filter').value = 'all';
+      document.getElementById('category-filter').value = 'all';
+      document.getElementById('type-filter').value = 'all';
+      document.getElementById('journal-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
 
     initPublications();
   </script>

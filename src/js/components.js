@@ -162,34 +162,97 @@ export function ProjectCard(project) {
  * Render Publication Reference Card
  */
 export function PublicationCard(pub) {
-  const tagsList = (pub.tags || []).map(tag => `<span class="pub-tag-badge">${tag}</span>`).join('');
-  const detailsString = `${pub.journal}${pub.volume ? `, Vol. ${pub.volume}` : ''}${pub.pages ? `, Pages ${pub.pages}` : ''} (${pub.year})`;
+  const highlightAuthor = (authors) => {
+    const regex = /(Tina T\. Salguero|Tina Salguero|T\. T\. Salguero|T\. Salguero|Salguero, T\. T\.|Salguero, T\.|Trnka, T\. M\.|T\. M\. Trnka|Trnka, T\.)/g;
+    return authors.replace(regex, '<strong>$1</strong>');
+  };
+
+  const keywordsList = (pub.keywords || [])
+    .map(kw => `<span class="pub-keyword">${kw}</span>`)
+    .join('');
 
   return `
-    <div class="publication-card" id="publication-${pub.id}">
+    <div class="publication-card ${pub.featured ? 'featured-pub' : ''}" id="publication-${pub.id}" data-featured="${pub.featured || false}">
+      ${pub.featured ? '<div class="pub-featured-tag">★ Featured Publication</div>' : ''}
+      
       <div class="pub-meta-row">
-        <span class="pub-year-badge">${pub.year}</span>
-        <div class="pub-tags-list">${tagsList}</div>
+        <div class="pub-badges">
+          <span class="pub-badge category-badge">${pub.research_category}</span>
+          <span class="pub-badge type-badge">${pub.publication_type}</span>
+          <span class="pub-year-badge">${pub.year}</span>
+        </div>
+        
+        <!-- Future Ready Placeholder: Altmetric and Citation Count -->
+        <div class="pub-future-metrics">
+          <span class="pub-metric-badge citation-count-stub" title="Citations (Coming Soon)">
+            <svg viewBox="0 0 24 24" class="metric-icon" style="width: 14px; height: 14px; fill: currentColor; display: inline-block; vertical-align: middle; margin-right: 3px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <span class="stub-val">--</span>
+          </span>
+          <span class="pub-metric-badge altmetric-stub" title="Altmetric (Coming Soon)">
+            <span class="altmetric-donut-stub" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--primary); display: inline-block; vertical-align: middle; margin-right: 3px;"></span>
+            <span class="stub-val">--</span>
+          </span>
+        </div>
       </div>
-      
+
       <h3 class="pub-title">${pub.title}</h3>
-      <p class="pub-authors">${pub.authors}</p>
-      <p class="pub-journal-details">${detailsString}</p>
+      <p class="pub-authors">${highlightAuthor(pub.authors)}</p>
       
+      <p class="pub-journal-details">
+        <span class="pub-journal-name">${pub.journal}</span>${pub.volume ? `, <strong>Vol. ${pub.volume}</strong>` : ''}${pub.issue ? `, Issue ${pub.issue}` : ''}${pub.pages ? `, Pages ${pub.pages}` : ''}
+      </p>
+
       <div class="pub-actions">
-        <a href="${pub.link}" class="pub-link-btn" target="_blank" rel="noopener">DOI: ${pub.doi}</a>
+        <a href="https://doi.org/${pub.doi}" class="pub-link-btn" target="_blank" rel="noopener" aria-label="DOI Link for ${pub.title}">
+          DOI: ${pub.doi}
+        </a>
+        <a href="${pub.link}" class="pub-link-btn read-btn" target="_blank" rel="noopener" aria-label="Read paper: ${pub.title}">
+          Read Paper &rarr;
+        </a>
+        
         ${pub.abstract ? `
-          <button class="pub-abstract-btn" onclick="toggleDetails('pub-abstract-${pub.id}')">
-            Show Abstract
+          <button class="pub-toggle-btn abstract-btn" onclick="toggleDetails('pub-abstract-${pub.id}')" aria-expanded="false" aria-controls="pub-abstract-${pub.id}">
+            View Abstract
+          </button>
+        ` : ''}
+        
+        ${keywordsList ? `
+          <button class="pub-toggle-btn keywords-btn" onclick="toggleDetails('pub-keywords-${pub.id}')" aria-expanded="false" aria-controls="pub-keywords-${pub.id}">
+            Keywords
           </button>
         ` : ''}
       </div>
 
+      <!-- Expandable Abstract Panel -->
       ${pub.abstract ? `
         <div class="pub-abstract-panel hidden" id="pub-abstract-${pub.id}">
-          <p class="abstract-text">${pub.abstract}</p>
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          <p class="abstract-text"><strong>Abstract:</strong> ${pub.abstract}</p>
         </div>
       ` : ''}
+
+      <!-- Expandable Keywords Panel -->
+      ${keywordsList ? `
+        <div class="pub-keywords-panel hidden" id="pub-keywords-${pub.id}">
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          <div class="pub-keywords-list">
+            <strong>Keywords:</strong> ${keywordsList}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Future Ready Placeholder: Citation & Bibliography export hooks -->
+      <div class="pub-future-actions" style="margin-top: 12px; display: flex; gap: 15px; font-size: 0.75rem; color: var(--light-gray);">
+        <button class="export-bibtex-stub" onclick="alert('BibTeX export is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.75rem;">
+          Cite (BibTeX)
+        </button>
+        <button class="copy-apa-stub" onclick="alert('ACS/APA Citation copy is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.75rem;">
+          Copy Citation
+        </button>
+        <a href="#" class="pdf-download-stub" onclick="alert('PDF download is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
+          Download PDF
+        </a>
+      </div>
     </div>
   `;
 }

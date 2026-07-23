@@ -72,6 +72,10 @@
           "publication_type": {
             "type": "string",
             "description": "Type of publication (e.g. Journal Article, Review, etc.)"
+          },
+          "featured": {
+            "type": "boolean",
+            "description": "Flag to mark this publication as featured (shown at top)"
           }
         }
       }

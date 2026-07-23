@@ -16,7 +16,8 @@
       "tags": ["Catalysis", "Ruthenium", "Metathesis"],
       "research_category": "Catalysis",
       "keywords": ["Ruthenium", "Catalysis", "Metathesis", "Decomposition"],
-      "publication_type": "Journal Article"
+      "publication_type": "Journal Article",
+      "featured": false
     },
     {
       "id": "pub-2013-ja310587c",
@@ -33,7 +34,8 @@
       "tags": ["Nanosheets", "Silicates", "Luminescence"],
       "research_category": "Synthesis",
       "keywords": ["Egyptian Blue", "Nanosheets", "Silicates", "NIR Luminescence"],
-      "publication_type": "Journal Article"
+      "publication_type": "Journal Article",
+      "featured": false
     },
     {
       "id": "pub-2016-nnano-2016-108",
@@ -50,7 +52,8 @@
       "tags": ["2D Materials", "Device Physics", "CDW"],
       "research_category": "2D Materials",
       "keywords": ["Charge-density-wave", "Oscillator", "Tantalum Disulfide", "Graphene"],
-      "publication_type": "Journal Article"
+      "publication_type": "Journal Article",
+      "featured": true
     },
     {
       "id": "pub-2017-nanolett-6b04334",
@@ -67,7 +70,8 @@
       "tags": ["Weyl Semimetal", "Noise", "Nanowires"],
       "research_category": "Characterization",
       "keywords": ["Electronic Noise", "Weyl Semimetal", "Nanowires", "Interconnects"],
-      "publication_type": "Journal Article"
+      "publication_type": "Journal Article",
+      "featured": false
     },
     {
       "id": "pub-2022-mattod-03015",
@@ -84,7 +88,8 @@
       "tags": ["Review", "One-Dimensional", "van der Waals"],
       "research_category": "2D Materials",
       "keywords": ["One-dimensional", "van der Waals", "Quantum Materials", "Exfoliation"],
-      "publication_type": "Review"
+      "publication_type": "Review",
+      "featured": true
     },
     {
       "id": "pub-2022-apl-5-0108414",
@@ -101,7 +106,8 @@
       "tags": ["Perspective", "Nanowires", "Research Overview"],
       "research_category": "2D Materials",
       "keywords": ["van der Waals", "APL Special Issue", "Research Overview", "Nanowires"],
-      "publication_type": "Review"
+      "publication_type": "Review",
+      "featured": false
     },
     {
       "id": "pub-2024-adma-202409898",
@@ -118,7 +124,8 @@
       "tags": ["Atomic Chains", "van der Waals", "Chalcogenides"],
       "research_category": "Chalcogenides",
       "keywords": ["Atomic Chains", "Van der Waals", "Exfoliation", "Interconnects"],
-      "publication_type": "Journal Article"
+      "publication_type": "Journal Article",
+      "featured": false
     },
     {
       "id": "pub-2025-acsnano-5c13312",
@@ -135,7 +142,8 @@
       "tags": ["Nanoribbons", "Mixed-Dimensional", "STEM"],
       "research_category": "Chalcogenides",
       "keywords": ["STEM", "Tantalum Selenide", "In Situ Heating", "Nanoribbons"],
-      "publication_type": "Journal Article"
+      "publication_type": "Journal Article",
+      "featured": false
     }
   ]
 }
