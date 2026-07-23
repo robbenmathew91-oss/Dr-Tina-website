@@ -66,20 +66,20 @@ export function FacultyProfile(faculty, ecosystem = {}) {
         <h2 style="font-size: 1.4rem; margin-bottom: 15px;">Laboratory Leadership Dashboard</h2>
         <div class="pi-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px;">
           <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.totalPublications || 80}</div>
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.totalPublications || '80+'}</div>
             <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Publications</div>
           </div>
           <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.totalCitations || '2,285+'}</div>
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.totalCitations || '2,200+'}</div>
             <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Citations</div>
           </div>
           <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.hIndex || 26}</div>
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.hIndex || '25+'}</div>
             <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">h-index</div>
           </div>
           <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.yearsAtUGA || '16+ Yrs'}</div>
-            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">At UGA</div>
+            <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.yearsAtUGA || '16+'}</div>
+            <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Years at UGA</div>
           </div>
           <div class="pi-stat-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; box-shadow: var(--shadow-sm);">
             <div style="font-size: 1.7rem; font-weight: 700; color: var(--primary);">${quickFacts.activeResearchThemes || 4}</div>
@@ -90,6 +90,9 @@ export function FacultyProfile(faculty, ecosystem = {}) {
             <div style="font-size: 0.85rem; color: var(--light-gray); margin-top: 4px;">Active Grants</div>
           </div>
         </div>
+        <p style="font-size: 0.82rem; color: var(--light-gray); margin-top: 12px; font-style: italic; text-align: right;">
+          ${quickFacts.metricsDisclaimer || 'Research metrics are based on publicly available academic profiles and may change over time.'}
+        </p>
       </section>
 
       <!-- 3. Scientific Vision & Philosophy -->

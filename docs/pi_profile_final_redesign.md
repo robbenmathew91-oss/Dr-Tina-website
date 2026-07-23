@@ -39,3 +39,14 @@ All statements and figures are strictly grounded in:
 - **Schema Validation**: Verified via `data/schemas/faculty.schema.json`
 - **Component Engine**: Implemented via `FacultyProfile(faculty, ecosystem)` in `src/js/components.js`
 - **Data Coordination**: Async dynamic loading in `people.html` using `loadData()` and `injectMarkup()`.
+
+---
+
+## 4. Refinement of Research Metrics for Long-Term Maintainability
+To ensure the PI profile dashboard remains accurate over time without requiring frequent manual edits for minor citation or publication increments:
+- **Publications**: Represented as `80+`
+- **Citations**: Rounded to `2,200+`
+- **h-index**: Rounded to `25+`
+- **Years at UGA**: Represented as `16+`
+- **Disclaimer Note**: Appended subtle footnote beneath the dashboard: *"Research metrics are based on publicly available academic profiles and may change over time."*
+- **Data Integrity**: Stored centrally inside `data/faculty.json` under `quickFacts` and validated against `data/schemas/faculty.schema.json`.

@@ -45,12 +45,13 @@
       "type": "object",
       "properties": {
         "yearsAtUGA": { "type": "string" },
-        "activeResearchThemes": { "type": "number" },
-        "activeGrants": { "type": "number" },
-        "currentLabMembers": { "type": "number" },
-        "totalPublications": { "type": "number" },
+        "activeResearchThemes": { "type": ["string", "number"] },
+        "activeGrants": { "type": ["string", "number"] },
+        "currentLabMembers": { "type": ["string", "number"] },
+        "totalPublications": { "type": ["string", "number"] },
         "totalCitations": { "type": "string" },
-        "hIndex": { "type": "number" }
+        "hIndex": { "type": ["string", "number"] },
+        "metricsDisclaimer": { "type": "string" }
       }
     },
     "researchVision": {
