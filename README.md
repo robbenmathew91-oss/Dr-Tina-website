@@ -30,7 +30,8 @@ Dr-Tina-Website/
 │   ├── 03_Site_Architecture.md# Information architecture and site map
 │   ├── 04_Design_System.md  # Typography, color palette, and visual identity
 │   ├── 05_Content_Checklist.md# Checklist for gathering site assets and content
-│   └── 06_Development_Log.md# Chronological log of development progress
+│   ├── 06_Development_Log.md# Chronological log of development progress
+│   └── 07_Content_Strategy.md# Rules/best practices for writing, updating, and SEO/a11y
 ├── public/                  # Static assets served directly from the root
 ├── scripts/                 # Utility scripts (e.g. data validation, building)
 ├── src/                     # Source code files (HTML, CSS, JavaScript)
