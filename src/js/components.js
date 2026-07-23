@@ -461,7 +461,7 @@ export function AlumniCard(alumnus) {
             <span class="alumni-year">Class of ${alumnus.graduationYear}</span>
           </div>
           <div class="alumni-body">
-            <p class="alumni-joined" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 2px;">Joined the Salguero Lab in ${alumnus.joined_lab}</p>
+            ${alumnus.joined_lab ? `<p class="alumni-joined" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 2px;">Joined the Salguero Lab in ${alumnus.joined_lab}</p>` : ''}
             <p class="alumni-graduated" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 4px;">Graduated in ${alumnus.graduated_year}</p>
             ${alumnus.degree_institution ? `<p class="alumni-degree-info" style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 6px;">${alumnus.degree}, ${alumnus.degree_institution} (${alumnus.degree_year})</p>` : ''}
             ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
@@ -472,7 +472,7 @@ export function AlumniCard(alumnus) {
                 <strong>Notable Achievement:</strong> ${alumnus.notableAchievements.join(', ')}
               </div>
             ` : ''}
-            <p class="alumni-current" style="margin-top: 6px;"><strong>Current Position:</strong> ${alumnus.currentPosition}</p>
+            ${alumnus.currentPosition ? `<p class="alumni-current" style="margin-top: 6px;"><strong>Current Position:</strong> ${alumnus.currentPosition}</p>` : ''}
             ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}
           </div>
         </div>
