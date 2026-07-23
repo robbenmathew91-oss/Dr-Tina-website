@@ -642,14 +642,35 @@ export function NewsCard(item, relations = {}) {
  * Render Gallery Item
  */
 export function GalleryItem(photo) {
+  const dateFormatted = new Date(photo.date).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
   return `
-    <div class="gallery-card" id="gallery-${photo.id}" data-category="${photo.category}">
-      <div class="gallery-image-wrapper">
-        <img src="${photo.url}" alt="${photo.caption}" class="gallery-image" loading="lazy" />
-        <div class="gallery-overlay">
-          <span class="gallery-category-badge">${photo.category}</span>
-          <p class="gallery-caption">${photo.caption}</p>
-          <time class="gallery-date">${new Date(photo.date).getFullYear()}</time>
+    <div class="gallery-card" id="gallery-${photo.id}" data-category="${photo.category}" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg-offset); box-shadow: var(--shadow-sm); transition: var(--transition); display: flex; flex-direction: column; height: 100%;">
+      <div class="gallery-image-wrapper" style="position: relative; aspect-ratio: 4/3; width: 100%; overflow: hidden; background-color: #000; cursor: pointer;" onclick="window.openLightbox('${photo.id}')">
+        <img src="${photo.url}" alt="${photo.caption}" class="gallery-image" style="width: 100%; height: 100%; object-fit: cover; transition: var(--transition); display: block;" loading="lazy" />
+        <div style="position: absolute; top: 10px; left: 10px; z-index: 5;">
+          <span class="pub-badge category-badge" style="text-transform: uppercase; font-size: 0.65rem;">${photo.category}</span>
+        </div>
+      </div>
+      <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+        <div>
+          <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 1.05rem; margin: 0 0 8px 0;">
+            ${photo.title || 'Untitled'}
+          </h3>
+          <p style="font-size: 0.85rem; line-height: 1.4; color: var(--dark-gray); margin: 0 0 10px 0;">
+            ${photo.caption}
+          </p>
+        </div>
+        <div>
+          <div style="font-size: 0.75rem; color: var(--light-gray); display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border); padding-top: 8px; margin-bottom: 10px;">
+            <span>${dateFormatted}</span>
+            ${photo.photographer ? `<span>Photo: ${photo.photographer}</span>` : ''}
+          </div>
+          <button class="pub-toggle-btn" style="width: 100%; text-align: center; justify-content: center; font-size: 0.8rem;" onclick="window.openLightbox('${photo.id}')">
+            View Image Lightbox
+          </button>
         </div>
       </div>
     </div>
