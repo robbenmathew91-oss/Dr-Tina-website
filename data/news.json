@@ -53,14 +53,31 @@
       "title": "UGA Graduate Student Wins 2025 CSGS Master's Thesis Award",
       "excerpt": "Xena Mansoura, advised by Dr. Tina T. Salguero, received the prestigious 2025 CSGS Master's Thesis Award in Math, Physical Sciences, and Engineering.",
       "content": "The University of Georgia Graduate School announced that Xena Mansoura has been selected as a recipient of the 2025 Council of Graduate Schools (CSGS) Master's Thesis Award in the Math, Physical Sciences, and Engineering category. Mansoura completed her M.S. in Chemistry under the mentorship of Dr. Tina T. Salguero. Her award-winning thesis, titled 'Synthesis, Characterization, and Application of Copper and Manganese Based Luminescent Materials,' investigates novel synthetic pathways and optical behavior in functional inorganic chalcogenides and oxides. Mansoura currently serves as a Research Associate at Pacific Northwest National Laboratory (PNNL).",
-      "image": "assets/images/placeholder.svg",
+      "image": "assets/images/news/xena_mansoura_portrait.jpg",
       "link": "https://grad.uga.edu",
       "category": "Awards & Recognition",
       "featured": true,
       "keywords": ["CSGS Award", "Master's Thesis", "Luminescent Materials", "PNNL"],
       "year": "2025",
       "related_people": ["tina-salguero", "xena-mansoura"],
-      "related_projects": ["project-luminescence"]
+      "related_projects": ["project-luminescence"],
+      "gallery_images": [
+        {
+          "src": "assets/images/news/xena_mansoura_lab_prep.jpg",
+          "alt": "Xena Mansoura conducting sample preparation in the chemistry laboratory",
+          "caption": "Xena Mansoura preparing inorganic sample substrates in the laboratory."
+        },
+        {
+          "src": "assets/images/news/xena_mansoura_sem_analysis.jpg",
+          "alt": "Xena Mansoura operating scanning electron microscope equipment",
+          "caption": "Analyzing nanostructure morphology using electron microscopy."
+        },
+        {
+          "src": "assets/images/news/xena_mansoura_poster_presentation.jpg",
+          "alt": "Xena Mansoura standing beside her research poster at the ACS conference",
+          "caption": "Presenting M.S. research on photoluminescent hydrogels at the ACS National Meeting."
+        }
+      ]
     },
     {
       "id": "news-2024-06-12",

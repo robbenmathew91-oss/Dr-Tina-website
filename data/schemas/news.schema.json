@@ -87,6 +87,19 @@
           "related_people": {
             "type": "array",
             "items": { "type": "string" }
+          },
+          "gallery_images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["src", "alt", "caption"],
+              "properties": {
+                "src": { "type": "string" },
+                "alt": { "type": "string" },
+                "caption": { "type": "string" }
+              }
+            },
+            "description": "Optional image gallery associated with the news article"
           }
         }
       }

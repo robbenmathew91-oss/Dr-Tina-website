@@ -938,6 +938,22 @@ export function NewsCard(item, relations = {}) {
               ${item.content}
             </div>
 
+            ${item.gallery_images && item.gallery_images.length > 0 ? `
+              <div class="news-gallery-section" style="margin-bottom: 18px;">
+                <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 8px;">Event Photo Gallery</span>
+                <div class="news-gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+                  ${item.gallery_images.map((gImg, idx) => `
+                    <div class="news-gallery-item" style="border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--bg); cursor: pointer;" onclick="window.openNewsLightbox('${gImg.src}', '${gImg.caption.replace(/'/g, "\\'")}')">
+                      <img src="${gImg.src}" alt="${gImg.alt}" style="width: 100%; height: 110px; object-fit: cover; display: block;" loading="lazy" />
+                      <div style="font-size: 0.75rem; padding: 6px 8px; color: var(--dark-gray); line-height: 1.25; background: var(--bg-offset); font-style: italic; border-top: 1px solid var(--border);">
+                        ${gImg.caption}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
             <!-- Keywords List -->
             ${keywordsList ? `<div style="margin-bottom: 10px;"><strong>Keywords:</strong> ${keywordsList}</div>` : ''}
 

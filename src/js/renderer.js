@@ -45,6 +45,29 @@ window.exportBibTeX = function(id, authors, title, journal, year, volume, issue,
   prompt('Copy BibTeX entry:', bib);
 };
 
+window.openNewsLightbox = function(imageSrc, caption) {
+  let modal = document.getElementById('news-lightbox-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'news-lightbox-modal';
+    modal.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;';
+    modal.innerHTML = `
+      <div style="position: relative; max-width: 900px; width: 100%; text-align: center;">
+        <button onclick="document.getElementById('news-lightbox-modal').style.display='none'" style="position: absolute; top: -40px; right: 0; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer;">&times;</button>
+        <img id="news-lightbox-img" src="" alt="" style="max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); object-fit: contain;" />
+        <p id="news-lightbox-caption" style="color: #fff; font-size: 0.95rem; margin-top: 15px; font-style: italic;"></p>
+      </div>
+    `;
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+    document.body.appendChild(modal);
+  }
+  document.getElementById('news-lightbox-img').src = imageSrc;
+  document.getElementById('news-lightbox-caption').textContent = caption;
+  modal.style.display = 'flex';
+};
+
 /**
  * Standard utility to inject HTML markup into a target container.
  * @param {string} selector - CSS selector of the parent target container
