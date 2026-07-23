@@ -68,6 +68,24 @@ window.openNewsLightbox = function(imageSrc, caption) {
   modal.style.display = 'flex';
 };
 
+window.shareNewsArticle = function(title, itemId) {
+  const shareUrl = `${window.location.origin}${window.location.pathname}#news-${itemId}`;
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      url: shareUrl
+    }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      alert(`Article link copied to clipboard:\n\n${shareUrl}`);
+    }).catch(() => {
+      prompt('Copy article link:', shareUrl);
+    });
+  } else {
+    prompt('Copy article link:', shareUrl);
+  }
+};
+
 /**
  * Standard utility to inject HTML markup into a target container.
  * @param {string} selector - CSS selector of the parent target container

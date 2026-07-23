@@ -974,19 +974,11 @@ export function NewsCard(item, relations = {}) {
         </div>
       </div>
 
-      <!-- Future Ready Placeholder: Embedded Videos, Press Kits, Social Sharing -->
-      <div class="pub-future-actions" style="margin-top: auto; padding: 12px 20px; background: rgba(0,0,0,0.02); display: flex; gap: 15px; font-size: 0.72rem; color: var(--light-gray); border-top: 1px solid var(--border);">
-        <button class="export-bibtex-stub" onclick="alert('Press Kit download is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
-          Download Press Kit
-        </button>
-        <span>•</span>
-        <button class="copy-apa-stub" onclick="alert('Embedded video is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
-          Watch Video
-        </button>
-        <span>•</span>
-        <a href="#" class="pdf-download-stub" onclick="alert('Social sharing is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
+      <!-- Article Actions -->
+      <div class="pub-future-actions" style="margin-top: auto; padding: 12px 20px; background: rgba(0,0,0,0.02); display: flex; gap: 15px; font-size: 0.75rem; color: var(--light-gray); border-top: 1px solid var(--border); justify-content: flex-end;">
+        <button class="pub-toggle-btn share-btn" onclick="window.shareNewsArticle('${item.title.replace(/'/g, "\\'")}', '${item.id}')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.8rem; font-weight: 500;">
           Share Article
-        </a>
+        </button>
       </div>
     </article>
   `;
