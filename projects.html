@@ -3,12 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Technical details, methodologies, and progress updates on materials synthesis and lamination projects in the Salguero Lab.">
+  <meta name="description" content="Core research projects, assemblies, and synthetic targets of the Salguero Group.">
   <title>Technical Projects | Salguero Research Group</title>
   <link rel="stylesheet" href="styles/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    .project-stat-card {
+      background: var(--bg-offset);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .project-stat-val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+      font-family: var(--font-heading);
+    }
+    .project-stat-label {
+      font-size: 0.8rem;
+      color: var(--light-gray);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    @media (max-width: 900px) {
+      .theme-cols-2 {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+      }
+    }
+    .status-planning {
+      background-color: #E0F7FA;
+      color: #00838F;
+    }
+  </style>
 </head>
 <body>
 
@@ -16,14 +49,74 @@
 
   <main id="main-content">
     <h1>Technical Projects</h1>
-    <p class="hero-tagline">Detailed chemical research and exploration projects in our laboratory.</p>
+    <p class="hero-tagline">Scientific objectives, experimental workflows, and research results.</p>
 
-    <!-- Projects List Target -->
-    <section class="mb-8">
-      <div id="projects-list-target">
-        <p>Loading projects database...</p>
+    <!-- Project Overview Dashboard -->
+    <section class="mb-8" style="margin-top: 30px;" aria-label="Projects Metrics Dashboard">
+      <div class="grid-cols-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;" id="projects-dashboard-target">
+        <!-- Stat cards dynamically injected -->
       </div>
     </section>
+
+    <!-- Search & Filter Controls -->
+    <section class="search-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; margin-top: 30px;" aria-label="Search and Filter Controls">
+      <div style="display: flex; gap: 15px; width: 100%; flex-wrap: wrap;">
+        <input type="text" id="search-box" class="search-input" placeholder="Search by project title, keywords, or techniques..." aria-label="Search projects">
+        
+        <select id="sort-filter" class="filter-select" aria-label="Sort projects">
+          <option value="active">Sort: Active First</option>
+          <option value="newest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+          <option value="title">Sort: Alphabetical Title</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; width: 100%;" class="grid-cols-4">
+        <select id="status-filter" class="filter-select" aria-label="Filter by Status">
+          <option value="all">All Statuses</option>
+          <option value="Active">Active Only</option>
+          <option value="Planning">Planning Only</option>
+          <option value="Completed">Completed Only</option>
+        </select>
+
+        <select id="theme-filter" class="filter-select" aria-label="Filter by Research Theme">
+          <option value="all">All Themes</option>
+        </select>
+
+        <select id="technique-filter" class="filter-select" aria-label="Filter by Technique">
+          <option value="all">All Techniques</option>
+        </select>
+
+        <select id="year-filter" class="filter-select" aria-label="Filter by Start Year">
+          <option value="all">All Start Years</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Active Filter Indicators -->
+    <div id="active-filters-container" class="pub-active-filters-row" aria-live="polite"></div>
+
+    <!-- Projects Grid -->
+    <section class="mb-8" style="margin-top: 30px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <h2 id="projects-list-title" style="margin: 0; font-size: 1.5rem;">Research Portfolios</h2>
+        <div id="projects-count" class="pub-count-label">Showing 0 of 0 projects</div>
+      </div>
+      <div id="projects-list-target" style="display: flex; flex-direction: column; gap: 25px;">
+        <p>Loading project records...</p>
+      </div>
+    </section>
+
+    <!-- Pagination Navigation -->
+    <div id="pagination-container" class="pub-pagination-bar" aria-label="Pagination Navigation"></div>
+
+    <!-- Timeline of Project Milestones -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 25px;">Project Milestones Timeline</h2>
+      <p style="margin-bottom: 25px; color: var(--light-gray);">Tracking achievements across the group's research portfolios.</p>
+      <div id="timeline-target"></div>
+    </section>
+
   </main>
 
   <div id="footer-container"></div>
@@ -33,23 +126,386 @@
     import { loadData } from './src/js/loader.js';
     import { validateData } from './src/js/validator.js';
     import { ProjectCard } from './src/js/components.js';
-    import { renderList } from './src/js/renderer.js';
+
+    let allProjects = [];
+    let filteredProjects = [];
+    let currentPage = 1;
+    let pageSize = 10;
+
+    let allResearch = [];
+    let allGrants = [];
+    let allPublications = [];
+    let allCollaborators = [];
 
     async function initProjects() {
-      const dataObj = await loadData('projects.json');
-      const projectsList = dataObj.projects || [];
+      // Load all 5 data feeds asynchronously
+      const [projectsData, researchData, grantsData, publicationsData, collaboratorsData] = await Promise.all([
+        loadData('projects.json'),
+        loadData('research.json'),
+        loadData('grants.json'),
+        loadData('publications.json'),
+        loadData('collaborators.json')
+      ]);
+
+      allProjects = projectsData.projects || [];
+      allResearch = researchData.themes || [];
+      allGrants = grantsData.grants || [];
+      allPublications = publicationsData.publications || [];
+      allCollaborators = collaboratorsData.collaborators || [];
 
       // Validate
-      validateData('project', projectsList);
+      validateData('project', allProjects);
 
-      // Render
-      renderList({
-        selector: '#projects-list-target',
-        items: projectsList,
-        componentFn: ProjectCard,
-        emptyMessage: 'No projects registered in the database.'
+      // Populate filter dropdowns
+      populateFilterDropdowns(allProjects);
+
+      // Add event listeners
+      document.getElementById('search-box').addEventListener('input', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('sort-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('status-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('theme-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('technique-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+      document.getElementById('year-filter').addEventListener('change', () => { currentPage = 1; applyFilters(); });
+
+      // Initial render
+      applyFilters();
+      renderDashboard();
+      renderTimeline();
+    }
+
+    function populateFilterDropdowns(projects) {
+      const themeSelect = document.getElementById('theme-filter');
+      const techniqueSelect = document.getElementById('technique-filter');
+      const yearSelect = document.getElementById('year-filter');
+
+      const themes = new Set();
+      const techniques = new Set();
+      const years = new Set();
+
+      projects.forEach(p => {
+        if (p.research_theme) themes.add(p.research_theme);
+        if (p.techniques) p.techniques.forEach(t => techniques.add(t));
+        if (p.timeline) {
+          const startYear = p.timeline.split(' ')[0];
+          if (startYear && startYear.length === 4) years.add(startYear);
+        }
+      });
+
+      Array.from(themes).sort().forEach(t => {
+        themeSelect.add(new Option(t, t));
+      });
+      Array.from(techniques).sort().forEach(t => {
+        techniqueSelect.add(new Option(t, t));
+      });
+      Array.from(years).sort((a,b) => b.localeCompare(a)).forEach(y => {
+        yearSelect.add(new Option(y, y));
       });
     }
+
+    function renderDashboard() {
+      const target = document.getElementById('projects-dashboard-target');
+      
+      const totalCount = allProjects.length;
+      const activeCount = allProjects.filter(p => p.status === 'Active').length;
+      const completedCount = allProjects.filter(p => p.status === 'Completed').length;
+
+      // Count dynamic mappings
+      const uniqueGrants = new Set(allProjects.flatMap(p => p.related_grants || [])).size;
+      const uniquePubs = new Set(allProjects.flatMap(p => p.related_publications || [])).size;
+      const uniqueCollabs = new Set(allProjects.flatMap(p => p.related_collaborators || []).map(cid => {
+        const collab = allCollaborators.find(c => c.id === cid);
+        return collab ? collab.institution : cid;
+      })).size;
+
+      target.innerHTML = `
+        <div class="project-stat-card">
+          <div class="project-stat-val">${totalCount}</div>
+          <div class="project-stat-label">Total Projects</div>
+        </div>
+        <div class="project-stat-card">
+          <div class="project-stat-val">${activeCount}</div>
+          <div class="project-stat-label">Active Portfolios</div>
+        </div>
+        <div class="project-stat-card">
+          <div class="project-stat-val">${uniqueGrants}</div>
+          <div class="project-stat-label">Linked Grants</div>
+        </div>
+        <div class="project-stat-card">
+          <div class="project-stat-val">${uniquePubs}</div>
+          <div class="project-stat-label">Publications</div>
+        </div>
+        <div class="project-stat-card">
+          <div class="project-stat-val">${uniqueCollabs}</div>
+          <div class="project-stat-label">Institutions</div>
+        </div>
+      `;
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('search-box').value.toLowerCase().trim();
+      const status = document.getElementById('status-filter').value;
+      const theme = document.getElementById('theme-filter').value;
+      const technique = document.getElementById('technique-filter').value;
+      const year = document.getElementById('year-filter').value;
+      const sortVal = document.getElementById('sort-filter').value;
+
+      // Filter Logic
+      filteredProjects = allProjects.filter(p => {
+        const matchesQuery = !query ||
+          p.title.toLowerCase().includes(query) ||
+          p.summary.toLowerCase().includes(query) ||
+          (p.tags && p.tags.some(tag => tag.toLowerCase().includes(query))) ||
+          (p.techniques && p.techniques.some(t => t.toLowerCase().includes(query)));
+
+        const matchesStatus = status === 'all' || p.status === status;
+        const matchesTheme = theme === 'all' || p.research_theme === theme;
+        const matchesTechnique = technique === 'all' || (p.techniques && p.techniques.includes(technique));
+        
+        let matchesYear = true;
+        if (year !== 'all') {
+          const startYear = p.timeline.split(' ')[0];
+          matchesYear = startYear === year;
+        }
+
+        return matchesQuery && matchesStatus && matchesTheme && matchesTechnique && matchesYear;
+      });
+
+      // Sorting Logic
+      let sortFn;
+      if (sortVal === 'active') {
+        sortFn = (a, b) => {
+          if (a.status !== b.status) {
+            if (a.status === 'Active') return -1;
+            if (b.status === 'Active') return 1;
+            if (a.status === 'Planning') return -1;
+            if (b.status === 'Planning') return 1;
+          }
+          return a.title.localeCompare(b.title);
+        };
+      } else if (sortVal === 'newest') {
+        sortFn = (a, b) => b.timeline.split(' ')[0].localeCompare(a.timeline.split(' ')[0]) || a.title.localeCompare(b.title);
+      } else if (sortVal === 'oldest') {
+        sortFn = (a, b) => a.timeline.split(' ')[0].localeCompare(b.timeline.split(' ')[0]) || a.title.localeCompare(b.title);
+      } else if (sortVal === 'title') {
+        sortFn = (a, b) => a.title.localeCompare(b.title);
+      }
+
+      filteredProjects.sort(sortFn);
+
+      // Render pills
+      renderActivePills({ query, status, theme, technique, year });
+
+      // Render main cards
+      renderPaginatedProjects();
+    }
+
+    function renderPaginatedProjects() {
+      const target = document.getElementById('projects-list-target');
+      const countLabel = document.getElementById('projects-count');
+
+      countLabel.textContent = `Showing ${filteredProjects.length} of ${allProjects.length} projects`;
+
+      if (filteredProjects.length === 0) {
+        target.innerHTML = `
+          <div class="empty-state" style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border); border-radius: 8px; background: var(--bg-offset);">
+            <p style="font-size: 1.1rem; color: var(--light-gray); margin-bottom: 10px;">No projects found matching your criteria.</p>
+            <button class="btn btn-secondary btn-sm" onclick="window.clearAllFilters()">Clear All Filters</button>
+          </div>
+        `;
+        document.getElementById('pagination-container').innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(filteredProjects.length / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, filteredProjects.length);
+      const pageItems = filteredProjects.slice(startIndex, endIndex);
+
+      // Render cards resolving relations on-the-fly
+      const markup = pageItems.map(p => {
+        const relations = {
+          grants: allGrants.filter(g => (p.related_grants || []).includes(g.id)),
+          publications: allPublications.filter(pub => (p.related_publications || []).includes(pub.id)),
+          collaborators: allCollaborators.filter(c => (p.related_collaborators || []).includes(c.id))
+        };
+        return ProjectCard(p, relations);
+      }).join('');
+
+      target.innerHTML = markup;
+
+      renderPaginationBar(totalPages);
+    }
+
+    function renderPaginationBar(totalPages) {
+      const container = document.getElementById('pagination-container');
+      
+      let pageButtons = '';
+      for (let i = 1; i <= totalPages; i++) {
+        pageButtons += `
+          <button class="pub-page-btn ${i === currentPage ? 'active-page' : ''}" onclick="window.setPage(${i})" aria-label="Page ${i}" ${i === currentPage ? 'aria-current="page"' : ''}>
+            ${i}
+          </button>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="pub-count-label">
+          Showing ${Math.min((currentPage - 1) * pageSize + 1, filteredProjects.length)}–${Math.min(currentPage * pageSize, filteredProjects.length)} of ${filteredProjects.length}
+        </div>
+        
+        <div class="pub-page-controls">
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous Page">
+            &lt; Prev
+          </button>
+          ${pageButtons}
+          <button class="pub-page-btn" onclick="window.setPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next Page">
+            Next &gt;
+          </button>
+        </div>
+
+        <div>
+          <span style="font-size: 0.85rem; color: var(--light-gray); margin-right: 8px;">Show:</span>
+          <select class="pub-pagesize-select" onchange="window.setPageSize(this.value)" aria-label="Projects per page">
+            <option value="10" ${pageSize === 10 ? 'selected' : ''}>10</option>
+            <option value="20" ${pageSize === 20 ? 'selected' : ''}>20</option>
+            <option value="50" ${pageSize === 50 ? 'selected' : ''}>50</option>
+          </select>
+        </div>
+      `;
+    }
+
+    function renderActivePills({ query, status, theme, technique, year }) {
+      const container = document.getElementById('active-filters-container');
+      const pills = [];
+
+      if (query) {
+        pills.push(`
+          <span class="filter-pill">
+            Search: "${query}"
+            <button class="filter-pill-remove" onclick="window.clearFilter('search')" aria-label="Remove search filter">×</button>
+          </span>
+        `);
+      }
+      if (status !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Status: ${status}
+            <button class="filter-pill-remove" onclick="window.clearFilter('status')" aria-label="Remove status filter">×</button>
+          </span>
+        `);
+      }
+      if (theme !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Theme: ${theme}
+            <button class="filter-pill-remove" onclick="window.clearFilter('theme')" aria-label="Remove theme filter">×</button>
+          </span>
+        `);
+      }
+      if (technique !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Technique: ${technique}
+            <button class="filter-pill-remove" onclick="window.clearFilter('technique')" aria-label="Remove technique filter">×</button>
+          </span>
+        `);
+      }
+      if (year !== 'all') {
+        pills.push(`
+          <span class="filter-pill">
+            Start Year: ${year}
+            <button class="filter-pill-remove" onclick="window.clearFilter('year')" aria-label="Remove year filter">×</button>
+          </span>
+        `);
+      }
+
+      if (pills.length > 0) {
+        container.innerHTML = `
+          ${pills.join('')}
+          <button class="btn btn-text btn-sm" onclick="window.clearAllFilters()" style="color: var(--primary); text-decoration: underline; cursor: pointer; padding: 0; font-weight: 600;">
+            Clear All
+          </button>
+        `;
+      } else {
+        container.innerHTML = '';
+      }
+    }
+
+    function renderTimeline() {
+      const target = document.getElementById('timeline-target');
+      
+      // Collect all milestones from all projects and sort chronologically
+      const list = [];
+      allProjects.forEach(p => {
+        if (p.milestones) {
+          p.milestones.forEach(m => {
+            list.push({
+              year: m.year,
+              title: m.title,
+              projectTitle: p.title,
+              status: p.status
+            });
+          });
+        }
+      });
+
+      list.sort((a,b) => a.year.localeCompare(b.year));
+
+      const markup = list.map(item => `
+        <div class="timeline-node">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content-card">
+            <div class="timeline-header">
+              <span class="event-date" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">${item.year}</span>
+              <span class="grant-status ${item.status === 'Active' ? 'status-active' : 'status-completed'}" style="font-size: 0.65rem;">${item.status}</span>
+            </div>
+            <h3 class="event-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.1rem; margin-top: 5px; margin-bottom: 8px;">
+              ${item.title}
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 0;">
+              <strong>Project:</strong> ${item.projectTitle}
+            </p>
+          </div>
+        </div>
+      `).join('');
+
+      target.innerHTML = `<div class="timeline-container">${markup}</div>`;
+    }
+
+    // Global bindings for pagination & pills
+    window.setPage = function(pageNumber) {
+      currentPage = pageNumber;
+      applyFilters();
+      document.getElementById('projects-list-title').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    window.setPageSize = function(size) {
+      pageSize = parseInt(size, 10);
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearFilter = function(name) {
+      if (name === 'search') document.getElementById('search-box').value = '';
+      if (name === 'status') document.getElementById('status-filter').value = 'all';
+      if (name === 'theme') document.getElementById('theme-filter').value = 'all';
+      if (name === 'technique') document.getElementById('technique-filter').value = 'all';
+      if (name === 'year') document.getElementById('year-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
+
+    window.clearAllFilters = function() {
+      document.getElementById('search-box').value = '';
+      document.getElementById('status-filter').value = 'all';
+      document.getElementById('theme-filter').value = 'all';
+      document.getElementById('technique-filter').value = 'all';
+      document.getElementById('year-filter').value = 'all';
+      currentPage = 1;
+      applyFilters();
+    };
 
     initProjects();
   </script>

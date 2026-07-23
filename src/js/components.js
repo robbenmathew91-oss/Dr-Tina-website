@@ -123,35 +123,165 @@ export function AlumniCard(alumnus) {
 /**
  * Render Research Project Card
  */
-export function ProjectCard(project) {
-  const statusClass = project.status.toLowerCase() === 'active' ? 'status-active' : 'status-completed';
-  const tagsList = (project.tags || []).map(tag => `<span class="project-tag">${tag}</span>`).join('');
+export function ProjectCard(project, relations = {}) {
+  const statusClass = project.status.toLowerCase() === 'active' 
+    ? 'status-active' 
+    : (project.status.toLowerCase() === 'planning' ? 'status-planning' : 'status-completed');
+
+  const techniquesList = (project.techniques || [])
+    .map(t => `<span class="technique-tag">${t}</span>`)
+    .join('');
+
+  const applicationsList = (project.applications || [])
+    .map(a => `<span class="application-tag">${a}</span>`)
+    .join('');
+
+  const objectivesList = (project.research_objectives || [])
+    .map(obj => `<li>${obj}</li>`)
+    .join('');
+
+  // Resolve dynamic relationships from parameters
+  const linkedGrants = relations.grants || [];
+  const linkedPublications = relations.publications || [];
+  const linkedCollaborators = relations.collaborators || [];
+
+  const grantsMarkup = linkedGrants.length > 0
+    ? linkedGrants.map(g => `
+        <div style="font-size: 0.85rem; margin-bottom: 6px; padding: 8px; border: 1px dashed var(--border); border-radius: 4px; background: var(--bg-offset);">
+          <strong>${g.agency}</strong>: ${g.title} (${g.grantNumber})
+        </div>
+      `).join('')
+    : '';
+
+  const publicationsMarkup = linkedPublications.length > 0
+    ? `<ul style="list-style: none; padding-left: 0; margin-bottom: 0;">` + 
+      linkedPublications.map(pub => `
+        <li style="font-size: 0.85rem; margin-bottom: 6px; line-height: 1.3;">
+          "${pub.title}" (<em>${pub.journal}</em>, ${pub.year})
+        </li>
+      `).join('') + `</ul>`
+    : '';
+
+  const collaboratorsMarkup = linkedCollaborators.length > 0
+    ? linkedCollaborators.map(c => `
+        <div style="font-size: 0.82rem; color: var(--light-gray); margin-bottom: 4px;">
+          • ${c.name} (${c.institution})
+        </div>
+      `).join('')
+    : '';
+
+  // Scientific Workflow chart styling
+  const workflow = project.workflow || {};
+  const workflowMarkup = `
+    <div class="project-workflow-diagram" style="margin-top: 15px; background: var(--bg-offset); padding: 15px; border-radius: 6px; border: 1px solid var(--border);">
+      <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 10px;">Scientific Workflow</span>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Question:</span> ${workflow.question || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Materials:</span> ${workflow.materials || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Methods:</span> ${workflow.methods || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Characterization:</span> ${workflow.characterization || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Results:</span> ${workflow.results || 'N/A'}</div>
+        <div style="text-align: center; color: var(--light-gray); font-size: 0.8rem;">↓</div>
+        <div style="font-size: 0.85rem;"><span style="color: var(--primary); font-weight: 600;">Applications:</span> ${workflow.applications || 'N/A'}</div>
+      </div>
+    </div>
+  `;
 
   return `
-    <article class="project-card" id="project-${project.id}">
-      ${project.image ? `
-        <div class="project-image-container">
-          <img src="${project.image}" alt="${project.title}" class="project-image" loading="lazy" />
-        </div>
-      ` : ''}
+    <article class="project-card ${project.status.toLowerCase()}" id="project-${project.id}" style="border: 1px solid var(--border); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; margin-bottom: 25px; background: var(--bg-offset); box-shadow: var(--shadow-sm); transition: var(--transition); padding: 22px;">
       <div class="project-content">
-        <div class="project-header">
-          <span class="project-status ${statusClass}">${project.status}</span>
-          <h3 class="project-title">${project.title}</h3>
+        <div class="project-header" style="margin-bottom: 12px;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+            <span class="project-status ${statusClass}">${project.status}</span>
+            <span class="pub-badge category-badge" style="text-transform: uppercase;">${project.research_theme || 'Research'}</span>
+          </div>
+          <h3 class="project-title" style="font-family: var(--font-heading); color: var(--primary); font-size: 1.3rem; margin-top: 5px; margin-bottom: 5px;">
+            ${project.title}
+          </h3>
+          <p style="margin: 0; font-size: 0.85rem; color: var(--light-gray);">
+            <strong>Leads:</strong> ${project.project_leads ? project.project_leads.join(', ') : 'N/A'} | <strong>Timeline:</strong> ${project.timeline || 'N/A'}
+          </p>
         </div>
-        <p class="project-summary">${project.summary}</p>
-        
-        <div class="project-tags-row">${tagsList}</div>
-        
-        ${project.funding ? `<p class="project-funding"><strong>Funding Support:</strong> ${project.funding}</p>` : ''}
 
-        <button class="btn btn-secondary btn-sm project-more-btn" onclick="toggleDetails('project-desc-${project.id}')">
-          View Project Details
+        <p class="project-summary" style="font-size: 0.95rem; line-height: 1.5; color: var(--dark-gray); margin-bottom: 12px;">
+          ${project.summary}
+        </p>
+
+        <div style="margin-bottom: 15px; font-size: 0.9rem; color: var(--dark-gray); background: #FFFDF0; border-left: 2px solid #D4AF37; padding: 10px 12px; border-radius: 0 4px 4px 0;">
+          <strong>Scientific Motivation:</strong> ${project.scientific_motivation}
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;" class="theme-cols-2">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Techniques Used</span>
+            <div class="techniques-list" style="margin-top: 5px;">${techniquesList}</div>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase;">Expected Applications</span>
+            <div class="applications-list" style="margin-top: 5px;">${applicationsList}</div>
+          </div>
+        </div>
+
+        <!-- Collapsible Details Trigger -->
+        <button class="pub-toggle-btn" onclick="toggleDetails('project-details-panel-${project.id}')" aria-expanded="false" aria-controls="project-details-panel-${project.id}">
+          Explore Scientific Workflow & Relations
         </button>
-        
-        <div class="project-description-full hidden" id="project-desc-${project.id}">
-          <hr />
-          <p>${project.detailedDescription}</p>
+
+        <div class="pub-abstract-panel hidden" id="project-details-panel-${project.id}">
+          <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+          
+          <div style="margin-bottom: 15px;">
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Research Objectives</span>
+            <ul style="font-size: 0.9rem; color: var(--dark-gray); padding-left: 15px;">
+              ${objectivesList}
+            </ul>
+          </div>
+
+          <div style="margin-bottom: 15px;">
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Expected Outcomes</span>
+            <p style="font-size: 0.9rem; color: var(--dark-gray); line-height: 1.4;">${project.expected_outcomes}</p>
+          </div>
+
+          <!-- Scientific Workflow Diagram -->
+          ${workflowMarkup}
+
+          <!-- Relations -->
+          <div style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;" class="theme-cols-2">
+            <div>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Linked Funding</span>
+              ${grantsMarkup || '<p style="font-size: 0.85rem; color: var(--light-gray);">None</p>'}
+            </div>
+            <div>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Linked Publications</span>
+              ${publicationsMarkup || '<p style="font-size: 0.85rem; color: var(--light-gray);">None</p>'}
+            </div>
+          </div>
+          
+          ${collaboratorsMarkup ? `
+            <div style="margin-top: 15px;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Scientific Collaborations</span>
+              ${collaboratorsMarkup}
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Future Ready Placeholder: GitHub, Datasets, Student profiles -->
+        <div class="pub-future-actions" style="margin-top: 15px; display: flex; gap: 15px; font-size: 0.72rem; color: var(--light-gray); border-top: 1px dashed var(--border); padding-top: 10px;">
+          <a href="#" class="pdf-download-stub" onclick="alert('Dataset repository link is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
+            Datasets
+          </a>
+          <span>•</span>
+          <button class="export-bibtex-stub" onclick="alert('GitHub Repository is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+            GitHub Code
+          </button>
+          <span>•</span>
+          <button class="copy-apa-stub" onclick="alert('Supplementary Files download is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+            Supplementary Info
+          </button>
         </div>
       </div>
     </article>
