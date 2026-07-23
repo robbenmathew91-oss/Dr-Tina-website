@@ -523,32 +523,116 @@ export function GrantCard(grant, relations = {}) {
 /**
  * Render News Card
  */
-export function NewsCard(item) {
+export function NewsCard(item, relations = {}) {
   const dateFormatted = new Date(item.date).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  return `
-    <article class="news-card" id="news-${item.id}">
-      ${item.image ? `
-        <div class="news-image-wrapper">
-          <img src="${item.image}" alt="${item.title}" class="news-image" loading="lazy" />
-        </div>
-      ` : ''}
-      <div class="news-card-content">
-        <time class="news-date" datetime="${item.date}">${dateFormatted}</time>
-        <h3 class="news-title">${item.title}</h3>
-        <p class="news-excerpt">${item.excerpt}</p>
-        
-        <button class="btn btn-link news-read-btn" onclick="toggleDetails('news-body-${item.id}')">
-          Read Article &darr;
-        </button>
+  const keywordsList = (item.keywords || [])
+    .map(kw => `<span class="pub-keyword">${kw}</span>`)
+    .join('');
 
-        <div class="news-body-full hidden" id="news-body-${item.id}">
-          <hr />
-          <div class="news-detailed-text">${item.content}</div>
-          ${item.link ? `<p class="news-external-link"><a href="${item.link}" target="_blank" rel="noopener">Official Press Release &rarr;</a></p>` : ''}
+  // Resolve relations
+  const linkedPubs = relations.publications || [];
+  const linkedProjects = relations.projects || [];
+  const linkedGrants = relations.grants || [];
+  const linkedPeople = relations.people || [];
+
+  const publicationsMarkup = linkedPubs.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Publications</span>` +
+      `<ul style="list-style: none; padding-left: 0; margin-bottom: 0;">` +
+      linkedPubs.map(pub => `<li style="font-size: 0.85rem; margin-bottom: 4px; line-height: 1.3;">• "${pub.title}" (<em>${pub.journal}</em>, ${pub.year})</li>`).join('') +
+      `</ul></div>`
+    : '';
+
+  const projectsMarkup = linkedProjects.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Projects</span>` +
+      linkedProjects.map(p => `<div style="font-size: 0.85rem; margin-bottom: 4px; padding: 6px 10px; border: 1px dashed var(--border); border-radius: 4px; background: var(--bg-offset);"><strong>${p.title}</strong></div>`).join('') +
+      `</div>`
+    : '';
+
+  const grantsMarkup = linkedGrants.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Grants</span>` +
+      linkedGrants.map(g => `<div style="font-size: 0.82rem; color: var(--dark-gray);">• ${g.agency} (${g.grantNumber})</div>`).join('') +
+      `</div>`
+    : '';
+
+  const peopleMarkup = linkedPeople.length > 0
+    ? `<div style="margin-top: 10px;"><span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 5px;">Related Group Members</span>` +
+      `<div style="display: flex; flex-wrap: wrap; gap: 6px;">` +
+      linkedPeople.map(p => `<span class="technique-tag" style="background: #E0F2F1; color: #004D40; border-color: #B2DFDB;">${p.name || p}</span>`).join('') +
+      `</div></div>`
+    : '';
+
+  return `
+    <article class="news-card ${item.featured ? 'featured-pub' : ''}" id="news-${item.id}" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg-offset); box-shadow: var(--shadow-sm); transition: var(--transition); display: flex; flex-direction: column; margin-bottom: 25px;" data-featured="${item.featured || false}">
+      ${item.featured ? '<div class="pub-featured-tag" style="padding: 15px 20px 0 20px; font-weight: 700; color: #B8860B;">★ Featured Announcement</div>' : ''}
+      
+      <div style="display: flex; gap: 20px; padding: 20px;" class="theme-cols-2">
+        ${item.image ? `
+          <div class="news-image-wrapper" style="width: 150px; min-width: 150px; height: 120px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border);">
+            <img src="${item.image}" alt="${item.title}" class="news-image" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+          </div>
+        ` : ''}
+
+        <div class="news-card-content" style="flex-grow: 1;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+            <span class="pub-badge category-badge" style="text-transform: uppercase; font-size: 0.68rem;">${item.category || 'News'}</span>
+            <time class="news-date" datetime="${item.date}" style="font-size: 0.8rem; color: var(--light-gray);">${dateFormatted}</time>
+          </div>
+
+          <h3 class="news-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.25rem; margin-top: 5px; margin-bottom: 8px;">
+            ${item.title}
+          </h3>
+          
+          <p class="news-excerpt" style="font-size: 0.92rem; line-height: 1.5; color: var(--dark-gray); margin-bottom: 12px;">
+            ${item.excerpt}
+          </p>
+
+          <!-- Collapsible Read More Button -->
+          <button class="pub-toggle-btn" onclick="toggleDetails('news-body-panel-${item.id}')" aria-expanded="false" aria-controls="news-body-panel-${item.id}">
+            Read Full Post &rarr;
+          </button>
+
+          <div class="pub-abstract-panel hidden" id="news-body-panel-${item.id}">
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+            <div class="news-detailed-text" style="font-size: 0.9rem; line-height: 1.6; color: var(--dark-gray); margin-bottom: 15px;">
+              ${item.content}
+            </div>
+
+            <!-- Keywords List -->
+            ${keywordsList ? `<div style="margin-bottom: 10px;"><strong>Keywords:</strong> ${keywordsList}</div>` : ''}
+
+            <!-- Relations -->
+            ${publicationsMarkup}
+            ${projectsMarkup}
+            ${grantsMarkup}
+            ${peopleMarkup}
+
+            ${item.link ? `
+              <div style="margin-top: 15px;">
+                <a href="${item.link}" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="font-size: 0.8rem; padding: 5px 10px;">
+                  Official Announcement Specs &rarr;
+                </a>
+              </div>
+            ` : ''}
+          </div>
         </div>
+      </div>
+
+      <!-- Future Ready Placeholder: Embedded Videos, Press Kits, Social Sharing -->
+      <div class="pub-future-actions" style="margin-top: auto; padding: 12px 20px; background: rgba(0,0,0,0.02); display: flex; gap: 15px; font-size: 0.72rem; color: var(--light-gray); border-top: 1px solid var(--border);">
+        <button class="export-bibtex-stub" onclick="alert('Press Kit download is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Download Press Kit
+        </button>
+        <span>•</span>
+        <button class="copy-apa-stub" onclick="alert('Embedded video is coming soon!')" style="background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 0.72rem;">
+          Watch Video
+        </button>
+        <span>•</span>
+        <a href="#" class="pdf-download-stub" onclick="alert('Social sharing is coming soon!'); return false;" style="color: var(--primary); text-decoration: underline;">
+          Share Article
+        </a>
       </div>
     </article>
   `;

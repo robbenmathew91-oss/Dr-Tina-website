@@ -38,6 +38,54 @@
           "link": {
             "type": "string",
             "description": "Optional external link (e.g. to a UGA press release)"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Publications",
+              "Awards",
+              "Conferences",
+              "Outreach",
+              "Student News",
+              "Lab Milestones",
+              "Funding",
+              "New Members",
+              "Alumni"
+            ],
+            "description": "Classification category for the news post"
+          },
+          "featured": {
+            "type": "boolean",
+            "description": "Is this a featured news post?"
+          },
+          "keywords": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Keywords list for indexing and search"
+          },
+          "year": {
+            "type": "string",
+            "description": "Year of publishing (e.g. 2026)"
+          },
+          "related_publications": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_projects": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_themes": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_grants": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related_people": {
+            "type": "array",
+            "items": { "type": "string" }
           }
         }
       }
