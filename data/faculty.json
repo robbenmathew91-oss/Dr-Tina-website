@@ -166,34 +166,66 @@
   ],
   "awards": [
     {
-      "award": "UGA First-Year Odyssey (FYO) Teaching Award",
-      "year": "2024",
-      "details": "Awarded for exceptional undergraduate instruction in the seminar course 'UGA at High Magnification'."
-    },
-    {
-      "award": "NSF Major Research Instrumentation (MRI) Award (PI)",
-      "year": "2019",
-      "details": "$997,499 federal grant (#1919942) for acquiring Georgia's premier Hitachi SU9000EA low-voltage FE-SEM/STEM."
-    },
-    {
       "award": "DOE Office of Science Early Career Research Program Award",
+      "category": "National Awards",
       "year": "2012",
       "details": "$750,000 5-year BES award (#SC0008065) for 'Dielectric Ceramics in Nanosheet Form'—the first recipient in the State of Georgia."
     },
     {
+      "award": "NSF Major Research Instrumentation (MRI) Award (PI)",
+      "category": "Research Awards",
+      "year": "2019",
+      "details": "$997,499 federal grant (#1919942) for acquiring Georgia's premier Hitachi SU9000EA low-voltage FE-SEM/STEM."
+    },
+    {
+      "award": "UGA First-Year Odyssey (FYO) Teaching Award",
+      "category": "Teaching Awards",
+      "year": "2024",
+      "details": "Awarded for exceptional undergraduate instruction in the seminar course 'UGA at High Magnification'."
+    },
+    {
       "award": "National Academy of Engineering Frontiers of Engineering (FOE) Invitee",
+      "category": "Major Honors",
       "year": "2008, 2009",
       "details": "Selected general participant (German-American FOE, Irvine) and committee member (China-America FOE, Beijing)."
     },
     {
       "award": "Damon Runyon Cancer Research Foundation Postdoctoral Fellowship",
+      "category": "Fellowships",
       "year": "2003",
       "details": "National postdoctoral fellowship for bio-related chemistry research at UC Santa Barbara."
     },
     {
       "award": "B.A. Summa Cum Laude",
+      "category": "Major Honors",
       "year": "1997",
       "details": "Highest academic distinction from Columbia University."
+    }
+  ],
+  "whyJoin": [
+    {
+      "title": "Cutting-Edge Materials Synthesis",
+      "description": "Pioneer soft-chemical exfoliation, chemical vapor transport, and hydrothermal synthesis of novel 2D nanosheets and 1D quantum nanoribbons."
+    },
+    {
+      "title": "Advanced Electron Microscopy Facilities",
+      "description": "Gain direct access and expert training on Georgia's premier low-voltage Hitachi SU9000EA FE-SEM/STEM at the GEM core facility."
+    },
+    {
+      "title": "Nationally Funded Research Programs",
+      "description": "Participate in major federal research grants funded by the National Science Foundation (NSF) and Department of Energy (DOE BES)."
+    },
+    {
+      "title": "Collaborative & Interdisciplinary Network",
+      "description": "Collaborate closely with leading device physics teams at UC Riverside, Oak Ridge National Laboratory, and regional quantum alliance networks."
+    },
+    {
+      "title": "Inclusive Graduate & Undergraduate Mentorship",
+      "description": "Experience tailored research mentorship empowering students for top careers in academia, national laboratories, and high-tech industry."
+    },
+    {
+      "title": "Interdisciplinary Quantum & Energy Frontiers",
+      "description": "Integrate synthetic chemistry with quantum network devices, low-frequency noise spectroscopy, machine learning, and heritage materials science."
     }
   ],
   "professionalService": [

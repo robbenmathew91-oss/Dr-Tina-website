@@ -214,7 +214,11 @@ export function FacultyProfile(faculty, ecosystem = {}) {
           <div style="display: flex; flex-direction: column; gap: 12px;">
             ${awards.map(a => `
               <div>
-                <div style="font-weight: 700; color: var(--text-color);">${a.award} <span style="color: var(--primary); font-size: 0.85rem;">(${a.year})</span></div>
+                <div style="font-weight: 700; color: var(--text-color);">
+                  ${a.award} 
+                  <span style="color: var(--primary); font-size: 0.85rem;">(${a.year})</span>
+                  ${a.category ? `<span style="font-size: 0.75rem; background: var(--bg); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; margin-left: 6px; color: var(--light-gray);">${a.category}</span>` : ''}
+                </div>
                 <div style="font-size: 0.88rem; color: var(--light-gray);">${a.details}</div>
               </div>
             `).join('')}
@@ -222,7 +226,7 @@ export function FacultyProfile(faculty, ecosystem = {}) {
         </section>
 
         <section class="pi-service-card" style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
-          <h2 style="font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Professional Service & Appointments</h2>
+          <h2 style="font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Professional Service & Governance</h2>
           <div style="display: flex; flex-direction: column; gap: 12px;">
             ${service.map(s => `
               <div>
@@ -252,31 +256,60 @@ export function FacultyProfile(faculty, ecosystem = {}) {
         </section>
       ` : ''}
 
-      <!-- 11. Dynamic Research Ecosystem Section -->
+      <!-- 11. Why Join the Salguero Research Group -->
+      ${(faculty.whyJoin || []).length > 0 ? `
+        <section class="pi-why-join-section" style="margin-bottom: 45px; background: var(--bg-offset); border: 1px solid var(--border); border-radius: 12px; padding: 30px; box-shadow: var(--shadow-sm);">
+          <div style="text-align: center; margin-bottom: 25px;">
+            <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 6px;">Why Join the Salguero Research Group?</h2>
+            <p style="font-size: 0.95rem; color: var(--light-gray); max-width: 650px; margin: 0 auto;">
+              We offer prospective graduate students, postdocs, and undergraduate researchers an empowering, world-class research environment.
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 25px;">
+            ${faculty.whyJoin.map(item => `
+              <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px;">
+                <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--primary); margin-bottom: 6px;">${item.title}</h3>
+                <p style="font-size: 0.88rem; color: var(--text-color); margin: 0; line-height: 1.5;">${item.description}</p>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <a href="join.html" class="btn-primary" style="display: inline-block; padding: 12px 28px; font-size: 1.05rem; font-weight: 600; background: var(--primary); color: #fff; text-decoration: none; border-radius: 8px; box-shadow: var(--shadow-md);">
+              Interested in joining the Salguero Research Group? Apply Here &rarr;
+            </a>
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 4. Dynamic Research Ecosystem Gateway Section -->
       <section class="pi-ecosystem-section" style="margin-top: 50px; padding-top: 30px; border-top: 2px dashed var(--border);">
         <div style="text-align: center; margin-bottom: 30px;">
           <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 6px;">Laboratory Research Ecosystem</h2>
           <p style="font-size: 1rem; color: var(--light-gray); max-width: 650px; margin: 0 auto;">
-            Explore how Dr. Salguero's research program connects core scientific themes, high-impact publications, active grants, and student projects.
+            Explore how Dr. Salguero's research program connects core scientific themes, high-impact publications, active grants, projects, and latest news.
           </p>
         </div>
 
         <!-- Ecosystem Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
           
-          <!-- Themes Overview -->
-          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
-            <h3 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-              <span>Research Themes</span>
-              <a href="research.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">Explore &rarr;</a>
-            </h3>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              ${themes.map(t => `
-                <div style="font-size: 0.9rem;">
-                  <strong style="color: var(--text-color);">${t.title}</strong>
-                  <p style="font-size: 0.83rem; color: var(--light-gray); margin: 2px 0 0 0;">${t.overview ? t.overview.substring(0, 100) + '...' : ''}</p>
-                </div>
-              `).join('')}
+          <!-- Themes Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Research Themes</span>
+                <a href="research.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">Explore &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${themes.map(t => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${t.title}</strong>
+                    <p style="font-size: 0.82rem; color: var(--light-gray); margin: 2px 0 0 0;">${t.overview ? t.overview.substring(0, 85) + '...' : ''}</p>
+                  </div>
+                `).join('')}
+              </div>
             </div>
             <div style="margin-top: 15px; text-align: right;">
               <a href="research.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">Explore Research Themes</a>
@@ -284,40 +317,86 @@ export function FacultyProfile(faculty, ecosystem = {}) {
           </div>
 
           <!-- Featured Landmark Publications -->
-          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
-            <h3 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-              <span>Featured Publications</span>
-              <a href="publications.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View All &rarr;</a>
-            </h3>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              ${featuredPubs.map(p => `
-                <div style="font-size: 0.88rem;">
-                  <a href="${p.link || '#'}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--text-color); text-decoration: none;">${p.title}</a>
-                  <div style="font-size: 0.82rem; color: var(--light-gray);">${p.journal} (${p.year})</div>
-                </div>
-              `).join('')}
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Featured Publications</span>
+                <a href="publications.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View All &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${featuredPubs.map(p => `
+                  <div style="font-size: 0.88rem;">
+                    <a href="${p.link || '#'}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--text-color); text-decoration: none;">${p.title}</a>
+                    <div style="font-size: 0.82rem; color: var(--light-gray);">${p.journal} (${p.year})</div>
+                  </div>
+                `).join('')}
+              </div>
             </div>
             <div style="margin-top: 15px; text-align: right;">
               <a href="publications.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View All Publications</a>
             </div>
           </div>
 
-          <!-- Active Grants -->
-          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
-            <h3 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-              <span>Active Research Funding</span>
-              <a href="funding.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View Funding &rarr;</a>
-            </h3>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              ${activeGrants.map(g => `
-                <div style="font-size: 0.88rem;">
-                  <strong style="color: var(--text-color);">${g.agency}</strong>
-                  <div style="font-size: 0.83rem; color: var(--light-gray);">${g.title} (${g.period || g.duration})</div>
-                </div>
-              `).join('')}
+          <!-- Featured Projects Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Featured Projects</span>
+                <a href="projects.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View Projects &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${activeProjects.map(proj => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${proj.title}</strong>
+                    <p style="font-size: 0.82rem; color: var(--light-gray); margin: 2px 0 0 0;">${proj.summary ? proj.summary.substring(0, 85) + '...' : ''}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+              <a href="projects.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View Research Projects</a>
+            </div>
+          </div>
+
+          <!-- Active Grants Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Active Funding</span>
+                <a href="funding.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View Funding &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${activeGrants.map(g => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${g.agency}</strong>
+                    <div style="font-size: 0.82rem; color: var(--light-gray);">${g.title} (${g.period || g.duration})</div>
+                  </div>
+                `).join('')}
+              </div>
             </div>
             <div style="margin-top: 15px; text-align: right;">
               <a href="funding.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View Research Grants</a>
+            </div>
+          </div>
+
+          <!-- Latest Lab News Gateway -->
+          <div style="background: var(--bg-offset); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Latest News</span>
+                <a href="news.html" style="font-size: 0.85rem; font-weight: 500; text-decoration: none;">View News &rarr;</a>
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${latestNews.map(n => `
+                  <div style="font-size: 0.88rem;">
+                    <strong style="color: var(--text-color);">${n.title}</strong>
+                    <div style="font-size: 0.82rem; color: var(--light-gray);">${n.date} &bull; ${n.category}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+              <a href="news.html" class="btn-primary" style="display: inline-block; padding: 6px 14px; font-size: 0.85rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px;">View All News</a>
             </div>
           </div>
 
