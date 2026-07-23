@@ -11,7 +11,7 @@ const FALLBACKS = {
     department: "Chemistry Department",
     institution: "University of Georgia",
     email: "",
-    photo: "assets/images/placeholder.jpg",
+    photo: "assets/images/placeholder.svg",
     biography: "Biography details are temporarily unavailable.",
     education: [],
     researchInterests: []

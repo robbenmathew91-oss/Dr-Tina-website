@@ -8,7 +8,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "degree", "graduationYear", "currentPosition"],
+        "required": ["id", "name", "degree", "graduationYear", "currentPosition", "joined_lab", "status", "graduated_year"],
         "properties": {
           "id": {
             "type": "string",
@@ -37,6 +37,23 @@
           "linkedin": {
             "type": "string",
             "description": "Optional LinkedIn URL"
+          },
+          "photo": {
+            "type": "string",
+            "description": "Relative path to the alumnus's headshot"
+          },
+          "joined_lab": {
+            "type": "string",
+            "description": "Year they joined the Salguero Lab"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Current Member", "Alumni"],
+            "description": "Active status of the member in the group"
+          },
+          "graduated_year": {
+            "type": "string",
+            "description": "Year they graduated or departed from the lab"
           }
         }
       }
