@@ -2,25 +2,18 @@
   "$schema": "./schemas/gallery.schema.json",
   "gallery": [
     {
-      "id": "gallery-01",
-      "url": "assets/images/gallery/lab_group_2026.jpg",
-      "caption": "The Salguero Research Group in front of the UGA Chemistry Building (Spring 2026).",
-      "category": "Group",
-      "date": "2026-04-12"
-    },
-    {
-      "id": "gallery-02",
-      "url": "assets/images/gallery/sem_micrograph.jpg",
-      "caption": "Scanning electron microscopy (SEM) micrograph showing layered stacks of exfoliated nanosheets.",
+      "id": "gallery-nsf-slide1",
+      "url": "assets/images/gallery/nsf_microscope_slide1.jpg",
+      "caption": "NSF MRI Summary Slide showing the Hitachi SU9000EA Microscope and materials characterization examples.",
       "category": "Research",
-      "date": "2025-11-05"
+      "date": "2020-01-16"
     },
     {
-      "id": "gallery-03",
-      "url": "assets/images/gallery/furnace_setup.jpg",
-      "caption": "Graduate student setting up a high-temperature tube furnace for solid-state synthesis.",
-      "category": "Lab Life",
-      "date": "2026-02-18"
+      "id": "gallery-nsf-slide2",
+      "url": "assets/images/gallery/nsf_microscope_slide2.jpg",
+      "caption": "Georgia Electron Microscopy (GEM) facility summary highlighting low-voltage SEM/STEM capabilities.",
+      "category": "Research",
+      "date": "2020-01-16"
     }
   ]
 }

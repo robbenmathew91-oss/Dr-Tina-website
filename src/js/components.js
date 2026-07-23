@@ -20,7 +20,7 @@ export function FacultyProfile(faculty) {
     <div class="faculty-profile" id="faculty-profile-${faculty.name.replace(/\s+/g, '-').toLowerCase()}">
       <div class="profile-header-grid">
         <div class="profile-image-container">
-          <img src="${faculty.photo || 'assets/images/placeholder.jpg'}" alt="${faculty.name}" class="profile-photo" loading="lazy" />
+          <img src="${faculty.photo || 'assets/images/placeholder.svg'}" alt="${faculty.name}" class="profile-photo" loading="lazy" />
         </div>
         <div class="profile-details-container">
           <h1 class="faculty-name">${faculty.name}</h1>
@@ -71,7 +71,7 @@ export function StudentCard(student) {
   return `
     <div class="student-card" id="student-${student.id}">
       <div class="student-photo-wrapper">
-        <img src="${student.photo || 'assets/images/placeholder.jpg'}" alt="${student.name}" class="student-photo" loading="lazy" />
+        <img src="${student.photo || 'assets/images/placeholder.svg'}" alt="${student.name}" class="student-photo" loading="lazy" />
       </div>
       <div class="student-info">
         <h3 class="student-name">${student.name}</h3>

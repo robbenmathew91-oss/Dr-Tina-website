@@ -8,7 +8,7 @@
       "summary": "Development of synthetic strategies for the exfoliation and controlled assembly of inorganic nanosheets into hybrid thin-film structures.",
       "detailedDescription": "This project aims to study the basic chemical physics of 2D exfoliation. We are synthesizing new parent layered materials and using soft-chemical routes to produce stable colloid suspensions of single-layer sheets. We are developing layer-by-layer deposition techniques to build artificial superlattices with tailored magnetic and optical properties.",
       "tags": ["Nanosheets", "Thin Films", "Inorganic Synthesis"],
-      "image": "assets/images/projects/nanosheets_project.jpg",
+      "image": "assets/images/placeholder.svg",
       "funding": "National Science Foundation (NSF)"
     },
     {
@@ -18,7 +18,7 @@
       "summary": "Designing high-surface-area transition metal oxide materials optimized for hydrogen generation and solar light harvesting.",
       "detailedDescription": "This research investigates how structural tuning and doping of metal oxides influences charge-carrier lifetime and catalytic efficiency. We are integrating exfoliated sheets into catalyst platforms to maximize accessible surface area and active catalytic sites.",
       "tags": ["Photocatalysis", "Energy", "Metal Oxides"],
-      "image": "assets/images/projects/photocatalysis_project.jpg",
+      "image": "assets/images/placeholder.svg",
       "funding": "Department of Energy (DOE)"
     }
   ]

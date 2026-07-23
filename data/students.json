@@ -2,34 +2,54 @@
   "$schema": "./schemas/students.schema.json",
   "students": [
     {
-      "id": "student-1",
-      "name": "Jane Doe",
-      "role": "Graduate Student (Ph.D. Candidate)",
-      "yearStarted": "2023",
-      "projectFocus": "Exfoliation techniques and chemical modification of layered inorganic oxides.",
-      "email": "jane.doe@uga.edu",
-      "linkedin": "https://linkedin.com/in/janedoe",
-      "photo": "assets/images/team/jane_doe.jpg"
+      "id": "jose-garcia",
+      "name": "Jose Garcia",
+      "role": "Graduate Student (GEM Fellow)",
+      "yearStarted": "Unknown",
+      "projectFocus": "Materials Chemistry and Nanoscience.",
+      "email": "josemaria.garcia@uga.edu",
+      "linkedin": "",
+      "photo": "assets/images/team/jose_garcia.jpg"
     },
     {
-      "id": "student-2",
-      "name": "John Smith",
-      "role": "Graduate Student (M.S. Student)",
-      "yearStarted": "2024",
-      "projectFocus": "Synthesis and structural analysis of novel metal chalcogenide nanosheets.",
-      "email": "john.smith@uga.edu",
+      "id": "clayton-mantz",
+      "name": "Clayton Mantz",
+      "role": "Graduate Student",
+      "yearStarted": "Unknown",
+      "projectFocus": "Materials Synthesis and Characterization.",
+      "email": "cjm56926@uga.edu",
       "linkedin": "",
-      "photo": "assets/images/team/john_smith.jpg"
+      "photo": "assets/images/team/clayton_mantz.jpg"
     },
     {
-      "id": "student-3",
-      "name": "Alex UGA-Undergrad",
-      "role": "Undergraduate Researcher",
-      "yearStarted": "2025",
-      "projectFocus": "Assisting with thin-film spin coating and deposition of nanosheet networks.",
-      "email": "alex.undergrad@uga.edu",
+      "id": "athar-yeganeh-neysiani",
+      "name": "Athar Yeganeh Neysiani",
+      "role": "Graduate Student",
+      "yearStarted": "Unknown",
+      "projectFocus": "Inorganic – Synthetic Materials.",
+      "email": "Athar.yeganehneysiani@uga.edu",
       "linkedin": "",
-      "photo": "assets/images/team/alex_undergrad.jpg"
+      "photo": "assets/images/team/athar_yeganeh_neysiani.jpg"
+    },
+    {
+      "id": "ali-ahmed",
+      "name": "Ali Ahmed",
+      "role": "Graduate Student",
+      "yearStarted": "Unknown",
+      "projectFocus": "Materials Chemistry research and inorganic exfoliation.",
+      "email": "contact@uga.edu",
+      "linkedin": "",
+      "photo": "assets/images/placeholder.svg"
+    },
+    {
+      "id": "april-rains",
+      "name": "April Rains",
+      "role": "Graduate Student",
+      "yearStarted": "Unknown",
+      "projectFocus": "Materials Chemistry synthesis and characterization.",
+      "email": "contact@uga.edu",
+      "linkedin": "",
+      "photo": "assets/images/placeholder.svg"
     }
   ]
 }
