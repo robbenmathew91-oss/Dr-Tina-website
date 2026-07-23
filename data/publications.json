@@ -174,7 +174,7 @@
       "pages": "38028-38039",
       "doi": "10.1021/acsnano.5c13312",
       "link": "https://doi.org/10.1021/acsnano.5c13312",
-      "abstract": "We report on the thermally driven structural transformation of TaSe3 nanoribbons into complex mixed-dimensional architectures. Using in situ scanning transmission electron microscopy (STEM) combined with heating, we observe real-time nucleation of new phases and structural reconstruction at the nanoscale.",
+      "abstract": "Tantalum\u2013selenium compounds, particularly TaSe2 and TaSe3, are promising materials for electronics and quantum technologies due to their charge density wave and topological properties, and they are also candidates for energy storage and electrocatalysis applications. In this study, we investigate the thermally driven structural evolution of TaSe3 nanoribbons using in situ scanning transmission electron microscopy (STEM). Low-kV STEM experiments reveal a complex nanoscale transformation pathway in which TaSe3 nanoribbons convert into multiphase, mixed-dimensional (0D\u20131D) tantalum\u2013selenium architectures. Aberration-corrected STEM enables direct visualization of the underlying atomic rearrangements, while electron energy loss spectroscopy and DFT calculations corroborate the identity and stability of the product phases. Our results uncover a detailed mechanism: selenium loss from TaSe3 nanoribbons initiates surface conversion to TaSe2, which, as temperature increases, progressively continues into the nanoribbon interior. Thicker regions of TaSe2 delaminate and detach from the core material, forming a porous TaSe2 shell. At 1200 \u00b0C, the core restructures into discrete \u223c20\u202fnm Ta-self-intercalated TaSe2 nanoparticles. This core\u2013shell transformation, driven by nanoscale confinement effects, differs markedly from the bulk decomposition pathway of TaSe3 and highlights the impact of modulating selenium loss, tantalum intercalation, and the stability of intermediate structures through confinement effects. The resulting 0D\u20131D heterostructure of Ta-rich nanoparticles encapsulated within porous TaSe2 tubes represents surprising and emergent complexity in a binary system. These mechanistic insights demonstrate how the controlled thermolysis of a readily accessible metal trichalcogenide precursor can yield complex, low-dimensional chalcogenide architectures.",
       "tags": [
         "Charge Density Wave Materials",
         "Quasi-1D van der Waals Materials",
@@ -251,7 +251,7 @@
       "pages": "2409898",
       "doi": "10.1002/adma.202409898",
       "link": "https://doi.org/10.1002/adma.202409898",
-      "abstract": "This work reports the liquid-phase exfoliation and electrical characterization of quasi-one-dimensional van der Waals crystals down to the individual atomic chain limit. High-resolution transmission electron microscopy and atomic force microscopy confirm the stability and structural integrity of the isolated chains, showing potential as ultra-scaled interconnects.",
+      "abstract": "Experiments with graphene have demonstrated that 2D van der Waals materials can be stable, robust, and efficiently manipulated at the level of individual atomic planes. However, the stability and manipulation of 1D van der Waals materials and individual atomic chains remains elusive. Here, the ability to exfoliate and process two representative van der Waals materials containing 1D motifs, namely MoI3 and Ta2Se8I, at the scale of individual atomic chains is demonstrated. High\u2010resolution transmission electron microscopy and atomic force microscopy studies confirm the presence of stable individual atomic chains of MoI3 at room temperature. It is further shown that 1D van der Waals materials with low exfoliation energy, such as Ta2Se8I, can be processed with electron beams to achieve suspended individual atomic chains. Ab initio calculations corroborate the findings regarding the cleavage energies and the thermodynamic stability of individual atomic chains in these 1D van der Waals materials. These results demonstrate that the top\u2010down approach in material processing can be extended to the scale of individual chains.",
       "tags": [
         "Inorganic Materials",
         "Chalcogenides",
@@ -514,7 +514,7 @@
       "pages": "040401",
       "doi": "10.1063/5.0108414",
       "link": "https://doi.org/10.1063/5.0108414",
-      "abstract": "An introduction to the special topic collection on the physics and materials science of one-dimensional van der Waals materials. We summarize recent breakthroughs in synthesis, device fabrication, and physical property modeling that characterize this rapidly developing field of materials chemistry.",
+      "abstract": "",
       "tags": [
         "Inorganic Materials",
         "Perspective",
@@ -543,7 +543,7 @@
       "pages": "74-91",
       "doi": "10.1016/j.mattod.2022.03.015",
       "link": "https://doi.org/10.1016/j.mattod.2022.03.015",
-      "abstract": "This review provides an overview of the electronic, optical, phonon, thermal, and noise properties of quasi-one-dimensional van der Waals materials and their electronic and optoelectronic device applications. We outline the state of the art in the synthesis and exfoliation of these materials and highlight future research directions.",
+      "abstract": "The advent of graphene and other two-dimensional van der Waals materials, with their unique electrical, optical, and thermal properties has resulted in tremendous progress for fundamental science. Recent developments suggest that taking one more step down in dimensionality \u2014 from mono-layer atomic sheets to individual atomic chains \u2014 can bring exciting prospects in fundamental science and practical applications. The atomic chain is the ultimate limit in material downscaling, a frontier for establishing an entirely new field of one-dimensional quantum materials. Here, we review this emerging area of one-dimensional van der Waals quantum materials and anticipate its future directions. We focus on quantum effects associated with the charge-density-wave condensate, strongly-correlated phenomena, topological phases, and other unique physical characteristics, which are attainable specifically in van der Waals materials of lower dimensionality. Possibilities for engineering the properties of quasi-one-dimensional materials via compositional changes, vacancies, and defects, as well as their potential applications in composites are also discussed.",
       "tags": [
         "van der Waals",
         "Review",
@@ -1421,7 +1421,7 @@
       "pages": "377-383",
       "doi": "10.1021/acs.nanolett.6b04334",
       "link": "https://doi.org/10.1021/acs.nanolett.6b04334",
-      "abstract": "We report on low-frequency electronic excess noise in quasi-one-dimensional TaSe3 nanowires. The noise spectra show 1/f-like scaling at room temperature, which changes to Lorentzian-like GR noise peaks at lower temperatures. The current-carrying capacity is exceptionally high, pointing to their potential for nanoscale interconnect applications.",
+      "abstract": "We report results of investigation of the low-frequency electronic excess noise in quasi-1D nanowires of TaSe3 capped with quasi-2D h-BN layers. Semimetallic TaSe3 is a quasi-1D van der Waals material with exceptionally high breakdown current density. It was found that TaSe3 nanowires have lower levels of the normalized noise spectral density, SI/I2, compared to carbon nanotubes and graphene (I is the current). The temperature-dependent measurements revealed that the low-frequency electronic 1/f noise becomes the 1/f2 type as temperature increases to \u223c400 K, suggesting the onset of electromigration (f is the frequency). Using the Dutta-Horn random fluctuation model of the electronic noise in metals, we determined that the noise activation energy for quasi-1D TaSe3 nanowires is approximately EP \u2248 1.0 eV. In the framework of the empirical noise model for metallic interconnects, the extracted activation energy, related to electromigration is EA = 0.88 eV, consistent with that for Cu and Al interconnects. Our results shed light on the physical mechanism of low-frequency 1/f noise in quasi-1D van der Waals semimetals and suggest that such material systems have potential for ultimately downscaled local interconnect applications.",
       "tags": [
         "Noise",
         "Charge Density Wave Materials",
@@ -1496,7 +1496,7 @@
       "pages": "1045-1050",
       "doi": "10.1038/nnano.2016.108",
       "link": "https://doi.org/10.1038/nnano.2016.108",
-      "abstract": "Transition-metal dichalcogenides exhibit a variety of collective electronic phases, including charge-density-wave (CDW) states. Here we demonstrate a room-temperature current-controlled oscillator operating via the CDW state in integrated devices consisting of thin-film 1T-TaS2 channels on hexagonal boron nitride with graphene gates. The devices exhibit high stability, low noise and high performance, showing prospects for applications in communications and signal processing.",
+      "abstract": "",
       "tags": [
         "2D Materials",
         "CDW",
@@ -1709,7 +1709,7 @@
       "pages": "1677-1679",
       "doi": "10.1021/ja310587c",
       "link": "https://doi.org/10.1021/ja310587c",
-      "abstract": "Egyptian blue (calcium copper tetrasilicate, CaCuSi4O10), first synthesized in ancient Egypt, is a layered silicate pigment. We report that Egyptian blue can be exfoliated into nanosheets of single-layer thickness by soft-chemical methods. These nanosheets possess robust near-infrared luminescence, opening applications in imaging, security inks, and planar solar concentrators.",
+      "abstract": "",
       "tags": [
         "Luminescence",
         "Nanosheets",
@@ -1833,7 +1833,7 @@
       "pages": "7961-7968",
       "doi": "10.1021/ja0713577",
       "link": "https://doi.org/10.1021/ja0713577",
-      "abstract": "Decomposition of ruthenium olefin metathesis catalysts (H2IMes)(PCy3)(Cl)2Ru=CHPh and (IMes)(PCy3)(Cl)2Ru=CHPh was investigated. In solution, these catalysts undergo primary decomposition via loss of the phosphine ligand, followed by coupling of the ruthenium-bound benzylidene ligand with the methyl group of the N-heterocyclic carbene ligand.",
+      "abstract": "The decomposition of a series of ruthenium metathesis catalysts has been examined using methylidene species as model complexes. All of the phosphine-containing methylidene complexes decomposed to generate methylphosphonium salts, and their decomposition routes followed first-order kinetics. The formation of these salts in high conversion, coupled with the observed kinetic behavior for this reaction, suggests that the major decomposition pathway involves nucleophilic attack of a dissociated phosphine on the methylidene carbon. This mechanism also is consistent with decomposition observed in the presence of ethylene as a model olefin substrate. The decomposition of phosphine-free catalyst (H2IMes)(Cl)2Ru=CH(2-C6H4-O-i-Pr) (H2IMes = 1,3-dimesityl-4,5-dihydroimidazol-2-ylidene) with ethylene was found to generate unidentified ruthenium hydride species. The novel ruthenium complex (H2IMes)(pyridine)3(Cl)2Ru, which was generated during the synthetic attempts to prepare the highly unstable pyridine-based methylidene complex (H2IMes)(pyridine)2(Cl)2Ru=CH2, is also reported.",
       "tags": [
         "Catalysis",
         "Ruthenium",

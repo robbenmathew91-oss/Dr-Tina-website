@@ -43,8 +43,9 @@ The site's "Featured Research" section now dynamically presents 11 landmark publ
 
 ---
 
-## 5. Official Abstract & Metadata Integrity Policy
-To maintain strict university academic standards and prevent synthetic or template text from appearing as scientific metadata:
-- **Placeholder Elimination**: Removed all 72 generated template abstracts from `data/publications.json`.
-- **Verified Retention**: Retained only official publisher-verified abstracts for 8 landmark papers.
-- **Dynamic UI Omission**: Updated `PublicationCard` component in `src/js/components.js` so that publications lacking an official abstract gracefully omit the "View Abstract" button and collapsible panel completely. No disabled controls, fallback text, or "No abstract available" placeholders are displayed.
+## 5. Official Abstract & Metadata Integrity Audit
+To maintain strict academic integrity and ensure zero unverified content appears on the website:
+- **Comprehensive API Verification**: Audited all 80 publications against official publisher metadata APIs (Crossref & Semantic Scholar).
+- **Exact Verbatim Retention**: Retained verbatim, official publisher abstracts for 5 papers with direct API verification (`pub-2025-acsnano-5c13312`, `pub-2024-adma-202409898`, `pub-2022-mattod-03015`, `pub-2017-nanolett-6b04334`, `pub-2007-ja0713577`).
+- **Omission of Unverified Summaries**: Set the `abstract` field to `""` for all remaining 75 publications where full verbatim publisher abstracts were not directly returned by the metadata API. No AI summaries or template text were retained.
+- **Dynamic UI Rendering**: Publications with verified abstracts display the **View Abstract** button; publications without verified abstracts omit the button completely.
