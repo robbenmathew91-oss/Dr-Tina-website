@@ -49,3 +49,13 @@ To maintain strict academic integrity and ensure zero unverified content appears
 - **Exact Verbatim Retention**: Retained verbatim, official publisher abstracts for 5 papers with direct API verification (`pub-2025-acsnano-5c13312`, `pub-2024-adma-202409898`, `pub-2022-mattod-03015`, `pub-2017-nanolett-6b04334`, `pub-2007-ja0713577`).
 - **Omission of Unverified Summaries**: Set the `abstract` field to `""` for all remaining 75 publications where full verbatim publisher abstracts were not directly returned by the metadata API. No AI summaries or template text were retained.
 - **Dynamic UI Rendering**: Publications with verified abstracts display the **View Abstract** button; publications without verified abstracts omit the button completely.
+
+---
+
+## 6. Action Button Simplification & Canonical DOI Destination
+To eliminate redundant controls and maintain a clean academic interface:
+- **Renamed Action**: "Read Paper" was renamed to **"View Publication →"**.
+- **Canonical DOI Destination**: "View Publication" opens the official publisher DOI page (`https://doi.org/...`) or primary publication URL in a new tab.
+- **Removed Duplicate DOI Button**: Eliminated separate "DOI: 10.xxx" button to eliminate redundancy.
+- **Removed Local Downloads**: Completely removed PDF download links and stubs. The website functions as a metadata gateway to the publisher.
+- **Retained Citation Tools**: Preserved interactive **Copy Citation** and **BibTeX** citation modal generators.

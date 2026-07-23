@@ -8,8 +8,41 @@ window.toggleDetails = function(elementId) {
   const panel = document.getElementById(elementId);
   if (panel) {
     panel.classList.toggle('hidden');
-    // Optionally change button text/state here if needed
   }
+};
+
+// Global Citation Export Utilities
+window.copyCitation = function(authors, title, journal, year, volume, issue, pages, doi) {
+  let citation = `${authors}. "${title}." ${journal}`;
+  if (year) citation += ` (${year})`;
+  if (volume) citation += `, Vol. ${volume}`;
+  if (issue) citation += `, Issue ${issue}`;
+  if (pages) citation += `, pp. ${pages}`;
+  if (doi) citation += `. https://doi.org/${doi}`;
+  citation += '.';
+
+  navigator.clipboard.writeText(citation).then(() => {
+    alert(`Citation copied to clipboard:\n\n${citation}`);
+  }).catch(() => {
+    prompt('Copy citation:', citation);
+  });
+};
+
+window.exportBibTeX = function(id, authors, title, journal, year, volume, issue, pages, doi) {
+  const citeKey = id.replace(/[^a-zA-Z0-9-]/g, '');
+  let bib = `@article{${citeKey},\n`;
+  bib += `  author = {${authors}},\n`;
+  bib += `  title = {{${title}}},\n`;
+  bib += `  journal = {${journal}},\n`;
+  if (year) bib += `  year = {${year}},\n`;
+  if (volume) bib += `  volume = {${volume}},\n`;
+  if (issue) bib += `  number = {${issue}},\n`;
+  if (pages) bib += `  pages = {${pages}},\n`;
+  if (doi) bib += `  doi = {${doi}},\n`;
+  bib += `  url = {https://doi.org/${doi}}\n`;
+  bib += `}`;
+
+  prompt('Copy BibTeX entry:', bib);
 };
 
 /**
