@@ -66,6 +66,21 @@
       "notableAchievements": [
         "2025 CSGS Master's Thesis Award recipient (Math, Physical Sciences, and Engineering)"
       ]
+    },
+    {
+      "id": "april-rains",
+      "name": "April Rains",
+      "degree": "Ph.D. in Chemistry",
+      "graduationYear": "2026",
+      "thesisTitle": "Sustainable Recycling of Lithium-Ion Batteries",
+      "currentPosition": "Alumna",
+      "linkedin": "",
+      "photo": "assets/images/placeholder.svg",
+      "joined_lab": "2025",
+      "status": "Alumni",
+      "graduated_year": "2026",
+      "degree_institution": "University of Georgia",
+      "degree_year": "2026"
     }
   ]
 }
