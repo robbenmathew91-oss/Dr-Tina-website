@@ -74,6 +74,11 @@
           "description": {
             "type": "string",
             "description": "Summary description of research and accomplishments in the lab"
+          },
+          "notableAchievements": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Notable awards, honors, and thesis recognitions"
           }
         }
       }

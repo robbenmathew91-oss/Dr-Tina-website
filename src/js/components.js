@@ -467,7 +467,12 @@ export function AlumniCard(alumnus) {
             ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
             ${alumnus.researchFocus || alumnus.projectFocus ? `<p class="alumni-focus"><strong>Research Focus:</strong> ${alumnus.researchFocus || alumnus.projectFocus}</p>` : ''}
             ${alumnus.description ? `<p class="alumni-desc" style="font-size: 0.9rem; margin-top: 4px; color: var(--text-color);">${alumnus.description}</p>` : ''}
-            <p class="alumni-current" style="margin-top: 4px;"><strong>Current:</strong> ${alumnus.currentPosition}</p>
+            ${alumnus.notableAchievements && alumnus.notableAchievements.length > 0 ? `
+              <div class="alumni-achievements" style="margin-top: 6px; padding: 6px 10px; background: #FFFDF0; border-left: 3px solid #D4AF37; border-radius: 0 4px 4px 0; font-size: 0.85rem; color: #8B6508;">
+                <strong>Notable Achievement:</strong> ${alumnus.notableAchievements.join(', ')}
+              </div>
+            ` : ''}
+            <p class="alumni-current" style="margin-top: 6px;"><strong>Current Position:</strong> ${alumnus.currentPosition}</p>
             ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}
           </div>
         </div>
@@ -932,6 +937,22 @@ export function NewsCard(item, relations = {}) {
             <div class="news-detailed-text" style="font-size: 0.9rem; line-height: 1.6; color: var(--dark-gray); margin-bottom: 15px;">
               ${item.content}
             </div>
+
+            ${item.gallery_images && item.gallery_images.length > 0 ? `
+              <div class="news-gallery-section" style="margin-bottom: 18px;">
+                <span style="font-size: 0.78rem; font-weight: 700; color: var(--light-gray); text-transform: uppercase; display: block; margin-bottom: 8px;">Event Photo Gallery</span>
+                <div class="news-gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+                  ${item.gallery_images.map((gImg, idx) => `
+                    <div class="news-gallery-item" style="border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--bg); cursor: pointer;" onclick="window.openNewsLightbox('${gImg.src}', '${gImg.caption.replace(/'/g, "\\'")}')">
+                      <img src="${gImg.src}" alt="${gImg.alt}" style="width: 100%; height: 110px; object-fit: cover; display: block;" loading="lazy" />
+                      <div style="font-size: 0.75rem; padding: 6px 8px; color: var(--dark-gray); line-height: 1.25; background: var(--bg-offset); font-style: italic; border-top: 1px solid var(--border);">
+                        ${gImg.caption}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
 
             <!-- Keywords List -->
             ${keywordsList ? `<div style="margin-bottom: 10px;"><strong>Keywords:</strong> ${keywordsList}</div>` : ''}
