@@ -1,0 +1,23 @@
+[
+  {
+    "id": "gallery-01",
+    "url": "assets/images/gallery/lab_group_2026.jpg",
+    "caption": "The Salguero Research Group in front of the UGA Chemistry Building (Spring 2026).",
+    "category": "Group",
+    "date": "2026-04-12"
+  },
+  {
+    "id": "gallery-02",
+    "url": "assets/images/gallery/sem_micrograph.jpg",
+    "caption": "Scanning electron microscopy (SEM) micrograph showing layered stacks of exfoliated nanosheets.",
+    "category": "Research",
+    "date": "2025-11-05"
+  },
+  {
+    "id": "gallery-03",
+    "url": "assets/images/gallery/furnace_setup.jpg",
+    "caption": "Graduate student setting up a high-temperature tube furnace for solid-state synthesis.",
+    "category": "Lab Life",
+    "date": "2026-02-18"
+  }
+]

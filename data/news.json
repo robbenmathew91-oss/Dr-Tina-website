@@ -1,0 +1,20 @@
+[
+  {
+    "id": "news-2026-07-01",
+    "date": "2026-07-01",
+    "title": "Welcome to our new Undergraduate Researchers!",
+    "excerpt": "The Salguero Lab welcomes several new undergraduate research assistants joining us for the summer session.",
+    "content": "We are excited to welcome new undergraduate chemistry students who will be working on synthesis and characterization projects. They will be paired with senior graduate student mentors to learn advanced solid-state synthesis techniques.",
+    "image": "assets/images/news/summer_students_2026.jpg",
+    "link": ""
+  },
+  {
+    "id": "news-2026-05-15",
+    "date": "2026-05-15",
+    "title": "Jane Doe wins Outstanding Graduate Student Award",
+    "excerpt": "Ph.D. student Jane Doe has been awarded the UGA Chemistry Department's Outstanding Graduate Research Award.",
+    "content": "Congratulations to Jane Doe on receiving the Outstanding Graduate Student Research Award for her pioneering work on high-yield nanosheet exfoliation. The award recognizes research excellence, publication records, and mentorship within the department.",
+    "image": "assets/images/news/jane_doe_award.jpg",
+    "link": ""
+  }
+]
