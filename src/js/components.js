@@ -123,15 +123,23 @@ export function FacultyProfile(faculty, ecosystem = {}) {
 
       <!-- 4. Career Timeline -->
       ${timeline.length > 0 ? `
-        <section class="pi-timeline-section" style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.4rem; margin-bottom: 20px;">Academic Career Timeline</h2>
-          <div class="timeline-container" style="display: flex; flex-direction: column; gap: 15px; border-left: 3px solid var(--primary); padding-left: 20px; margin-left: 10px;">
+        <section class="pi-timeline-section" style="margin-bottom: 45px; background: var(--bg-offset); border: 1px solid var(--border); border-radius: 12px; padding: 30px; box-shadow: var(--shadow-sm);">
+          <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; border-bottom: 2px solid var(--primary); padding-bottom: 6px; display: inline-block;">Academic Career Timeline</h2>
+          <div class="timeline-container" style="display: flex; flex-direction: column; gap: 24px; position: relative; padding-left: 28px; margin-left: 8px; border-left: 2px solid var(--border);">
             ${timeline.map(t => `
-              <div class="timeline-item" style="position: relative;">
-                <div class="timeline-dot" style="position: absolute; left: -27px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary);"></div>
-                <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary); uppercase;">${t.year} &bull; ${t.category}</div>
-                <div style="font-size: 1.05rem; font-weight: 600; color: var(--text-color); margin-top: 2px;">${t.milestone}</div>
-                ${t.details ? `<div style="font-size: 0.9rem; color: var(--light-gray); margin-top: 2px;">${t.details}</div>` : ''}
+              <div class="timeline-item" style="position: relative; padding-left: 8px;">
+                <div class="timeline-dot" style="position: absolute; left: -35px; top: 3px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 2px solid var(--bg-offset); box-shadow: 0 0 0 2px var(--primary);"></div>
+                <div class="timeline-meta" style="font-size: 0.88rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px;">
+                  ${t.year} &bull; ${t.category}
+                </div>
+                <h3 class="timeline-title" style="font-size: 1.1rem; font-weight: 600; color: var(--text-color); margin: 0 0 4px 0; line-height: 1.35;">
+                  ${t.milestone}
+                </h3>
+                ${t.details ? `
+                  <p class="timeline-details" style="font-size: 0.92rem; color: var(--light-gray); margin: 0; line-height: 1.5;">
+                    ${t.details}
+                  </p>
+                ` : ''}
               </div>
             `).join('')}
           </div>
