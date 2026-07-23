@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Publications Bibliography",
+  "type": "object",
+  "required": ["publications"],
+  "properties": {
+    "publications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "authors", "journal", "year", "doi", "link"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the publication (e.g. pub-2025-01)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Full title of the paper"
+          },
+          "authors": {
+            "type": "string",
+            "description": "Comma-separated list of authors (e.g., Doe, J., and Salguero, T.)"
+          },
+          "journal": {
+            "type": "string",
+            "description": "Journal name"
+          },
+          "volume": {
+            "type": "string",
+            "description": "Volume number (optional)"
+          },
+          "pages": {
+            "type": "string",
+            "description": "Page numbers (optional)"
+          },
+          "year": {
+            "type": "string",
+            "description": "Year of publication"
+          },
+          "doi": {
+            "type": "string",
+            "description": "Digital Object Identifier (DOI)"
+          },
+          "link": {
+            "type": "string",
+            "format": "uri",
+            "description": "Direct URL link to the publisher's page"
+          },
+          "abstract": {
+            "type": "string",
+            "description": "Abstract of the publication for detailed modal view"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Scientific tags for categorizing and filtering",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

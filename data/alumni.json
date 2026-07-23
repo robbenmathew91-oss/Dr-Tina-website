@@ -1,20 +1,23 @@
-[
-  {
-    "id": "alumni-1",
-    "name": "Dr. Sarah Miller",
-    "degree": "Ph.D.",
-    "graduationYear": "2024",
-    "thesisTitle": "Novel Synthetic Routes to Transition Metal Oxide Nanosheets",
-    "currentPosition": "Postdoctoral Researcher at Oak Ridge National Laboratory",
-    "linkedin": "https://linkedin.com/in/sarahmiller"
-  },
-  {
-    "id": "alumni-2",
-    "name": "Michael Carter",
-    "degree": "B.S. (Honors Chemistry)",
-    "graduationYear": "2023",
-    "thesisTitle": "Surface Exfoliation of Metal Phosphates",
-    "currentPosition": "Ph.D. Student at Northwestern University",
-    "linkedin": ""
-  }
-]
+{
+  "$schema": "./schemas/alumni.schema.json",
+  "alumni": [
+    {
+      "id": "alumni-1",
+      "name": "Dr. Sarah Miller",
+      "degree": "Ph.D.",
+      "graduationYear": "2024",
+      "thesisTitle": "Novel Synthetic Routes to Transition Metal Oxide Nanosheets",
+      "currentPosition": "Postdoctoral Researcher at Oak Ridge National Laboratory",
+      "linkedin": "https://linkedin.com/in/sarahmiller"
+    },
+    {
+      "id": "alumni-2",
+      "name": "Michael Carter",
+      "degree": "B.S. (Honors Chemistry)",
+      "graduationYear": "2023",
+      "thesisTitle": "Surface Exfoliation of Metal Phosphates",
+      "currentPosition": "Ph.D. Student at Northwestern University",
+      "linkedin": ""
+    }
+  ]
+}

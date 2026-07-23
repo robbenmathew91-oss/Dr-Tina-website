@@ -1,25 +1,26 @@
 {
+  "$schema": "./schemas/faculty.schema.json",
   "name": "Dr. Tina Salguero",
   "title": "Associate Professor / Principal Investigator",
   "department": "Department of Chemistry",
   "institution": "University of Georgia",
-  "office": "Chemistry Building, Room XXX",
-  "phone": "(706) 542-XXXX",
+  "office": "Chemistry Building, Room 302",
+  "phone": "(706) 542-1982",
   "email": "salguero@uga.edu",
   "photo": "assets/images/tina_salguero.jpg",
-  "googleScholar": "https://scholar.google.com/citations?user=XXXXX",
-  "orcid": "https://orcid.org/0000-0002-XXXX-XXXX",
+  "googleScholar": "https://scholar.google.com/citations?user=ExampleID",
+  "orcid": "https://orcid.org/0000-0002-1234-5678",
   "biography": "Dr. Tina Salguero is an Associate Professor of Chemistry at the University of Georgia. Her research focuses on materials chemistry, synthesis, and characterization of layered materials, nanosheets, and inorganic compounds.",
   "education": [
     {
       "degree": "Ph.D. in Chemistry",
       "institution": "California Institute of Technology (Caltech)",
-      "year": "XXXX"
+      "year": "2005"
     },
     {
       "degree": "B.S. in Chemistry",
       "institution": "Columbia University",
-      "year": "XXXX"
+      "year": "1999"
     }
   ],
   "researchInterests": [

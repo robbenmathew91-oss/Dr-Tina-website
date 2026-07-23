@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Grants List",
+  "type": "object",
+  "required": ["grants"],
+  "properties": {
+    "grants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "agency", "duration", "status", "principalInvestigator"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the grant"
+          },
+          "title": {
+            "type": "string",
+            "description": "Official title of the funded project"
+          },
+          "agency": {
+            "type": "string",
+            "description": "Funding agency (e.g. National Science Foundation)"
+          },
+          "grantNumber": {
+            "type": "string",
+            "description": "Official award number (optional)"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Funding amount (optional)"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Funding time span (e.g. 2024 - 2027)"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Active", "Completed"],
+            "description": "Current status of the grant"
+          },
+          "principalInvestigator": {
+            "type": "string",
+            "description": "Name of the PI"
+          }
+        }
+      }
+    }
+  }
+}

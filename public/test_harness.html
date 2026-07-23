@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Architecture Test Harness</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #fafafa; color: #333; }
+    h1 { color: #cc0000; border-bottom: 2px solid #ccc; padding-bottom: 10px; }
+    .status-box { background: #e0f2f1; border-left: 5px solid #009688; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+    .status-box.error { background: #ffebee; border-left: 5px solid #f44336; }
+    .container-section { margin-top: 30px; border: 1px solid #ddd; background: #fff; padding: 20px; border-radius: 6px; }
+    .container-section h2 { margin-top: 0; color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    /* Mimic some basic layout styling for validation checks */
+    .hidden { display: none !important; }
+    .interest-badge, .pub-tag-badge, .project-tag, .event-type-badge {
+      display: inline-block; background: #eee; padding: 3px 8px; border-radius: 12px; margin-right: 5px; font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Salguero Lab Architecture Test Harness</h1>
+  <div id="test-status" class="status-box">Running architecture verification...</div>
+
+  <div class="container-section">
+    <h2>1. Faculty Profile</h2>
+    <div id="faculty-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>2. Student Cards</h2>
+    <div id="students-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>3. Alumni List</h2>
+    <div id="alumni-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>4. Projects</h2>
+    <div id="projects-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>5. Publications</h2>
+    <div id="publications-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>6. Grants</h2>
+    <div id="grants-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>7. News Feed</h2>
+    <div id="news-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>8. Photo Gallery</h2>
+    <div id="gallery-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>9. Events Timeline</h2>
+    <div id="events-target">Loading...</div>
+  </div>
+
+  <div class="container-section">
+    <h2>10. Collaborators</h2>
+    <div id="collaborators-target">Loading...</div>
+  </div>
+
+  <script type="module">
+    import { loadData } from '../src/js/loader.js';
+    import { validateData } from '../src/js/validator.js';
+    import * as Components from '../src/js/components.js';
+    import * as Renderer from '../src/js/renderer.js';
+
+    async function runTests() {
+      const statusEl = document.getElementById('test-status');
+      try {
+        console.log("Starting architecture verification tests...");
+
+        // Define files to test
+        const files = [
+          { name: 'faculty.json', schema: 'faculty', target: '#faculty-target', comp: Components.FacultyProfile, key: null },
+          { name: 'students.json', schema: 'student', target: '#students-target', comp: Components.StudentCard, key: 'students' },
+          { name: 'alumni.json', schema: 'alumnus', target: '#alumni-target', comp: Components.AlumniCard, key: 'alumni' },
+          { name: 'projects.json', schema: 'project', target: '#projects-target', comp: Components.ProjectCard, key: 'projects' },
+          { name: 'publications.json', schema: 'publication', target: '#publications-target', comp: Components.PublicationCard, key: 'publications', sort: Renderer.SortFunctions.publicationsDefault },
+          { name: 'grants.json', schema: 'grant', target: '#grants-target', comp: Components.GrantCard, key: 'grants', sort: Renderer.SortFunctions.grantsDefault },
+          { name: 'news.json', schema: 'news', target: '#news-target', comp: Components.NewsCard, key: 'news', sort: Renderer.SortFunctions.datesDescending },
+          { name: 'gallery.json', schema: 'gallery', target: '#gallery-target', comp: Components.GalleryItem, key: 'gallery' },
+          { name: 'events.json', schema: 'event', target: '#events-target', comp: Components.TimelineItem, key: 'events', sort: Renderer.SortFunctions.datesAscending },
+          { name: 'collaborators.json', schema: 'collaborator', target: '#collaborators-target', comp: Components.CollaboratorCard, key: 'collaborators' }
+        ];
+
+        let allValid = true;
+
+        for (const file of files) {
+          console.log(`Loading data from data/${file.name}...`);
+          const dataObj = await loadData(file.name, '../data');
+
+          // Extract array if nested, or validate root object
+          const content = file.key ? dataObj[file.key] : dataObj;
+          
+          console.log(`Validating data/${file.name}...`);
+          const isValid = validateData(file.schema, content);
+          if (!isValid) {
+            allValid = false;
+          }
+
+          console.log(`Rendering data/${file.name} to target ${file.target}...`);
+          if (file.key) {
+            Renderer.renderList({
+              selector: file.target,
+              items: content,
+              componentFn: file.comp,
+              sortFn: file.sort || null,
+              emptyMessage: `No ${file.key} found.`
+            });
+          } else {
+            // Single object rendering (faculty)
+            const html = file.comp(content);
+            Renderer.injectMarkup(file.target, html);
+          }
+        }
+
+        if (allValid) {
+          statusEl.className = "status-box";
+          statusEl.innerHTML = "<strong>VERIFICATION SUCCESSFUL:</strong> All 10 data databases loaded, validated against schemas, sorted, and rendered without errors.";
+          console.log("Architecture verification successful!");
+        } else {
+          statusEl.className = "status-box error";
+          statusEl.innerHTML = "<strong>VERIFICATION WARNING:</strong> Render successful, but validation warnings were detected in the console logs. Please inspect browser console.";
+          console.log("Architecture verification finished with validation warnings.");
+        }
+
+      } catch (err) {
+        statusEl.className = "status-box error";
+        statusEl.innerHTML = `<strong>VERIFICATION FAILED:</strong> Runtime exception occurred: ${err.message}`;
+        console.error("Architecture verification failed:", err);
+      }
+    }
+
+    runTests();
+  </script>
+</body>
+</html>

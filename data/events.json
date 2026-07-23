@@ -1,0 +1,32 @@
+{
+  "$schema": "./schemas/events.schema.json",
+  "events": [
+    {
+      "id": "event-2026-08-10",
+      "title": "Group Meeting: Nanosheet Assembly Progress",
+      "date": "2026-08-10",
+      "time": "10:00 AM",
+      "location": "Chemistry Building, Room 302",
+      "description": "Weekly meeting to discuss synthesis progress, troubleshoot sonication parameters, and review upcoming paper drafts.",
+      "type": "Group Meeting"
+    },
+    {
+      "id": "event-2026-09-05",
+      "title": "Invited Lecture: Advanced Electron Microscopy",
+      "date": "2026-09-05",
+      "time": "4:00 PM",
+      "location": "UGA Science Library Auditorium",
+      "description": "Dr. Sarah Miller from Oak Ridge National Laboratory will deliver an invited lecture on high-resolution aberration-corrected STEM imaging of 2D layered materials.",
+      "type": "Departmental Seminar"
+    },
+    {
+      "id": "event-2026-07-28",
+      "title": "Dissertation Defense: Jane Doe",
+      "date": "2026-07-28",
+      "time": "2:00 PM",
+      "location": "Chemistry Building, Room 104",
+      "description": "Jane Doe will present her doctoral dissertation defense titled 'Chemical Strategies for the Exfoliation and Dynamic Assembly of Transition Metal Oxide Nanosheets'.",
+      "type": "Dissertation Defense"
+    }
+  ]
+}

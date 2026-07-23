@@ -1,28 +1,31 @@
-[
-  {
-    "id": "pub-2025-01",
-    "title": "Exfoliation of Layered Transition Metal Oxides Using Novel Aqueous Exfoliants",
-    "authors": "Doe, J., Smith, J., and Salguero, T.",
-    "journal": "Journal of Materials Chemistry A",
-    "volume": "13",
-    "pages": "1234-1242",
-    "year": "2025",
-    "doi": "10.1039/XXXXXXXXX",
-    "link": "https://doi.org/10.1039/XXXXXXXXX",
-    "abstract": "Here, we report an efficient, high-yield soft-chemical method to exfoliate layered oxides into high-quality single-layer nanosheets using a new class of organic counter-ions. This approach significantly reduces sonication time and minimizes lattice damage, producing sheets with excellent structural integrity.",
-    "tags": ["Nanosheets", "Oxides", "Synthesis"]
-  },
-  {
-    "id": "pub-2024-01",
-    "title": "Synthesis and Electrochemical Properties of Doped Metal Silicate Thin Films",
-    "authors": "Miller, S. and Salguero, T.",
-    "journal": "Inorganic Chemistry",
-    "volume": "63",
-    "pages": "5678-5685",
-    "year": "2024",
-    "doi": "10.1021/acs.inorgchem.XXXXXXX",
-    "link": "https://doi.org/10.1021/acs.inorgchem.XXXXXXX",
-    "abstract": "We describe the hydrothermal synthesis and electrochemical characteristics of manganese-doped metal silicates. Spin-coated films exhibit improved charge storage properties and cyclability, pointing toward potential applications in thin-film micro-supercapacitors.",
-    "tags": ["Inorganic Synthesis", "Electrochemistry", "Silicates"]
-  }
-]
+{
+  "$schema": "./schemas/publications.schema.json",
+  "publications": [
+    {
+      "id": "pub-2025-01",
+      "title": "Exfoliation of Layered Transition Metal Oxides Using Novel Aqueous Exfoliants",
+      "authors": "Doe, J., Smith, J., and Salguero, T.",
+      "journal": "Journal of Materials Chemistry A",
+      "volume": "13",
+      "pages": "1234-1242",
+      "year": "2025",
+      "doi": "10.1039/XXXXXXXXX",
+      "link": "https://doi.org/10.1039/XXXXXXXXX",
+      "abstract": "Here, we report an efficient, high-yield soft-chemical method to exfoliate layered oxides into high-quality single-layer nanosheets using a new class of organic counter-ions. This approach significantly reduces sonication time and minimizes lattice damage, producing sheets with excellent structural integrity.",
+      "tags": ["Nanosheets", "Oxides", "Synthesis"]
+    },
+    {
+      "id": "pub-2024-01",
+      "title": "Synthesis and Electrochemical Properties of Doped Metal Silicate Thin Films",
+      "authors": "Miller, S. and Salguero, T.",
+      "journal": "Inorganic Chemistry",
+      "volume": "63",
+      "pages": "5678-5685",
+      "year": "2024",
+      "doi": "10.1021/acs.inorgchem.XXXXXXX",
+      "link": "https://doi.org/10.1021/acs.inorgchem.XXXXXXX",
+      "abstract": "We describe the hydrothermal synthesis and electrochemical characteristics of manganese-doped metal silicates. Spin-coated films exhibit improved charge storage properties and cyclability, pointing toward potential applications in thin-film micro-supercapacitors.",
+      "tags": ["Inorganic Synthesis", "Electrochemistry", "Silicates"]
+    }
+  ]
+}

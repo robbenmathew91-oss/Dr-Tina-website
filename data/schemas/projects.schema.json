@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Projects Database",
+  "type": "object",
+  "required": ["projects"],
+  "properties": {
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status", "summary", "detailedDescription", "tags"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique URL-friendly slug/identifier for the project"
+          },
+          "title": {
+            "type": "string",
+            "description": "Full title of the research project"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Active", "Completed"],
+            "description": "Current status of the project"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Brief one-to-two sentence summary for preview cards"
+          },
+          "detailedDescription": {
+            "type": "string",
+            "description": "In-depth description of the project goals and results"
+          },
+          "tags": {
+            "type": "array",
+            "description": "List of thematic keywords (e.g. Synthesis, Thin Films)",
+            "items": { "type": "string" }
+          },
+          "image": {
+            "type": "string",
+            "description": "Path to research graphic or image"
+          },
+          "funding": {
+            "type": "string",
+            "description": "Sponsor or agency details supporting the research"
+          }
+        }
+      }
+    }
+  }
+}

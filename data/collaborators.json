@@ -1,0 +1,23 @@
+{
+  "$schema": "./schemas/collaborators.schema.json",
+  "collaborators": [
+    {
+      "id": "collab-ornl-microscopy",
+      "name": "Dr. Arthur Pendelton",
+      "institution": "Oak Ridge National Laboratory",
+      "location": "Oak Ridge, TN",
+      "website": "https://www.ornl.gov",
+      "logo": "assets/images/collaborators/ornl_logo.png",
+      "focus": "Collaborative aberration-corrected STEM imaging of inorganic nanosheet lattices."
+    },
+    {
+      "id": "collab-gt-electronics",
+      "name": "Dr. Karen Vance",
+      "institution": "Georgia Institute of Technology",
+      "location": "Atlanta, GA",
+      "website": "https://www.gatech.edu",
+      "logo": "assets/images/collaborators/gatech_logo.png",
+      "focus": "Fabrication of thin-film field-effect transistors using exfoliated 2D oxide channels."
+    }
+  ]
+}

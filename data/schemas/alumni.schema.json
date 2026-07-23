@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Alumni Roster",
+  "type": "object",
+  "required": ["alumni"],
+  "properties": {
+    "alumni": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "degree", "graduationYear", "currentPosition"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the alumnus"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the alumnus"
+          },
+          "degree": {
+            "type": "string",
+            "description": "Degree earned in the lab (e.g. Ph.D., M.S., B.S.)"
+          },
+          "graduationYear": {
+            "type": "string",
+            "description": "Year of graduation/departure from the lab"
+          },
+          "thesisTitle": {
+            "type": "string",
+            "description": "Title of their thesis or major project"
+          },
+          "currentPosition": {
+            "type": "string",
+            "description": "Their current employer, institution, and title"
+          },
+          "linkedin": {
+            "type": "string",
+            "description": "Optional LinkedIn URL"
+          }
+        }
+      }
+    }
+  }
+}

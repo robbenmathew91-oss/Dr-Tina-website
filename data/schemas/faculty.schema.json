@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Faculty",
+  "type": "object",
+  "required": ["name", "title", "department", "institution", "email", "photo", "biography"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name of the Faculty Member / PI"
+    },
+    "title": {
+      "type": "string",
+      "description": "Academic title (e.g., Associate Professor)"
+    },
+    "department": {
+      "type": "string",
+      "description": "Academic department"
+    },
+    "institution": {
+      "type": "string",
+      "description": "University/Institution name"
+    },
+    "office": {
+      "type": "string",
+      "description": "Office location details"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone number"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Institutional email address"
+    },
+    "photo": {
+      "type": "string",
+      "description": "Relative path to the profile photo"
+    },
+    "googleScholar": {
+      "type": "string",
+      "format": "uri",
+      "description": "Link to Google Scholar profile"
+    },
+    "orcid": {
+      "type": "string",
+      "description": "ORCID researcher identifier"
+    },
+    "biography": {
+      "type": "string",
+      "description": "Biography or overview of research trajectory"
+    },
+    "education": {
+      "type": "array",
+      "description": "Education history list",
+      "items": {
+        "type": "object",
+        "required": ["degree", "institution", "year"],
+        "properties": {
+          "degree": { "type": "string" },
+          "institution": { "type": "string" },
+          "year": { "type": "string" }
+        }
+      }
+    },
+    "researchInterests": {
+      "type": "array",
+      "description": "List of primary research interests",
+      "items": { "type": "string" }
+    }
+  }
+}

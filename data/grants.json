@@ -1,22 +1,25 @@
-[
-  {
-    "id": "grant-nsf-2024",
-    "title": "NSF Division of Materials Research: Chemical Exfoliation and Sorting of 2D Nanosheets",
-    "agency": "National Science Foundation (NSF)",
-    "grantNumber": "DMR-XXXXXXX",
-    "amount": "$450,000",
-    "duration": "2024 - 2027",
-    "status": "Active",
-    "principalInvestigator": "Dr. Tina Salguero"
-  },
-  {
-    "id": "grant-doe-2022",
-    "title": "DOE Office of Basic Energy Sciences: Novel Thin-Film Materials for Energy Applications",
-    "agency": "Department of Energy (DOE)",
-    "grantNumber": "DE-SCXXXXX",
-    "amount": "$600,000",
-    "duration": "2022 - 2025",
-    "status": "Active",
-    "principalInvestigator": "Dr. Tina Salguero"
-  }
-]
+{
+  "$schema": "./schemas/grants.schema.json",
+  "grants": [
+    {
+      "id": "grant-nsf-2024",
+      "title": "NSF Division of Materials Research: Chemical Exfoliation and Sorting of 2D Nanosheets",
+      "agency": "National Science Foundation (NSF)",
+      "grantNumber": "DMR-XXXXXXX",
+      "amount": "$450,000",
+      "duration": "2024 - 2027",
+      "status": "Active",
+      "principalInvestigator": "Dr. Tina Salguero"
+    },
+    {
+      "id": "grant-doe-2022",
+      "title": "DOE Office of Basic Energy Sciences: Novel Thin-Film Materials for Energy Applications",
+      "agency": "Department of Energy (DOE)",
+      "grantNumber": "DE-SCXXXXX",
+      "amount": "$600,000",
+      "duration": "2022 - 2025",
+      "status": "Active",
+      "principalInvestigator": "Dr. Tina Salguero"
+    }
+  ]
+}

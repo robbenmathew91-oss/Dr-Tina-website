@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Research Collaborators",
+  "type": "object",
+  "required": ["collaborators"],
+  "properties": {
+    "collaborators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "institution", "focus"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the collaborator"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the collaborating scientist / contact"
+          },
+          "institution": {
+            "type": "string",
+            "description": "Collaborating institution or company (e.g. Oak Ridge National Laboratory)"
+          },
+          "location": {
+            "type": "string",
+            "description": "Optional location (e.g., Oak Ridge, TN)"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional website link of the collaborator or their lab group"
+          },
+          "logo": {
+            "type": "string",
+            "description": "Optional path to institution logo"
+          },
+          "focus": {
+            "type": "string",
+            "description": "Short description of the collaboration focus (e.g. SEM characterization)"
+          }
+        }
+      }
+    }
+  }
+}

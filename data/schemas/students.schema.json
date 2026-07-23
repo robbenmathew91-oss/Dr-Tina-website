@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Students Roster",
+  "type": "object",
+  "required": ["students"],
+  "properties": {
+    "students": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "role", "yearStarted", "projectFocus", "email"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the student (e.g. jane-doe)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the student"
+          },
+          "role": {
+            "type": "string",
+            "description": "Student's role in the lab (e.g., Ph.D. Candidate, Undergraduate Researcher)"
+          },
+          "yearStarted": {
+            "type": "string",
+            "description": "Year they joined the research group"
+          },
+          "projectFocus": {
+            "type": "string",
+            "description": "Short summary of their project focus or thesis topic"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address"
+          },
+          "linkedin": {
+            "type": "string",
+            "description": "Optional LinkedIn URL"
+          },
+          "photo": {
+            "type": "string",
+            "description": "Relative path to the student's headshot"
+          }
+        }
+      }
+    }
+  }
+}
