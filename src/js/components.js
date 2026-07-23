@@ -76,7 +76,7 @@ export function StudentCard(student) {
       <div class="student-info">
         <h3 class="student-name">${student.name}</h3>
         <p class="student-role">${student.role}</p>
-        <p class="student-year">Joined Lab: ${student.yearStarted}</p>
+        <p class="student-year">Joined the Salguero Lab in ${student.joined_lab || student.yearStarted}</p>
         <p class="student-focus">${student.projectFocus}</p>
         
         <div class="student-links">
@@ -94,14 +94,25 @@ export function StudentCard(student) {
 export function AlumniCard(alumnus) {
   return `
     <div class="alumni-card-item" id="alumni-${alumnus.id}">
-      <div class="alumni-header">
-        <h3 class="alumni-name">${alumnus.name}, <span class="alumni-degree">${alumnus.degree}</span></h3>
-        <span class="alumni-year">Class of ${alumnus.graduationYear}</span>
-      </div>
-      <div class="alumni-body">
-        ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
-        <p class="alumni-current"><strong>Current:</strong> ${alumnus.currentPosition}</p>
-        ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}
+      <div class="alumni-flex-container" style="display: flex; gap: 15px; align-items: flex-start;">
+        ${alumnus.photo ? `
+          <div class="alumni-photo-container" style="flex-shrink: 0; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 1px solid var(--border);">
+            <img src="${alumnus.photo}" alt="${alumnus.name}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+          </div>
+        ` : ''}
+        <div style="flex-grow: 1;">
+          <div class="alumni-header">
+            <h3 class="alumni-name">${alumnus.name}, <span class="alumni-degree">${alumnus.degree}</span></h3>
+            <span class="alumni-year">Class of ${alumnus.graduationYear}</span>
+          </div>
+          <div class="alumni-body">
+            <p class="alumni-joined" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 2px;">Joined the Salguero Lab in ${alumnus.joined_lab}</p>
+            <p class="alumni-graduated" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 6px;">Graduated in ${alumnus.graduated_year}</p>
+            ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
+            <p class="alumni-current"><strong>Current:</strong> ${alumnus.currentPosition}</p>
+            ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}
+          </div>
+        </div>
       </div>
     </div>
   `;

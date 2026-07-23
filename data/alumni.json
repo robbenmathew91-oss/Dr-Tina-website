@@ -2,22 +2,30 @@
   "$schema": "./schemas/alumni.schema.json",
   "alumni": [
     {
-      "id": "alumni-1",
-      "name": "Dr. Sarah Miller",
+      "id": "casey-rowe",
+      "name": "Casey Rowe",
       "degree": "Ph.D.",
-      "graduationYear": "2024",
-      "thesisTitle": "Novel Synthetic Routes to Transition Metal Oxide Nanosheets",
-      "currentPosition": "Postdoctoral Researcher at Oak Ridge National Laboratory",
-      "linkedin": "https://linkedin.com/in/sarahmiller"
+      "graduationYear": "2025",
+      "thesisTitle": "Revealing Thermally-Induced Nanoscale Behavior in Low-Dimensional Quantum Materials Through in Situ Scanning Transmission Electron Microscopy",
+      "currentPosition": "Postdoctoral Researcher",
+      "linkedin": "",
+      "photo": "assets/images/team/casey_rowe.jpg",
+      "joined_lab": "2020",
+      "status": "Alumni",
+      "graduated_year": "2025"
     },
     {
-      "id": "alumni-2",
-      "name": "Michael Carter",
-      "degree": "B.S. (Honors Chemistry)",
-      "graduationYear": "2023",
-      "thesisTitle": "Surface Exfoliation of Metal Phosphates",
-      "currentPosition": "Ph.D. Student at Northwestern University",
-      "linkedin": ""
+      "id": "nicholas-sesing",
+      "name": "Nicholas Sesing",
+      "degree": "Ph.D.",
+      "graduationYear": "2025",
+      "thesisTitle": "Chemical Vapor Transport Optimization for Actinide Chalcogenides",
+      "currentPosition": "Research Scientist",
+      "linkedin": "",
+      "photo": "assets/images/team/nicholas_sesing.jpg",
+      "joined_lab": "2020",
+      "status": "Alumni",
+      "graduated_year": "2025"
     }
   ]
 }

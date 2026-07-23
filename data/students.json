@@ -5,51 +5,61 @@
       "id": "jose-garcia",
       "name": "Jose Garcia",
       "role": "Graduate Student (GEM Fellow)",
-      "yearStarted": "Unknown",
+      "yearStarted": "2022",
       "projectFocus": "Materials Chemistry and Nanoscience.",
       "email": "josemaria.garcia@uga.edu",
       "linkedin": "",
-      "photo": "assets/images/team/jose_garcia.jpg"
+      "photo": "assets/images/team/jose_garcia.jpg",
+      "joined_lab": "2022",
+      "status": "Current Member"
     },
     {
       "id": "clayton-mantz",
       "name": "Clayton Mantz",
       "role": "Graduate Student",
-      "yearStarted": "Unknown",
+      "yearStarted": "2023",
       "projectFocus": "Materials Synthesis and Characterization.",
       "email": "cjm56926@uga.edu",
       "linkedin": "",
-      "photo": "assets/images/team/clayton_mantz.jpg"
+      "photo": "assets/images/team/clayton_mantz.jpg",
+      "joined_lab": "2023",
+      "status": "Current Member"
     },
     {
       "id": "athar-yeganeh-neysiani",
       "name": "Athar Yeganeh Neysiani",
       "role": "Graduate Student",
-      "yearStarted": "Unknown",
+      "yearStarted": "2024",
       "projectFocus": "Inorganic – Synthetic Materials.",
       "email": "Athar.yeganehneysiani@uga.edu",
       "linkedin": "",
-      "photo": "assets/images/team/athar_yeganeh_neysiani.jpg"
+      "photo": "assets/images/team/athar_yeganeh_neysiani.jpg",
+      "joined_lab": "2024",
+      "status": "Current Member"
     },
     {
       "id": "ali-ahmed",
       "name": "Ali Ahmed",
       "role": "Graduate Student",
-      "yearStarted": "Unknown",
+      "yearStarted": "2024",
       "projectFocus": "Materials Chemistry research and inorganic exfoliation.",
       "email": "contact@uga.edu",
       "linkedin": "",
-      "photo": "assets/images/placeholder.svg"
+      "photo": "assets/images/placeholder.svg",
+      "joined_lab": "2024",
+      "status": "Current Member"
     },
     {
       "id": "april-rains",
       "name": "April Rains",
       "role": "Graduate Student",
-      "yearStarted": "Unknown",
+      "yearStarted": "2025",
       "projectFocus": "Materials Chemistry synthesis and characterization.",
       "email": "contact@uga.edu",
       "linkedin": "",
-      "photo": "assets/images/placeholder.svg"
+      "photo": "assets/images/placeholder.svg",
+      "joined_lab": "2025",
+      "status": "Current Member"
     }
   ]
 }
