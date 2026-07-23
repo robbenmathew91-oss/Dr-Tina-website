@@ -78,10 +78,27 @@
     import { renderList, injectMarkup, SortFunctions } from './src/js/renderer.js';
 
     async function initPeople() {
-      // 1. Faculty PI
-      const faculty = await loadData('faculty.json');
+      // 1. Faculty PI & Research Ecosystem Data
+      const [faculty, researchData, pubsData, projectsData, grantsData, newsData] = await Promise.all([
+        loadData('faculty.json'),
+        loadData('research.json'),
+        loadData('publications.json'),
+        loadData('projects.json'),
+        loadData('grants.json'),
+        loadData('news.json')
+      ]);
+
       validateData('faculty', faculty);
-      injectMarkup('#faculty-target', FacultyProfile(faculty));
+
+      const ecosystem = {
+        themes: researchData.themes || [],
+        publications: pubsData.publications || [],
+        projects: projectsData.projects || [],
+        grants: grantsData.grants || [],
+        news: newsData.news || []
+      };
+
+      injectMarkup('#faculty-target', FacultyProfile(faculty, ecosystem));
 
       // 2. Students
       const studentData = await loadData('students.json');

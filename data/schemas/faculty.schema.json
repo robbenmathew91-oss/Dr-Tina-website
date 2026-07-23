@@ -1,72 +1,183 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Faculty",
+  "title": "Faculty Profile Schema",
   "type": "object",
-  "required": ["name", "title", "department", "institution", "email", "photo", "biography"],
+  "required": [
+    "name",
+    "title",
+    "department",
+    "institution",
+    "office",
+    "phone",
+    "email",
+    "photo",
+    "googleScholar",
+    "orcid",
+    "summary",
+    "quickFacts",
+    "researchVision",
+    "timeline",
+    "education",
+    "graduateAndPostdoc",
+    "leadershipAndMentorship",
+    "researchInterests",
+    "awards",
+    "professionalService",
+    "milestones"
+  ],
   "properties": {
-    "name": {
-      "type": "string",
-      "description": "Full name of the Faculty Member / PI"
+    "name": { "type": "string" },
+    "title": { "type": "string" },
+    "department": { "type": "string" },
+    "institution": { "type": "string" },
+    "office": { "type": "string" },
+    "phone": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "photo": { "type": "string" },
+    "googleScholar": { "type": "string" },
+    "orcid": { "type": "string" },
+    "biography": { "type": "string" },
+    "summary": {
+      "type": "array",
+      "items": { "type": "string" }
     },
-    "title": {
-      "type": "string",
-      "description": "Academic title (e.g., Associate Professor)"
+    "quickFacts": {
+      "type": "object",
+      "properties": {
+        "yearsAtUGA": { "type": "string" },
+        "activeResearchThemes": { "type": "number" },
+        "activeGrants": { "type": "number" },
+        "currentLabMembers": { "type": "number" },
+        "totalPublications": { "type": "number" },
+        "totalCitations": { "type": "string" },
+        "hIndex": { "type": "number" }
+      }
     },
-    "department": {
-      "type": "string",
-      "description": "Academic department"
+    "researchVision": {
+      "type": "object",
+      "required": ["philosophy", "longTermVision", "whyItMatters", "interdisciplinaryApproach", "futureDirections"],
+      "properties": {
+        "philosophy": { "type": "string" },
+        "longTermVision": { "type": "string" },
+        "whyItMatters": { "type": "string" },
+        "interdisciplinaryApproach": { "type": "string" },
+        "futureDirections": { "type": "string" }
+      }
     },
-    "institution": {
-      "type": "string",
-      "description": "University/Institution name"
-    },
-    "office": {
-      "type": "string",
-      "description": "Office location details"
-    },
-    "phone": {
-      "type": "string",
-      "description": "Contact phone number"
-    },
-    "email": {
-      "type": "string",
-      "format": "email",
-      "description": "Institutional email address"
-    },
-    "photo": {
-      "type": "string",
-      "description": "Relative path to the profile photo"
-    },
-    "googleScholar": {
-      "type": "string",
-      "format": "uri",
-      "description": "Link to Google Scholar profile"
-    },
-    "orcid": {
-      "type": "string",
-      "description": "ORCID researcher identifier"
-    },
-    "biography": {
-      "type": "string",
-      "description": "Biography or overview of research trajectory"
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["year", "milestone", "category"],
+        "properties": {
+          "year": { "type": "string" },
+          "milestone": { "type": "string" },
+          "category": { "type": "string" },
+          "details": { "type": "string" }
+        }
+      }
     },
     "education": {
       "type": "array",
-      "description": "Education history list",
       "items": {
         "type": "object",
         "required": ["degree", "institution", "year"],
         "properties": {
           "degree": { "type": "string" },
           "institution": { "type": "string" },
-          "year": { "type": "string" }
+          "year": { "type": "string" },
+          "notes": { "type": "string" }
         }
+      }
+    },
+    "graduateAndPostdoc": {
+      "type": "object",
+      "required": ["doctoral", "postdoctoral", "industrial"],
+      "properties": {
+        "doctoral": {
+          "type": "object",
+          "required": ["degree", "institution", "year", "advisor", "focus", "summary"],
+          "properties": {
+            "degree": { "type": "string" },
+            "institution": { "type": "string" },
+            "year": { "type": "string" },
+            "advisor": { "type": "string" },
+            "focus": { "type": "string" },
+            "summary": { "type": "string" },
+            "nobelNotes": { "type": "string" }
+          }
+        },
+        "postdoctoral": {
+          "type": "object",
+          "required": ["role", "institution", "fellowship", "summary"],
+          "properties": {
+            "role": { "type": "string" },
+            "institution": { "type": "string" },
+            "fellowship": { "type": "string" },
+            "summary": { "type": "string" }
+          }
+        },
+        "industrial": {
+          "type": "object",
+          "required": ["role", "organization", "focus", "summary"],
+          "properties": {
+            "role": { "type": "string" },
+            "organization": { "type": "string" },
+            "focus": { "type": "string" },
+            "summary": { "type": "string" }
+          }
+        }
+      }
+    },
+    "leadershipAndMentorship": {
+      "type": "object",
+      "required": ["roles", "mentoringPhilosophy", "trainingPrograms", "outreachAndEquity"],
+      "properties": {
+        "roles": { "type": "array", "items": { "type": "string" } },
+        "mentoringPhilosophy": { "type": "string" },
+        "trainingPrograms": { "type": "string" },
+        "outreachAndEquity": { "type": "string" }
       }
     },
     "researchInterests": {
       "type": "array",
-      "description": "List of primary research interests",
       "items": { "type": "string" }
+    },
+    "awards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["award", "year", "details"],
+        "properties": {
+          "award": { "type": "string" },
+          "year": { "type": "string" },
+          "details": { "type": "string" }
+        }
+      }
+    },
+    "professionalService": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "organization", "details"],
+        "properties": {
+          "role": { "type": "string" },
+          "organization": { "type": "string" },
+          "details": { "type": "string" }
+        }
+      }
+    },
+    "milestones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["year", "title", "description"],
+        "properties": {
+          "year": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
     }
   }
 }
