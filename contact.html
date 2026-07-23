@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get in touch with the Salguero Lab at UGA. Laboratory location, mailing address, email contact, and campus navigation map.">
+  <title>Contact & Map | Salguero Research Group</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    <h1>Contact & Map</h1>
+    <p class="hero-tagline">How to find us and get in touch.</p>
+
+    <div class="contact-grid" style="margin-top: 40px;">
+      
+      <!-- Left Column: Info & Form -->
+      <div>
+        <h2>Get in Touch</h2>
+        <p>If you have questions about our publications, want to inquire about materials distribution, or wish to discuss research collaborations, please fill out the form below or contact Dr. Salguero directly.</p>
+        
+        <form id="contact-form" style="margin-top: 25px;" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" id="name" class="form-control" required placeholder="Your full name">
+          </div>
+          
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" class="form-control" required placeholder="name@institution.edu">
+          </div>
+
+          <div class="form-group">
+            <label for="affiliation" class="form-label">Institution / Organization</label>
+            <input type="text" id="affiliation" class="form-control" placeholder="University, College, or Company">
+          </div>
+
+          <div class="form-group">
+            <label for="role" class="form-label">I am a...</label>
+            <select id="role" class="form-control">
+              <option value="General Inquirer">General Inquirer</option>
+              <option value="Graduate Applicant">Prospective Graduate Student</option>
+              <option value="Undergraduate Applicant">Prospective Undergraduate Researcher</option>
+              <option value="Collaborator">Academic or Industry Collaborator</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Your Message</label>
+            <textarea id="message" class="form-control" required placeholder="Write your message details here..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Send Inquiry</button>
+        </form>
+
+        <div id="form-success-box" class="empty-state-card hidden" style="background-color: #E8F5E9; border-color: #2E7D32; padding: 25px; margin-top: 20px; text-align: left;">
+          <h4 style="color: #2E7D32; margin-bottom: 5px;">✓ Message Submitted Successfully</h4>
+          <p style="margin-bottom: 0; font-size: 0.95rem;">Thank you for contacting the Salguero Research Group. We have received your inquiry and will respond as soon as possible.</p>
+        </div>
+      </div>
+
+      <!-- Right Column: Address and Map -->
+      <div>
+        <h2>Our Location</h2>
+        <p>The Salguero Research Group is located in the primary Chemistry Building on the south campus of the University of Georgia.</p>
+        
+        <ul class="contact-list">
+          <li>🏢 <strong>Office:</strong> Chemistry Building, Room 302</li>
+          <li>🔬 <strong>Laboratory:</strong> Chemistry Building, Rooms 303 & 304</li>
+          <li>✉️ <strong>PI Email:</strong> <a href="mailto:salguero@uga.edu">salguero@uga.edu</a></li>
+          <li>📞 <strong>Phone:</strong> (706) 542-1982</li>
+        </ul>
+
+        <div class="map-iframe-container" style="margin-top: 30px;">
+          <!-- Embedded Google Map of UGA Chemistry Building -->
+          <iframe 
+            title="UGA Chemistry Department Location Map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m13!1d3320.1706859345633!2d-83.37330548480374!3d33.94705358063544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f66d2146f6630f%3A0xc3cfdb078696ecbd!2sChemistry%20Department%2C%20140%20Cedar%20St%2C%20Athens%2C%20GA%2030602!5e0!3m2!1sen!2sus!4v1660000000000!5m2!1sen!2sus"
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Render Collaborators Section -->
+    <section class="mb-8" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border);">
+      <h2>Research Collaborators</h2>
+      <p style="margin-bottom: 20px;">We collaborate with top-tier research institutes and national laboratories across the United States:</p>
+      <div id="collaborators-list-target" class="grid-cols-2">
+        <p>Loading collaborator profiles...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { CollaboratorCard } from './src/js/components.js';
+    import { renderList } from './src/js/renderer.js';
+
+    // Bind form submit globally
+    window.handleFormSubmit = function(event) {
+      event.preventDefault();
+      
+      // Hide form and show success box
+      const form = document.getElementById('contact-form');
+      const successBox = document.getElementById('form-success-box');
+      if (form && successBox) {
+        form.classList.add('hidden');
+        successBox.classList.remove('hidden');
+      }
+    };
+
+    async function initCollaborators() {
+      const dataObj = await loadData('collaborators.json');
+      const collaboratorsList = dataObj.collaborators || [];
+
+      // Validate
+      validateData('collaborator', collaboratorsList);
+
+      // Render
+      renderList({
+        selector: '#collaborators-list-target',
+        items: collaboratorsList,
+        componentFn: CollaboratorCard,
+        emptyMessage: 'No collaborators registered.'
+      });
+    }
+
+    initCollaborators();
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chronological updates, student accolades, accepted papers, and group announcements from the Salguero Lab.">
+  <title>News & Announcements | Salguero Research Group</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    <h1>News & Announcements</h1>
+    <p class="hero-tagline">Updates, achievements, and lab milestones.</p>
+
+    <!-- News List Target -->
+    <section class="mb-8" style="margin-top: 30px;">
+      <div id="news-list-target" class="grid-cols-2">
+        <p>Loading news updates...</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { NewsCard } from './src/js/components.js';
+    import { renderList, SortFunctions } from './src/js/renderer.js';
+
+    async function initNews() {
+      const dataObj = await loadData('news.json');
+      const newsList = dataObj.news || [];
+
+      // Validate
+      validateData('news', newsList);
+
+      // Render
+      renderList({
+        selector: '#news-list-target',
+        items: newsList,
+        componentFn: NewsCard,
+        sortFn: SortFunctions.datesDescending,
+        emptyMessage: 'No news or updates posted yet.'
+      });
+    }
+
+    initNews();
+  </script>
+</body>
+</html>

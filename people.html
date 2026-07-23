@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet the members of the Salguero Research Group at UGA. Roster of current graduate and undergraduate students, alumni, and PI Dr. Tina Salguero.">
+  <title>Group Members | Salguero Research Group</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    <h1>Group Members</h1>
+    <p class="hero-tagline">The scientists and researchers of the Salguero Lab.</p>
+
+    <!-- Faculty PI Section -->
+    <section class="mb-8" style="margin-top: 40px;">
+      <h2>Principal Investigator</h2>
+      <div id="faculty-target">
+        <p>Loading Principal Investigator profile...</p>
+      </div>
+    </section>
+
+    <!-- Graduate Students -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2>Graduate Researchers</h2>
+      <div id="grad-students-target" class="grid-cols-3">
+        <p>Loading graduate students...</p>
+      </div>
+    </section>
+
+    <!-- Undergraduate Students -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2>Undergraduate Assistants</h2>
+      <div id="undergrad-students-target" class="grid-cols-3">
+        <p>Loading undergraduate students...</p>
+      </div>
+    </section>
+
+    <!-- Alumni Section -->
+    <section class="mb-8" style="margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--border);">
+      <h2>Group Alumni</h2>
+      <p style="margin-bottom: 20px;">We are proud of our former group members and their achievements. Below is a directory of alumni and their destinations:</p>
+      <div id="alumni-target">
+        <p>Loading alumni directory...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { FacultyProfile, StudentCard, AlumniCard } from './src/js/components.js';
+    import { renderList, injectMarkup, SortFunctions } from './src/js/renderer.js';
+
+    async function initPeople() {
+      // 1. Faculty PI
+      const faculty = await loadData('faculty.json');
+      validateData('faculty', faculty);
+      injectMarkup('#faculty-target', FacultyProfile(faculty));
+
+      // 2. Students
+      const studentData = await loadData('students.json');
+      const studentList = studentData.students || [];
+      validateData('student', studentList);
+
+      // Separate grad and undergrad
+      const gradStudents = studentList.filter(s => 
+        s.role.toLowerCase().includes('graduate') || 
+        s.role.toLowerCase().includes('ph.d') || 
+        s.role.toLowerCase().includes('m.s')
+      );
+      const undergradStudents = studentList.filter(s => 
+        s.role.toLowerCase().includes('undergrad')
+      );
+
+      // Render Graduate
+      renderList({
+        selector: '#grad-students-target',
+        items: gradStudents,
+        componentFn: StudentCard,
+        sortFn: SortFunctions.alphabeticalByName,
+        emptyMessage: 'No current graduate students listed.'
+      });
+
+      // Render Undergraduate
+      renderList({
+        selector: '#undergrad-students-target',
+        items: undergradStudents,
+        componentFn: StudentCard,
+        sortFn: SortFunctions.alphabeticalByName,
+        emptyMessage: 'No current undergraduate students listed.'
+      });
+
+      // 3. Alumni
+      const alumniData = await loadData('alumni.json');
+      const alumniList = alumniData.alumni || [];
+      validateData('alumnus', alumniList);
+
+      renderList({
+        selector: '#alumni-target',
+        items: alumniList,
+        componentFn: AlumniCard,
+        sortFn: SortFunctions.alumniDefault,
+        emptyMessage: 'No alumni registered in directory.'
+      });
+    }
+
+    initPeople();
+  </script>
+</body>
+</html>

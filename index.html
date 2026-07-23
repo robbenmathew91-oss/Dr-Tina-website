@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official website of Dr. Tina Salguero's research group at the University of Georgia. Specializing in materials chemistry, inorganic synthesis, and 2D nanosheet assembly.">
+  <title>Salguero Research Group | University of Georgia</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Layout containers dynamically injected -->
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    
+    <!-- Hero Header -->
+    <section class="hero-section">
+      <h1 class="text-center">Materials Chemistry & 2D Nanosheets</h1>
+      <p class="hero-tagline text-center">Synthesizing advanced inorganic compounds and exploring the chemistry of layered nanomaterials.</p>
+      <div class="hero-cta">
+        <a href="research.html" class="btn btn-primary">Our Research</a>
+        <a href="join.html" class="btn btn-secondary">Join Our Team</a>
+      </div>
+    </section>
+
+    <!-- Lab Overview -->
+    <section class="mb-8">
+      <h2>Welcome to the Salguero Lab</h2>
+      <p>The Salguero Research Group at the University of Georgia (UGA) explores the frontier of inorganic materials and surface chemistry. Our primary scientific focus is on the discovery of novel parent layered compounds, the chemistry of chemical exfoliation into single-layer nanosheets, and the assembly of these 2D structures into functional hybrid networks for energy and electronic applications.</p>
+      <p>We combine advanced synthetic chemistry (such as high-temperature solid-state reactions, flux synthesis, and hydrothermal methods) with modern characterization tools including X-ray Diffraction (XRD), Scanning and Transmission Electron Microscopy (SEM/TEM), and atomic force microscopy (AFM).</p>
+    </section>
+
+    <!-- News Highlights Row -->
+    <section class="mb-8">
+      <h2>Latest News & Announcements</h2>
+      <div id="news-highlight-grid" class="grid-cols-2">
+        <p>Loading news updates...</p>
+      </div>
+      <div class="text-center my-8">
+        <a href="news.html" class="btn btn-secondary">Read All News Updates &rarr;</a>
+      </div>
+    </section>
+
+    <!-- UGA Badge Section -->
+    <section class="mb-8 py-8" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background-color: var(--bg-offset); padding: 30px; border-radius: 8px;">
+      <h3 style="margin-bottom: 10px;">Academic Affiliations</h3>
+      <p style="margin-bottom: 0;">We are situated in the <strong>Department of Chemistry</strong> inside the Franklin College of Arts and Sciences. Our lab group works in partnership with the UGA Center for Metalloenzyme Studies and utilizes the extensive facilities of the Georgia Electron Microscopy center.</p>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <!-- Layout and Content Rendering scripts -->
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { NewsCard } from './src/js/components.js';
+    import { renderList, SortFunctions } from './src/js/renderer.js';
+
+    async function loadLatestNews() {
+      const newsData = await loadData('news.json');
+      const newsList = newsData.news || [];
+      
+      // Validate
+      validateData('news', newsList);
+
+      // Take latest 2 news items
+      const sortedNews = [...newsList].sort(SortFunctions.datesDescending);
+      const latestNews = sortedNews.slice(0, 2);
+
+      renderList({
+        selector: '#news-highlight-grid',
+        items: latestNews,
+        componentFn: NewsCard,
+        emptyMessage: 'No announcements published yet.'
+      });
+    }
+
+    loadLatestNews();
+  </script>
+</body>
+</html>

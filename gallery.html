@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Visual record of the Salguero Group: group portraits, experimental setups, microscopy images, and lab life at UGA.">
+  <title>Lab Gallery | Salguero Research Group</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    <h1>Lab Gallery</h1>
+    <p class="hero-tagline">A visual record of our research, equipment, and lab culture.</p>
+
+    <!-- Gallery Filter buttons -->
+    <section class="gallery-filter-buttons">
+      <button class="filter-btn active" id="btn-all" onclick="filterGallery('all')">All Photos</button>
+      <button class="filter-btn" id="btn-group" onclick="filterGallery('Group')">Group Profiles</button>
+      <button class="filter-btn" id="btn-research" onclick="filterGallery('Research')">Research & STEM</button>
+      <button class="filter-btn" id="btn-lab-life" onclick="filterGallery('Lab Life')">Lab Life</button>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="mb-8">
+      <div id="gallery-grid-target" class="gallery-grid">
+        <p>Loading gallery images...</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { GalleryItem } from './src/js/components.js';
+    import { renderList, SortFunctions } from './src/js/renderer.js';
+
+    let allPhotos = [];
+
+    // Bind filter function to window so it is accessible by inline buttons
+    window.filterGallery = function(category) {
+      // Toggle button active states
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      const currentBtnId = `btn-${category.toLowerCase().replace(/\s+/g, '-')}`;
+      const activeBtn = document.getElementById(currentBtnId);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+      }
+
+      // Filter photos
+      const filtered = category === 'all' 
+        ? allPhotos 
+        : allPhotos.filter(photo => photo.category === category);
+
+      renderList({
+        selector: '#gallery-grid-target',
+        items: filtered,
+        componentFn: GalleryItem,
+        sortFn: SortFunctions.datesDescending,
+        emptyMessage: 'No photos in this category yet.'
+      });
+    };
+
+    async function initGallery() {
+      const dataObj = await loadData('gallery.json');
+      allPhotos = dataObj.gallery || [];
+
+      // Validate
+      validateData('gallery', allPhotos);
+
+      // Render all photos initially
+      window.filterGallery('all');
+    }
+
+    initGallery();
+  </script>
+</body>
+</html>

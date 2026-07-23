@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guidelines for joining the Salguero Lab at UGA. Opportunities for graduate students, undergraduate researchers, and postdocs.">
+  <title>Join the Group | Salguero Research Group</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    <h1>Join the Group</h1>
+    <p class="hero-tagline">Research opportunities in materials chemistry.</p>
+
+    <section class="mb-8" style="margin-top: 30px;">
+      <p>We are always looking for motivated, curious, and hard-working researchers to join our team. Students in the Salguero Group gain hands-on training in solid-state and hydrothermal chemical synthesis, colloidal chemistry, spin coating, and advanced characterization tools (including XRD, SEM, TEM, and AFM).</p>
+    </section>
+
+    <!-- Specific Roles sections -->
+    <section class="grid-cols-3 mb-8" style="margin-top: 40px; gap: 30px;">
+      <div style="padding: 24px; border: 1px solid var(--border); border-radius: 8px;">
+        <h3 style="color: var(--primary); margin-bottom: 12px;">Graduate Students</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 15px;">Prospective graduate researchers must first gain admission to the Ph.D. or M.S. program in the <strong>UGA Department of Chemistry</strong>. Once admitted, you are invited to rotate in our lab during the Fall semester.</p>
+        <a href="https://chem.uga.edu/graduate-program" target="_blank" rel="noopener" style="font-weight: 600; font-size: 0.9rem;">UGA Chemistry Admissions &rarr;</a>
+      </div>
+      
+      <div style="padding: 24px; border: 1px solid var(--border); border-radius: 8px;">
+        <h3 style="color: var(--primary); margin-bottom: 12px;">Undergraduates</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 15px;">We welcome UGA undergraduates for credit (CHEM 3900/4900). We require a commitment of at least 2 consecutive semesters, and approximately 9–12 hours of lab work per week. Ideal for chemistry and engineering majors.</p>
+        <a href="contact.html" style="font-weight: 600; font-size: 0.9rem;">Apply for Rotation &rarr;</a>
+      </div>
+      
+      <div style="padding: 24px; border: 1px solid var(--border); border-radius: 8px;">
+        <h3 style="color: var(--primary); margin-bottom: 12px;">Postdocs</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 15px;">Postdoctoral positions are dependent on active grant funding. When positions open up, they will be listed here and on official UGA careers portals. Inquiries with external fellowship funding are always welcome.</p>
+        <a href="mailto:salguero@uga.edu" style="font-weight: 600; font-size: 0.9rem;">Email Inquiries &rarr;</a>
+      </div>
+    </section>
+
+    <!-- Application / Inquiry steps -->
+    <section class="mb-8" style="margin-top: 50px; background-color: var(--bg-offset); padding: 30px; border-radius: 8px; border: 1px solid var(--border);">
+      <h2>How to Contact Us</h2>
+      <p>If you are interested in joining our lab, please email Dr. Salguero directly at <a href="mailto:salguero@uga.edu">salguero@uga.edu</a> with the subject line <code>"Salguero Lab Inquiry - [Your Name]"</code>. Please include the following details:</p>
+      <ul style="margin-left: 20px; margin-top: 10px; margin-bottom: 20px;">
+        <li>A brief explanation of your research interests and why you want to work in our group.</li>
+        <li>Your current CV / resume (with details of any chemistry courses taken).</li>
+        <li>Contact information for 2 references (academic or research mentors).</li>
+      </ul>
+      <p style="margin-bottom: 0;"><em>We encourage applicants from diverse backgrounds in chemistry, physics, and materials engineering to apply.</em></p>
+    </section>
+
+    <!-- Upcoming Events for Visitors -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2>Upcoming Lab Events</h2>
+      <p>Prospective students are welcome to attend our departmental seminars or open defenses. Here is our calendar of upcoming events:</p>
+      <div class="timeline-container" id="events-timeline-target">
+        <p>Loading timeline events...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { TimelineItem } from './src/js/components.js';
+    import { renderList, SortFunctions } from './src/js/renderer.js';
+
+    async function initEvents() {
+      const dataObj = await loadData('events.json');
+      const eventsList = dataObj.events || [];
+
+      // Validate
+      validateData('event', eventsList);
+
+      // Render
+      renderList({
+        selector: '#events-timeline-target',
+        items: eventsList,
+        componentFn: TimelineItem,
+        sortFn: SortFunctions.datesAscending,
+        emptyMessage: 'No upcoming events listed at this time.'
+      });
+    }
+
+    initEvents();
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Peer-reviewed publications, journal papers, and research disclosures from Dr. Tina Salguero's materials chemistry group.">
+  <title>Publications Bibliography | Salguero Research Group</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    <h1>Publications</h1>
+    <p class="hero-tagline">Peer-reviewed publications and scientific disclosures.</p>
+
+    <!-- Search & Filter Controls -->
+    <section class="search-filter-bar">
+      <input type="text" id="search-box" class="search-input" placeholder="Search by title, author, or journal...">
+      
+      <select id="tag-filter" class="filter-select">
+        <option value="all">All Research Areas</option>
+        <!-- Injected dynamically -->
+      </select>
+
+      <select id="sort-filter" class="filter-select">
+        <option value="latest">Sort: Latest First</option>
+        <option value="oldest">Sort: Oldest First</option>
+        <option value="title">Sort: Alphabetical</option>
+      </select>
+    </section>
+
+    <!-- Publications List Container -->
+    <section class="mb-8">
+      <div id="publications-list-target">
+        <p>Loading bibliography data...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { PublicationCard } from './src/js/components.js';
+    import { renderList, SortFunctions } from './src/js/renderer.js';
+
+    let allPublications = [];
+
+    async function initPublications() {
+      const dataObj = await loadData('publications.json');
+      allPublications = dataObj.publications || [];
+
+      // Validate
+      validateData('publication', allPublications);
+
+      // Populate filter dropdown with unique tags dynamically
+      populateTagDropdown(allPublications);
+
+      // Add event listeners
+      document.getElementById('search-box').addEventListener('input', applyFilters);
+      document.getElementById('tag-filter').addEventListener('change', applyFilters);
+      document.getElementById('sort-filter').addEventListener('change', applyFilters);
+
+      // Initial render
+      applyFilters();
+    }
+
+    function populateTagDropdown(pubs) {
+      const tagSelect = document.getElementById('tag-filter');
+      const tagsSet = new Set();
+      
+      pubs.forEach(pub => {
+        if (pub.tags && Array.isArray(pub.tags)) {
+          pub.tags.forEach(tag => tagsSet.add(tag));
+        }
+      });
+
+      // Sort and append tags to dropdown
+      Array.from(tagsSet).sort().forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        tagSelect.appendChild(option);
+      });
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('search-box').value.toLowerCase().trim();
+      const selectedTag = document.getElementById('tag-filter').value;
+      const selectedSort = document.getElementById('sort-filter').value;
+
+      // 1. Filter
+      let filtered = allPublications.filter(pub => {
+        const matchesQuery = 
+          pub.title.toLowerCase().includes(query) ||
+          pub.authors.toLowerCase().includes(query) ||
+          pub.journal.toLowerCase().includes(query) ||
+          pub.year.includes(query);
+          
+        const matchesTag = selectedTag === 'all' || (pub.tags && pub.tags.includes(selectedTag));
+
+        return matchesQuery && matchesTag;
+      });
+
+      // 2. Sort
+      let sortFn;
+      if (selectedSort === 'latest') {
+        sortFn = SortFunctions.publicationsDefault; // Latest year first, then title alpha
+      } else if (selectedSort === 'oldest') {
+        sortFn = (a, b) => {
+          const yearA = parseInt(a.year, 10) || 0;
+          const yearB = parseInt(b.year, 10) || 0;
+          if (yearA !== yearB) {
+            return yearA - yearB; // Oldest year first
+          }
+          return a.title.localeCompare(b.title);
+        };
+      } else if (selectedSort === 'title') {
+        sortFn = (a, b) => a.title.localeCompare(b.title); // Alphabetical by title
+      }
+
+      // 3. Render
+      renderList({
+        selector: '#publications-list-target',
+        items: filtered,
+        componentFn: PublicationCard,
+        sortFn: sortFn,
+        emptyMessage: 'No publications match your active search terms or selected tags.'
+      });
+    }
+
+    initPublications();
+  </script>
+</body>
+</html>

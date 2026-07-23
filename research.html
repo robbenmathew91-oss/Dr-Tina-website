@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Core research directions of the Salguero Group: Inorganic Materials, 2D Nanosheet Exfoliation, Superlattices, and Energy Conversion Catalysts.">
+  <title>Research Overview | Salguero Research Group</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <main id="main-content">
+    <h1>Research Overview</h1>
+    <p class="hero-tagline">Exploring layered nanomaterials and advanced inorganic chemistry.</p>
+
+    <section class="mb-8">
+      <p>Research in the Salguero laboratory bridges inorganic synthesis, nanotechnology, and materials science. We explore new synthetic methods, characterize structural and chemical transitions at the atomic level, and assemble nanostructured components into functional configurations. Our active research is focused on three main thrust areas:</p>
+    </section>
+
+    <!-- Detailed Research Thrust areas -->
+    <section class="grid-cols-3 mb-8">
+      <div class="card-detail-box" style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; background-color: var(--bg-offset);">
+        <h3 style="color: var(--primary); margin-bottom: 12px;">1. Inorganic Synthesis</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 0;">We explore solid-state and solution-phase reactions to synthesize new complex metal oxides, chalcogenides, and silicates. By controlling crystal structure and stoichiometry, we tune physical characteristics like ionic conductivity, magnetic interactions, and optical bandgaps.</p>
+      </div>
+      <div class="card-detail-box" style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; background-color: var(--bg-offset);">
+        <h3 style="color: var(--primary); margin-bottom: 12px;">2. 2D Nanosheet Chemistry</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 0;">Using liquid-phase exfoliation strategies, we dissect layered crystals down to single-atom or single-octahedron sheet thicknesses. We study the surface chemistry, colloid stability, and chemical functionalization parameters of these 2D sheets in suspension.</p>
+      </div>
+      <div class="card-detail-box" style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; background-color: var(--bg-offset);">
+        <h3 style="color: var(--primary); margin-bottom: 12px;">3. Layered Assemblies</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 0;">We develop film assembly protocols (like layer-by-layer coating and spin deposition) to stack distinct nanosheet varieties into custom superlattice configurations. These artificial materials are optimized for solid-state micro-batteries and catalysts.</p>
+      </div>
+    </section>
+
+    <!-- Dynamic Projects Overview -->
+    <section class="mb-8">
+      <h2>Active Research Projects</h2>
+      <div id="projects-overview-grid" class="grid-cols-2">
+        <p>Loading projects database...</p>
+      </div>
+      <div class="text-center my-8">
+        <a href="projects.html" class="btn btn-primary">Go to Technical Projects Page &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="src/js/layout.js"></script>
+  <script type="module">
+    import { loadData } from './src/js/loader.js';
+    import { validateData } from './src/js/validator.js';
+    import { ProjectCard } from './src/js/components.js';
+    import { renderList } from './src/js/renderer.js';
+
+    async function loadProjects() {
+      const dataObj = await loadData('projects.json');
+      const projects = dataObj.projects || [];
+
+      validateData('project', projects);
+
+      // Render all projects
+      renderList({
+        selector: '#projects-overview-grid',
+        items: projects,
+        componentFn: ProjectCard,
+        emptyMessage: 'No projects registered in the database.'
+      });
+    }
+
+    loadProjects();
+  </script>
+</body>
+</html>
