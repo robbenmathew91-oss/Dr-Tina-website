@@ -9,44 +9,44 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    @media (max-width: 900px) {
+      .theme-cols-2 {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <div id="header-container"></div>
 
   <main id="main-content">
-    <h1>Research Overview</h1>
+    <h1>Research Directions</h1>
     <p class="hero-tagline">Exploring layered nanomaterials and advanced inorganic chemistry.</p>
 
-    <section class="mb-8">
-      <p>Research in the Salguero laboratory bridges inorganic synthesis, nanotechnology, and materials science. We explore new synthetic methods, characterize structural and chemical transitions at the atomic level, and assemble nanostructured components into functional configurations. Our active research is focused on three main thrust areas:</p>
+    <!-- Lab Philosophy Intro -->
+    <section class="mb-8" style="margin-top: 30px;">
+      <p style="font-size: 1.1rem; line-height: 1.7; color: var(--dark-gray);">
+        Research in the Salguero laboratory bridges inorganic synthesis, nanotechnology, and materials physics. We explore new synthetic methods, characterize structural and chemical transitions at the atomic level, and assemble nanostructured components into functional configurations. Our active research is organized around major scientific thrusts:
+      </p>
     </section>
 
-    <!-- Detailed Research Thrust areas -->
-    <section class="grid-cols-3 mb-8">
-      <div class="card-detail-box" style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; background-color: var(--bg-offset);">
-        <h3 style="color: var(--primary); margin-bottom: 12px;">1. Inorganic Synthesis</h3>
-        <p style="font-size: 0.95rem; margin-bottom: 0;">We explore solid-state and solution-phase reactions to synthesize new complex metal oxides, chalcogenides, and silicates. By controlling crystal structure and stoichiometry, we tune physical characteristics like ionic conductivity, magnetic interactions, and optical bandgaps.</p>
-      </div>
-      <div class="card-detail-box" style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; background-color: var(--bg-offset);">
-        <h3 style="color: var(--primary); margin-bottom: 12px;">2. 2D Nanosheet Chemistry</h3>
-        <p style="font-size: 0.95rem; margin-bottom: 0;">Using liquid-phase exfoliation strategies, we dissect layered crystals down to single-atom or single-octahedron sheet thicknesses. We study the surface chemistry, colloid stability, and chemical functionalization parameters of these 2D sheets in suspension.</p>
-      </div>
-      <div class="card-detail-box" style="padding: 20px; border: 1px solid var(--border); border-radius: 8px; background-color: var(--bg-offset);">
-        <h3 style="color: var(--primary); margin-bottom: 12px;">3. Layered Assemblies</h3>
-        <p style="font-size: 0.95rem; margin-bottom: 0;">We develop film assembly protocols (like layer-by-layer coating and spin deposition) to stack distinct nanosheet varieties into custom superlattice configurations. These artificial materials are optimized for solid-state micro-batteries and catalysts.</p>
-      </div>
+    <!-- Dynamic Research Themes Container -->
+    <section id="research-themes-target" class="mb-8" aria-label="Research Themes"></section>
+
+    <!-- Research Impact Section -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 25px;">Research Impact</h2>
+      <div id="research-impact-target" class="research-impact-grid"></div>
     </section>
 
-    <!-- Dynamic Projects Overview -->
-    <section class="mb-8">
-      <h2>Active Research Projects</h2>
-      <div id="projects-overview-grid" class="grid-cols-2">
-        <p>Loading projects database...</p>
-      </div>
-      <div class="text-center my-8">
-        <a href="projects.html" class="btn btn-primary">Go to Technical Projects Page &rarr;</a>
-      </div>
+    <!-- Research Area Evolution Timeline -->
+    <section class="mb-8" style="margin-top: 50px;">
+      <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 25px;">Research Timeline & Milestones</h2>
+      <p style="margin-bottom: 25px; color: var(--light-gray);">Tracing the evolution of the group's materials synthesis paradigms and physical discovery landmarks.</p>
+      <div id="research-timeline-target"></div>
     </section>
 
   </main>
@@ -57,25 +57,233 @@
   <script type="module">
     import { loadData } from './src/js/loader.js';
     import { validateData } from './src/js/validator.js';
-    import { ProjectCard } from './src/js/components.js';
-    import { renderList } from './src/js/renderer.js';
 
-    async function loadProjects() {
-      const dataObj = await loadData('projects.json');
-      const projects = dataObj.projects || [];
+    async function initResearch() {
+      // Load all 5 data feeds asynchronously
+      const [researchData, publicationsData, projectsData, grantsData, collaboratorsData] = await Promise.all([
+        loadData('research.json'),
+        loadData('publications.json'),
+        loadData('projects.json'),
+        loadData('grants.json'),
+        loadData('collaborators.json')
+      ]);
 
-      validateData('project', projects);
+      const themes = researchData.themes || [];
+      const impact = researchData.impact || {};
+      const timeline = researchData.timeline || [];
 
-      // Render all projects
-      renderList({
-        selector: '#projects-overview-grid',
-        items: projects,
-        componentFn: ProjectCard,
-        emptyMessage: 'No projects registered in the database.'
-      });
+      const publications = publicationsData.publications || [];
+      const projects = projectsData.projects || [];
+      const grants = grantsData.grants || [];
+      const collaborators = collaboratorsData.collaborators || [];
+
+      // Render Themes
+      renderThemes(themes, publications, projects, grants, collaborators);
+
+      // Render Impact
+      renderImpact(impact);
+
+      // Render Timeline
+      renderTimeline(timeline);
     }
 
-    loadProjects();
+    function renderThemes(themes, publications, projects, grants, collaborators) {
+      const target = document.getElementById('research-themes-target');
+      
+      const markup = themes.map(theme => {
+        // Resolve dynamic relations
+        const matchedProjects = projects.filter(p => theme.related_projects.includes(p.id));
+        const matchedGrants = grants.filter(g => theme.related_funding.includes(g.id));
+        const matchedPubs = publications.filter(pub => theme.related_publications.includes(pub.id));
+        const matchedCollabs = collaborators.filter(c => theme.related_collaborators.includes(c.id));
+
+        const techniquesList = theme.experimental_techniques
+          .map(t => `<span class="technique-tag">${t}</span>`)
+          .join('');
+
+        const applicationsList = theme.applications
+          .map(a => `<span class="application-tag">${a}</span>`)
+          .join('');
+
+        const projectsMarkup = matchedProjects.length > 0
+          ? matchedProjects.map(p => `
+              <div style="margin-bottom: 12px; padding: 15px; border: 1px dashed var(--border); border-radius: 6px; background: var(--bg-offset);">
+                <h5 style="margin: 0 0 5px 0; font-size: 0.95rem; color: var(--dark);">${p.title}</h5>
+                <p style="font-size: 0.85rem; color: var(--dark-gray); margin-bottom: 8px; line-height: 1.4;">${p.summary}</p>
+                <a href="projects.html#project-${p.id}" class="btn btn-outline btn-sm" style="font-size: 0.75rem; padding: 4px 8px;">View Project Specs &rarr;</a>
+              </div>
+            `).join('')
+          : '<p style="font-size: 0.9rem; color: var(--light-gray);">No active projects listed for this area.</p>';
+
+        const publicationsMarkup = matchedPubs.length > 0
+          ? `<ul class="related-list">` + matchedPubs.map(pub => {
+              const highlightAuthor = (authors) => {
+                const regex = /(Tina T\. Salguero|Tina Salguero|T\. T\. Salguero|T\. Salguero|Salguero, T\. T\.|Salguero, T\.|Trnka, T\. M\.|T\. M\. Trnka|Trnka, T\.)/g;
+                return authors.replace(regex, '<strong>$1</strong>');
+              };
+              return `
+                <li class="related-list-item" style="margin-bottom: 12px; line-height: 1.4;">
+                  <span style="font-size: 0.9rem; font-weight: 500; color: var(--dark);">"${pub.title}"</span><br />
+                  <span style="font-size: 0.82rem; color: var(--light-gray);">${highlightAuthor(pub.authors)}</span><br />
+                  <span style="font-size: 0.82rem; font-style: italic; color: var(--light-gray);">${pub.journal} (${pub.year})</span><br />
+                  <a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener" style="font-size: 0.78rem; color: var(--primary); font-weight: 600;">View Publisher Page &rarr;</a>
+                </li>
+              `;
+            }).join('') + `</ul>`
+          : '<p style="font-size: 0.9rem; color: var(--light-gray);">No publications linked.</p>';
+
+        const grantsMarkup = matchedGrants.length > 0
+          ? matchedGrants.map(g => `
+              <div style="font-size: 0.88rem; margin-bottom: 12px; line-height: 1.4; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                <strong>${g.agency}</strong>: "${g.title}" (${g.duration})<br />
+                <span style="font-size: 0.78rem; color: var(--light-gray);">Award #: ${g.grantNumber} | Amount: ${g.amount}</span>
+              </div>
+            `).join('')
+          : '<p style="font-size: 0.9rem; color: var(--light-gray);">No related grants listed.</p>';
+
+        const collabsMarkup = matchedCollabs.length > 0
+          ? matchedCollabs.map(c => `
+              <div style="font-size: 0.88rem; margin-bottom: 12px; line-height: 1.4;">
+                <strong>${c.name}</strong><br />
+                <span style="font-size: 0.78rem; color: var(--light-gray);">${c.institution} (${c.location})</span><br />
+                <span style="font-size: 0.82rem; color: var(--dark-gray);">Focus: ${c.focus}</span>
+              </div>
+            `).join('')
+          : '<p style="font-size: 0.9rem; color: var(--light-gray);">No active collaborations listed.</p>';
+
+        return `
+          <div class="research-theme-section" id="theme-section-${theme.id}" style="margin-bottom: 35px;">
+            <div class="research-theme-card">
+              <div class="research-theme-image-container">
+                <img src="${theme.image}" alt="${theme.title}" class="research-theme-image" loading="lazy" />
+              </div>
+              <div class="research-theme-content">
+                <div>
+                  <h3 class="research-theme-title">${theme.title}</h3>
+                  <p class="research-theme-summary">${theme.scientific_overview}</p>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                  <div class="research-theme-meta">
+                    <span><strong>Techniques:</strong> ${theme.experimental_techniques.length}</span>
+                    <span><strong>Projects:</strong> ${theme.related_projects.length}</span>
+                    <span><strong>Publications:</strong> ${theme.related_publications.length}</span>
+                  </div>
+                  <button class="btn btn-secondary btn-sm" onclick="toggleDetails('theme-details-${theme.id}')" aria-expanded="false" aria-controls="theme-details-${theme.id}">
+                    Explore Theme Details
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Expandable Details Container -->
+            <div class="theme-detail-panel hidden" id="theme-details-${theme.id}">
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;" class="theme-cols-2">
+                <div>
+                  <div class="theme-detail-section">
+                    <h4 class="theme-detail-subtitle">Why This Research Matters</h4>
+                    <p style="font-size: 0.92rem; line-height: 1.6; color: var(--dark-gray);">${theme.why_it_matters}</p>
+                  </div>
+
+                  <div class="theme-detail-section">
+                    <h4 class="theme-detail-subtitle">Current Challenges</h4>
+                    <p style="font-size: 0.92rem; line-height: 1.6; color: var(--dark-gray);">${theme.current_challenges}</p>
+                  </div>
+
+                  <div class="theme-detail-section">
+                    <h4 class="theme-detail-subtitle">Active Group Projects</h4>
+                    ${projectsMarkup}
+                  </div>
+
+                  <div class="theme-detail-section">
+                    <h4 class="theme-detail-subtitle">Related Publications</h4>
+                    ${publicationsMarkup}
+                  </div>
+                </div>
+
+                <div>
+                  <div class="theme-detail-section">
+                    <h4 class="theme-detail-subtitle">Experimental Techniques</h4>
+                    <div class="techniques-list">${techniquesList}</div>
+                  </div>
+
+                  <div class="theme-detail-section" style="margin-top: 25px;">
+                    <h4 class="theme-detail-subtitle">Potential Applications</h4>
+                    <div class="applications-list">${applicationsList}</div>
+                  </div>
+
+                  <div class="theme-detail-section" style="margin-top: 25px;">
+                    <h4 class="theme-detail-subtitle">Grant Funding Support</h4>
+                    ${grantsMarkup}
+                  </div>
+
+                  <div class="theme-detail-section" style="margin-top: 25px;">
+                    <h4 class="theme-detail-subtitle">Scientific Collaborators</h4>
+                    ${collabsMarkup}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      target.innerHTML = markup;
+    }
+
+    function renderImpact(impact) {
+      const target = document.getElementById('research-impact-target');
+      target.innerHTML = `
+        <div class="impact-card">
+          <h3 class="impact-title">
+            <span class="impact-icon">🔬</span> Scientific Discoveries
+          </h3>
+          <p class="impact-text">${impact.discoveries}</p>
+        </div>
+        <div class="impact-card">
+          <h3 class="impact-title">
+            <span class="impact-icon">🌱</span> Societal Impact
+          </h3>
+          <p class="impact-text">${impact.societal}</p>
+        </div>
+        <div class="impact-card">
+          <h3 class="impact-title">
+            <span class="impact-icon">🏢</span> Industrial Relevance
+          </h3>
+          <p class="impact-text">${impact.industrial}</p>
+        </div>
+        <div class="impact-card">
+          <h3 class="impact-title">
+            <span class="impact-icon">🚀</span> Future Directions
+          </h3>
+          <p class="impact-text">${impact.future}</p>
+        </div>
+      `;
+    }
+
+    function renderTimeline(timeline) {
+      const target = document.getElementById('research-timeline-target');
+      
+      const markup = timeline.map(node => `
+        <div class="timeline-node">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content-card">
+            <div class="timeline-header">
+              <span class="event-date" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">${node.year}</span>
+            </div>
+            <h3 class="event-title" style="font-family: var(--font-heading); color: var(--dark); font-size: 1.15rem; margin-top: 5px; margin-bottom: 8px;">
+              ${node.title}
+            </h3>
+            <p class="event-description" style="font-size: 0.9rem; color: var(--dark-gray);">${node.description}</p>
+          </div>
+        </div>
+      `).join('');
+
+      target.innerHTML = `<div class="timeline-container">${markup}</div>`;
+    }
+
+    // Initialize Research Page
+    initResearch();
   </script>
 </body>
 </html>
