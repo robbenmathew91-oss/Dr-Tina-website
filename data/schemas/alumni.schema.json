@@ -62,6 +62,18 @@
           "degree_year": {
             "type": "string",
             "description": "Year the degree was earned"
+          },
+          "researchFocus": {
+            "type": "string",
+            "description": "Summary of research focus or specialization"
+          },
+          "projectFocus": {
+            "type": "string",
+            "description": "Summary of project focus or thesis topic"
+          },
+          "description": {
+            "type": "string",
+            "description": "Summary description of research and accomplishments in the lab"
           }
         }
       }

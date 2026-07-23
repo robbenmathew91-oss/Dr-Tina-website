@@ -36,21 +36,6 @@
       "photo": "assets/images/team/athar_yeganeh_neysiani.jpg",
       "joined_lab": "2024",
       "status": "Current Member"
-    },
-    {
-      "id": "ali-ahmed",
-      "name": "Ali Ahmed",
-      "role": "Graduate Student",
-      "yearStarted": "2024",
-      "projectFocus": "Materials Chemistry research and inorganic exfoliation.",
-      "email": "contact@uga.edu",
-      "linkedin": "",
-      "photo": "assets/images/placeholder.svg",
-      "joined_lab": "2024",
-      "status": "Current Member",
-      "degree": "M.S. in Chemistry",
-      "degree_institution": "University of Georgia",
-      "degree_year": "2026"
     }
   ]
 }

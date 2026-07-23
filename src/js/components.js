@@ -111,7 +111,9 @@ export function AlumniCard(alumnus) {
             <p class="alumni-graduated" style="font-size: 0.85rem; color: var(--light-gray); margin-bottom: 4px;">Graduated in ${alumnus.graduated_year}</p>
             ${alumnus.degree_institution ? `<p class="alumni-degree-info" style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 6px;">${alumnus.degree}, ${alumnus.degree_institution} (${alumnus.degree_year})</p>` : ''}
             ${alumnus.thesisTitle ? `<p class="alumni-thesis"><strong>Thesis:</strong> "${alumnus.thesisTitle}"</p>` : ''}
-            <p class="alumni-current"><strong>Current:</strong> ${alumnus.currentPosition}</p>
+            ${alumnus.researchFocus || alumnus.projectFocus ? `<p class="alumni-focus"><strong>Research Focus:</strong> ${alumnus.researchFocus || alumnus.projectFocus}</p>` : ''}
+            ${alumnus.description ? `<p class="alumni-desc" style="font-size: 0.9rem; margin-top: 4px; color: var(--text-color);">${alumnus.description}</p>` : ''}
+            <p class="alumni-current" style="margin-top: 4px;"><strong>Current:</strong> ${alumnus.currentPosition}</p>
             ${alumnus.linkedin ? `<a href="${alumnus.linkedin}" class="alumni-linkedin-link" target="_blank" rel="noopener">LinkedIn Profile &rarr;</a>` : ''}
           </div>
         </div>

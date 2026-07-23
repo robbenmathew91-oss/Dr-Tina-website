@@ -32,6 +32,22 @@
       "degree_year": "2025"
     },
     {
+      "id": "ali-ahmed",
+      "name": "Ali Ahmed",
+      "degree": "M.S. Chemistry",
+      "graduationYear": "2026",
+      "currentPosition": "Chemistry Instructor, Nashville State Community College",
+      "linkedin": "",
+      "photo": "assets/images/placeholder.svg",
+      "joined_lab": "2024",
+      "status": "Alumni",
+      "graduated_year": "2026",
+      "degree_institution": "University of Georgia",
+      "degree_year": "2026",
+      "researchFocus": "Materials Chemistry and Inorganic Exfoliation",
+      "description": "Conducted research in materials chemistry and inorganic exfoliation during his M.S. studies in the Salguero Research Group."
+    },
+    {
       "id": "april-rains",
       "name": "April Rains",
       "degree": "Ph.D. in Chemistry",
